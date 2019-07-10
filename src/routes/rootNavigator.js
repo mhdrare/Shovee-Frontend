@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { createAppContainer, createMaterialTopTabNavigator } from 'react-navigation';
+import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from '../screens/Home';
 import Feed from '../screens/Feed';
 import Mall from '../screens/Mall';
 import Notification from '../screens/Notification';
 import Me from '../screens/Me';
+import DetailProduct from '../screens/DetailProduct';
 
 const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {
@@ -77,6 +78,15 @@ const AppTabNavigator = createMaterialTopTabNavigator({
       showIcon: true
     }
   })
+
+  const AppStackNavigator = createStackNavigator({
+    Home: {
+      screen: AppTabNavigator
+    },
+    DetailProduct
+  }, {
+    headerMode: 'none'
+  })
   
-  const AppNavigator = createAppContainer(AppTabNavigator);
+  const AppNavigator = createAppContainer(AppStackNavigator);
   export default AppNavigator;

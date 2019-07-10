@@ -17,7 +17,7 @@ import dummyData from '../components/dummydata/index.product';
 import Carousel from 'react-native-smart-carousel';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const HEADER_MAX_HEIGHT = 220;
+const HEADER_MAX_HEIGHT = 411;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
@@ -30,7 +30,7 @@ class CardsProduct extends Component {
   render() {
     return (
       <View style={styles.productContainer}>
-        <TouchableOpacity style={styles.productItem} onPress={() => {this.props.navigation.navigate('DetailProduct')}}>
+        <TouchableOpacity style={styles.productItem}>
           <Image source={{uri: this.props.item.image}} style={styles.productImage} />
           <Text numberOfLines={2} style={styles.productTitle}>{this.props.item.title}</Text>
           <View style={styles.productPrice}>
@@ -43,7 +43,7 @@ class CardsProduct extends Component {
   }
 }
 
-export default class Home extends Component {
+export default class DetailProduct extends Component {
   constructor(props) {
     super(props);
 
@@ -61,14 +61,26 @@ export default class Home extends Component {
       <React.Fragment>
 
         <View style={styles.scrollViewContent}>
-          <Image source={require('../assets/img/promo-shopee.jpeg')} style={{height:109, width:'100%'}} />
-          <Image source={require('../assets/img/promo-shopee2.jpeg')} style={{height:90, width:'100%'}} />
-
-          <Image source={require('../assets/img/header-promo.jpeg')} style={{height:41, width:411}} />
-          <View style={{width:411, height:200, backgroundColor:'#e3ebfe', padding:10}}>
-            <View style={{flexDirection:'row', flex:1}}>
+          <View style={{backgroundColor:'#fff', width:'100%', height:157, paddingHorizontal:12, paddingTop:12}}>
+            <View style={{flex:1, flexDirection:'row'}}>
+              <Text style={{fontSize:22, color:'#000'}}>Jilbab Pashmina sabyan diamond italiano</Text>
+            </View>
+            <View style={{flex:1, flexDirection:'row'}}>
+              <Text style={{fontSize:22, color:'#ee4d2d', fontWeight:'300'}}>Rp 61.200</Text>
             </View>
           </View>
+          
+          <View style={{backgroundColor:'#de2de1', width:'100%', height:125, marginTop:10}} />
+
+          <View style={{backgroundColor:'#ff0000', width:'100%', height:118.3, marginTop:10}} />
+
+          <View style={{backgroundColor:'#ff0000', width:'100%', height:48, marginTop:10}} />
+
+          <View style={{backgroundColor:'#ff0000', width:'100%', height:140, marginTop:10}} />
+
+          <View style={{backgroundColor:'#ff0000', width:'100%', height:432, marginTop:8}} />
+
+          <View style={{backgroundColor:'#ff0000', width:'100%', height:422, marginTop:8}} />
 
           <View style={{marginTop:15, flex:1, backgroundColor:'#efefef'}}>
             <View style={{flexDirection:'row', justifyContent:'space-between', height:42, width:'100%', backgroundColor:'#fff', paddingHorizontal:10}}>
@@ -88,7 +100,7 @@ export default class Home extends Component {
             keyExtractor={(item, index) => item.key}
             renderItem={({item, index}) => {
               return (
-                <CardsProduct item={item} index={index} navigation={this.props.navigation} />
+                <CardsProduct item={item} index={index} />
               )
             }} />
 
@@ -108,7 +120,7 @@ export default class Home extends Component {
     const datacarousel = [
       {
         "id": '339964',
-        "imagePath": "https://cf.shopee.co.id/file/webp/167d17a4d0733942a5853ae5305108cd_xxhdpi", // URL
+        "imagePath": "https://cf.shopee.co.id/file/c34c7eadcd6376f5f9355f7a26326c93", // URL
       },
       {
         "id": '33995',
@@ -142,22 +154,24 @@ export default class Home extends Component {
       extrapolate: 'clamp',
     });
 
+    const barOpacity = scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
+      outputRange: [0, 1, 1],
+      extrapolate: 'clamp'
+    });
+
     const imageOpacity = scrollY.interpolate({
       inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
       outputRange: [1, 1, 0],
       extrapolate: 'clamp',
     });
+
     const imageTranslate = scrollY.interpolate({
       inputRange: [0, HEADER_SCROLL_DISTANCE],
       outputRange: [0, 100],
       extrapolate: 'clamp',
     });
 
-    const titleScale = scrollY.interpolate({
-      inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-      outputRange: [1, 1, 0.8],
-      extrapolate: 'clamp',
-    });
     const titleTranslate = scrollY.interpolate({
       inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
       outputRange: [0, 0, -8],
@@ -168,7 +182,7 @@ export default class Home extends Component {
       <View style={styles.fill}>
         <StatusBar
           translucent
-          barStyle="light-content"
+          barStyle="dark-content"
           backgroundColor="rgba(0, 0, 0, 0.251)"
         />
         <Animated.ScrollView
@@ -215,11 +229,10 @@ export default class Home extends Component {
           ]}>
             <Carousel
               data={datacarousel}
-              autoPlay={true}
               height={HEADER_MAX_HEIGHT}
               navigation={true}
               navigationColor={'#ffffff'}
-              navigationType={'bars'}
+              navigationType={'dots'}
             />
           </Animated.View>
         </Animated.View>
@@ -227,6 +240,7 @@ export default class Home extends Component {
           style={[
             styles.bar,
             {
+              opacity: barOpacity,
               transform: [
                 { translateY: titleTranslate },
               ],
@@ -234,19 +248,19 @@ export default class Home extends Component {
           ]}
         >
           <TouchableWithoutFeedback>
-            <View style={{width:'70%', height:40, backgroundColor:'#fff', borderRadius:3, flex:1, flexDirection:'column', justifyContent:'center', marginBottom:5}}>
-              <Text style={{alignItems:'flex-start', color:'#F36B2C', fontSize:17, marginLeft:'18%'}}>Shovee</Text>
+            <View style={{width:'70%', height:40, flex:1, flexDirection:'column', justifyContent:'center', marginBottom:5}}>
+              <Text style={{alignItems:'flex-start', color:'#000', fontSize:20, marginLeft:'20%', fontWeight:'bold', fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif'}} numberOfLines={1}>{'Jilbab Pasmina Sabyan Diamond'.substring(0,20)+'...'}</Text>
             </View>
           </TouchableWithoutFeedback>
 
-          <Image source={require('../assets/icon/search.png')} style={{position:'absolute', top:7, left:13, width:20, height:20}} />
+          <Image source={require('../assets/icon/left-arrow.png')} style={{position:'absolute', top:7, left:13, width:24, height:24}} />
 
-          <TouchableHighlight style={{position:'absolute', top:7, right:'20%'}}>
-            <Image source={require('../assets/icon/shopcartwhite.png')} style={{width:24, height:24}} />
+          <TouchableHighlight style={{position:'absolute', top:7, right:'17%', zIndex:10}}>
+            <Image source={require('../assets/icon/shopcartorange.png')} style={{width:24, height:24}} />
           </TouchableHighlight>
 
-          <TouchableHighlight style={{position:'absolute', top:7, right:'7%'}}>
-            <Image source={require('../assets/icon/chat.png')} style={{width:28, height:28}} />
+          <TouchableHighlight style={{position:'absolute', top:7, right:'5%'}}>
+            <Image source={require('../assets/icon/more.png')} style={{width:24, height:24}} />
           </TouchableHighlight>
 
         </Animated.View>
@@ -267,7 +281,7 @@ const styles = StyleSheet.create({
       top: 0,
       left: 0,
       right: 0,
-      backgroundColor: '#ee4d2d',
+      backgroundColor: '#ffffff',
       overflow: 'hidden',
       height: HEADER_MAX_HEIGHT,
     },
@@ -278,7 +292,7 @@ const styles = StyleSheet.create({
       right: 0,
       width: null,
       height: HEADER_MAX_HEIGHT,
-      resizeMode: 'cover',
+      resizeMode:'cover'
     },
     bar: {
       backgroundColor: 'transparent',
@@ -296,7 +310,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
     },
     scrollViewContent: {
-      marginTop: Platform.OS !== 'ios' ? 30 : 0,
+      marginTop: Platform.OS !== 'ios' ? 0 : 0,
       paddingTop: Platform.OS !== 'ios' ? HEADER_MAX_HEIGHT : 0,
     },
     row: {
