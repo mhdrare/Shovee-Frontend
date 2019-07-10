@@ -15,6 +15,8 @@ import {
 } from 'react-native';
 import dummyData from '../components/dummydata/index.product';
 import Carousel from 'react-native-smart-carousel';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const HEADER_MAX_HEIGHT = 220;
@@ -242,11 +244,11 @@ export default class Home extends Component {
           <Image source={require('../assets/icon/search.png')} style={{position:'absolute', top:7, left:13, width:20, height:20}} />
 
           <TouchableHighlight style={{position:'absolute', top:7, right:'20%'}}>
-            <Image source={require('../assets/icon/shopcartwhite.png')} style={{width:24, height:24}} />
+            <MaterialCommunityIcons name="cart-outline" size={24} color={'#FFFFFF'}/>
           </TouchableHighlight>
 
-          <TouchableHighlight style={{position:'absolute', top:7, right:'7%'}}>
-            <Image source={require('../assets/icon/chat.png')} style={{width:28, height:28}} />
+          <TouchableHighlight style={{position:'absolute', top:4, right:'7%'}}>
+            <SimpleLineIcons name="bubbles" size={28} color={'white'}/>
           </TouchableHighlight>
 
         </Animated.View>
@@ -307,8 +309,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     productItem: {
-      height:hp('39%'), 
-      width:wp('48.3%'), 
+      height:hp('41%'), 
+      width:wp('50%'), 
       backgroundColor:'#fff'
     },
     productContainer: {
@@ -319,7 +321,7 @@ const styles = StyleSheet.create({
     },
     productImage: {
       height:196.5, 
-      width:196.5
+      width:'100%'
     },
     productTitle: {
       fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif', 
