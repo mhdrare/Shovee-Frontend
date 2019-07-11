@@ -19,6 +19,8 @@ export default auth = async (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
+				token: action.payload.data,
+				data: action.payload.data.data
 			}
 		case 'LOGIN_REJECTED':
 			return {
