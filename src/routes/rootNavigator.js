@@ -6,6 +6,8 @@ import Mall from '../screens/Mall';
 import Notification from '../screens/Notification';
 import Me from '../screens/Me';
 import DetailProduct from '../screens/DetailProduct';
+import Profile from '../screens/user/Profile';
+import PurchaseHistories from '../screens/PurchaseHistories';
 import LoginPage from '../screens/LoginPage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -91,6 +93,12 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     },
     Register: {
       screen: LoginPage,
+    },
+    PurchaseHistories: {
+      screen: PurchaseHistories,
+    },
+    Profile: {
+      screen: Profile,
     },
     DetailProduct
   }, {

@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity, TouchableHighlight
 import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import IconAntDesign from 'react-native-vector-icons/AntDesign'
-import Next from './log/NextDaftar'
+import Next from './user/NextDaftar'
 import Home from '../routes/rootNavigator'
 
 class Login extends Component {

@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
-import Feather from 'react-native-vector-icons/Feather'
+import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 class HeaderBeforeLogin extends Component {
@@ -118,10 +119,8 @@ class HeaderAfterLogin extends Component {
 							<SimpleLineIcons name="bubbles" size={24} color={'white'}/>
 						</TouchableHighlight>
 					</View>
-					<View style={styles.headerAccount}>
-						<TouchableOpacity>
-							<Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
-						</TouchableOpacity>
+					<TouchableOpacity style={styles.headerAccount} onPress={()=>this.props.navigation.navigate('Profile')}>
+						<Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
 						<View style={{flexDirection: 'column', margin: 5, marginLeft: 10}}>
 							<View>
 								<Text style={{fontSize: 18, fontWeight: '600', color: '#FFFFFF'}}>mhdrare</Text>
@@ -134,14 +133,33 @@ class HeaderAfterLogin extends Component {
 								</View>
 							</View>
 						</View>
-					</View>
+					</TouchableOpacity>
 				</View>
 				<View style={styles.body}>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('PurchaseHistories')}>
 						<MaterialCommunityIcons name="clipboard" style={{flex: 1, marginLeft: '3%'}} size={25} color="#3a5998" />
-						<Text style={styles.text}>Pesanan Saya</Text>
+						<Text style={styles.textPesanan}>Pesanan Saya</Text>
+						<Text style={styles.textPesanan}>Lihat Riwayat Pesanan</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
+					<View style={styles.itemPesanan}>
+						<TouchableOpacity style={styles.statusPesanan}>
+							<SimpleLineIcons name="wallet" size={30}/>
+							<Text style={styles.textStatus}>Belum Bayar</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.statusPesanan}>
+							<MaterialCommunityIcons name="truck" size={30}/>
+							<Text style={styles.textStatus}>Dikemas</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.statusPesanan}>
+							<MaterialIcons name="move-to-inbox" size={30}/>
+							<Text style={styles.textStatus}>Dikirim</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.statusPesanan}>
+							<EvilIcons name="star" size={37}/>
+							<Text style={styles.textStatus}>Beri Penilaian</Text>
+						</TouchableOpacity>
+					</View>
 					<TouchableOpacity style={styles.items}>
 						<MaterialCommunityIcons name="cellphone" style={{flex: 1, marginLeft: '3%'}} size={25} color="#369e55"/>
 						<Text style={styles.text}>Pulsa & Produk Digital</Text>
@@ -213,7 +231,7 @@ export default class App extends Component {
 		return(
 			<ScrollView>
 				{
-					this.state.isLogin != 1 ? <HeaderBeforeLogin/> : <HeaderAfterLogin/>
+					this.state.isLogin != 1 ? <HeaderBeforeLogin navigation={this.props.navigation}/> : <HeaderAfterLogin navigation={this.props.navigation}/>
 				}
 			</ScrollView>
 		)
@@ -262,7 +280,8 @@ const styles = StyleSheet.create({
 		marginRight: '8%'
 	},
 	text: {
-		flex: 8, color: '#000000'
+		flex: 8, 
+		color: '#000000'
 	},
 	buttonLogin: {
 		backgroundColor: 'white',
@@ -281,5 +300,26 @@ const styles = StyleSheet.create({
 		borderColor: '#FFFFFF',
 		width: 80,
 		marginLeft: '5%'
+	},
+	itemPesanan: {
+		backgroundColor: '#FFFFFF',
+		flexDirection: 'row',
+		height: 80,
+		borderColor: '#f2f2f2',
+		borderTopWidth: 0.4,
+		borderBottomWidth: 0.4,
+		alignItems: 'center',
+	},
+	textPesanan: {
+		flex: 4, 
+		color: '#000000'
+	},
+	statusPesanan: {
+		flex: 1,
+		alignItems: 'center'
+	},
+	textStatus: {
+		fontSize: 11,
+		marginTop: 5
 	}
 })
