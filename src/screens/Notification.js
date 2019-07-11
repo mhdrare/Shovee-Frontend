@@ -25,7 +25,7 @@ export default class App extends Component {
 				<View style={styles.container}>
 					<View style={styles.body}>
 						<ScrollView>
-							<View  style={{paddingTop: 10}}>
+							<View style={{paddingTop: 10}}>
 								<TouchableOpacity style={styles.items}>
 									<FontAwesome name="share-alt" style={styles.fontFlex} size={25} color="#3a5998"/>
 									<TouchableOpacity style={{flexDirection: 'column', flex: 7}}>

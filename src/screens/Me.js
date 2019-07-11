@@ -101,7 +101,7 @@ class HeaderAfterLogin extends Component {
 			<React.Fragment>
 				<View style={styles.header}>
 					<View style={styles.headerTop}>	
-						<TouchableOpacity style={styles.store}>
+						<TouchableOpacity style={styles.store} onPress={() => this.props.navigation.navigate('SellerPage')}>
 							<View style={{flex: 4, marginLeft: 30}}>
 								<Text style={{color: '#EE4D2D', fontSize: 12, fontWeight: '600'}}>Toko Saya</Text>
 							</View>
@@ -231,7 +231,7 @@ export default class App extends Component {
 		return(
 			<ScrollView>
 				{
-					this.state.isLogin != 1 ? <HeaderBeforeLogin navigation={this.props.navigation}/> : <HeaderAfterLogin navigation={this.props.navigation}/>
+					this.state.isLogin == 1 ? <HeaderAfterLogin navigation={this.props.navigation}/> : <HeaderBeforeLogin navigation={this.props.navigation}/>
 				}
 			</ScrollView>
 		)

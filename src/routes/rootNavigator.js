@@ -8,7 +8,9 @@ import Me from '../screens/Me';
 import DetailProduct from '../screens/DetailProduct';
 import Profile from '../screens/user/Profile';
 import PurchaseHistories from '../screens/PurchaseHistories';
+import AddProduct from '../screens/AddProduct';
 import LoginPage from '../screens/LoginPage';
+import SellerPage from '../screens/SellerPage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -99,6 +101,12 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     },
     Profile: {
       screen: Profile,
+    },
+    SellerPage: {
+      screen: SellerPage,
+    },
+    AddProduct: {
+      screen: AddProduct,
     },
     DetailProduct
   }, {

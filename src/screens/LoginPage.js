@@ -4,6 +4,7 @@ import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import IconAntDesign from 'react-native-vector-icons/AntDesign'
 import Next from './user/NextDaftar'
+import ForgetPassword from './user/ForgetPassword'
 import Home from '../routes/rootNavigator'
 
 class Login extends Component {
@@ -14,6 +15,9 @@ class Login extends Component {
 					<View style={{width:'80%', marginTop: 30}}>
 						<TextInput style={styles.input} placeholder="Email/Telepon/Username"/>
 						<TextInput style={styles.input} secureTextEntry={true} placeholder="Password"/>
+						<TouchableOpacity style={{position: 'absolute', right: 5, top: 65}} onPress={() => this.props.navigation.navigate('ForgetPassword')}>
+							<Text style={{color: '#075d54'}}>Lupa?</Text>
+						</TouchableOpacity>
 					</View>
 					<TouchableOpacity style={styles.button}>
 						<Text style={{color: '#FFFFFF'}}>{'Log In'.toUpperCase()}</Text>
@@ -143,6 +147,9 @@ const StackNavigator = createStackNavigator({
   },
   Next: {
     screen: Next,
+  },
+  ForgetPassword: {
+    screen: ForgetPassword,
   },
 },{
   initialRouteName: 'Login',
