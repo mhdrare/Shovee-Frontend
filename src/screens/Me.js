@@ -219,7 +219,7 @@ class HeaderAfterLogin extends Component {
 }
 
 export default class App extends Component {
-	 constructor(props) {
+	constructor(props) {
         super(props);
   
         this.state = {
@@ -231,7 +231,7 @@ export default class App extends Component {
 		return(
 			<ScrollView>
 				{
-					this.state.isLogin == 1 ? <HeaderAfterLogin navigation={this.props.navigation}/> : <HeaderBeforeLogin navigation={this.props.navigation}/>
+					this.state.isLogin != 1 ? <HeaderAfterLogin navigation={this.props.navigation}/> : <HeaderBeforeLogin navigation={this.props.navigation}/>
 				}
 			</ScrollView>
 		)

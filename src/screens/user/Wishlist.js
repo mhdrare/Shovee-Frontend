@@ -30,7 +30,7 @@ class WishlistCard extends Component {
 
     render() {
         return (
-            <TouchableOpacity style={{flex:1, margin:10, backgroundColor:'#fff', justifyContent:'center', alignItems:'center', marginBottom: 5, elevation:2}}>
+            <TouchableOpacity style={{flex:1, marginHorizontal:5, backgroundColor:'#fff', justifyContent:'center', alignItems:'center', marginBottom: 5, marginTop:5, elevation:2}}>
                 <Image source={{uri: this.props.item.image }} style={{width:'100%', height:193}} />
                 
                 <View style={{flexDirection:'row', padding:8}}>
@@ -64,7 +64,7 @@ export default class Wishlist extends Component {
         return (
             <React.Fragment>
                 <View style={{backgroundColor:'#efefef', position:'absolute', top:24, right:0, left:0, bottom:0}}>
-                    <View style={{backgroundColor:'#fff', elevation:2}}>
+                    <View style={{backgroundColor:'#fff', elevation:2, marginBottom:10}}>
                         <View style={{flexDirection:'row', paddingHorizontal:14, paddingVertical:15, alignItems:'center'}}>
                             <TouchableOpacity style={{flex:1}} onPress={() => {this.props.navigation.goBack()}}>
                                 <AntDesign name="arrowleft" size={26} color={'#EE4D2D'}/>

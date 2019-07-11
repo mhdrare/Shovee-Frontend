@@ -148,7 +148,11 @@ android {
 }
 
 dependencies {
+<<<<<<< HEAD
     implementation project(':react-native-onesignal')
+=======
+    implementation project(':react-native-image-picker')
+>>>>>>> 89f314f0ba16753690f553b45e5125328d9a3138
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])

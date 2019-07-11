@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { YellowBox } from 'react-native'
 import AppNavigator from './src/routes/rootNavigator';
 import OneSignal from 'react-native-onesignal'
+YellowBox.ignoreWarnings(['ViewPagerAndroid']);
 
 export default class App extends Component {
   constructor(props) {

@@ -18,14 +18,43 @@ export default class App extends Component {
 						<View style={styles.title}>
 							<Text style={{color: '#000000', fontSize: 17}}>Tambah Produk</Text>
 						</View>
-						<TouchableOpacity style={styles.check} onPress={() => this.props.navigation.goBack()}>
+						<TouchableOpacity style={styles.check} onPress={() => alert('SUKSES')}>
 							<MaterialCommunityIcons name="check" size={24} color={'#EE4D2D'}/>
 						</TouchableOpacity>
 					</View>
 				</View>
 				<View style={styles.container}>
 					<ScrollView>
-						
+						<View style={styles.imageProduct}>
+							<Image style={{width: 120, height: 120, margin: 2}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
+							<TouchableOpacity style={{width: 120, height: 120, margin: 2, borderWidth: 1, borderRadius: 1, borderStyle: 'dashed', justifyContent:'center'}}>
+								<Text style={{textAlign: 'center',}}>+ Tambah Foto</Text>
+							</TouchableOpacity>
+						</View>
+						<View style={styles.items}>
+							<TextInput placeholder="Nama Produk" />
+						</View>
+						<View style={styles.items}>
+							<TextInput placeholder="Deskripsi Produk" multiline={true} style={{textAlignVertical: 'top', height: 100}}/>
+						</View>
+						<View style={{height: 10}} />
+						<View style={styles.items}>
+							<Text style={{color: '#000', flex: 1}}>Kategori</Text>
+							<TextInput placeholder="Atur Kategori" />
+						</View>
+						<View style={{height: 10}} />
+						<View style={styles.items}>
+							<Text style={{color: '#000', flex: 1}}>Harga</Text>
+							<TextInput placeholder="Atur Harga" />
+						</View>
+						<View style={styles.items}>
+							<Text style={{color: '#000', flex: 1}}>Stok</Text>
+							<TextInput placeholder="Atur Stok" />
+						</View>
+						<View style={styles.items}>
+							<Text style={{color: '#000', flex: 1}}>Variasi</Text>
+							<TextInput placeholder="Atur Merk" />
+						</View>
 					</ScrollView>
 				</View>
 			</React.Fragment>
@@ -61,8 +90,22 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		flex: 1,
-		alignItems: 'center',
 		marginTop: 80,
 		backgroundColor: '#EFEFEF'
+	},
+	imageProduct: {
+		paddingLeft: 10,
+		paddingRight: 10,
+		paddingTop: 10,
+		paddingBottom: 10,
+		flexDirection: 'row',
+	},
+	items: {
+		paddingLeft: 10,
+		paddingRight: 10,
+		borderColor: 'grey',
+		backgroundColor: '#FFFFFF',
+		flexDirection: 'row',
+		alignItems: 'center'
 	},
 })
