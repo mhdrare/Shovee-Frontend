@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { YellowBox } from 'react-native'
 import AppNavigator from './src/routes/rootNavigator';
 import OneSignal from 'react-native-onesignal'
+import { Provider } from 'react-redux'
 YellowBox.ignoreWarnings(['ViewPagerAndroid']);
+
+import store from './src/public/redux/store'
 
 export default class App extends Component {
   constructor(props) {
@@ -37,7 +40,9 @@ export default class App extends Component {
 
   render() {
     return (
-      <AppNavigator />
+      <Provider store={store} >
+        <AppNavigator />
+      </Provider>
     );
   }
 }

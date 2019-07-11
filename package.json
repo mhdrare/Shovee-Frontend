@@ -12,11 +12,8 @@
     "react": "16.8.3",
     "react-native": "0.59.9",
     "react-native-gesture-handler": "^1.3.0",
-<<<<<<< HEAD
     "react-native-onesignal": "^3.2.14",
-=======
     "react-native-image-picker": "^0.28.1",
->>>>>>> 89f314f0ba16753690f553b45e5125328d9a3138
     "react-native-paper": "^2.16.0",
     "react-native-responsive-screen": "^1.2.2",
     "react-native-smart-carousel": "^1.1.0",

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
 import products from './product'
-import users from './users'
+import users from './user'
 import auth from './auth'
 
 const appReducer = combineReducers({
