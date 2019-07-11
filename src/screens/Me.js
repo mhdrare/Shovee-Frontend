@@ -44,7 +44,7 @@ class HeaderBeforeLogin extends Component {
 					</TouchableOpacity>
 				</View>
 				<View style={styles.body}>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => {this.props.navigation.navigate('Wishlist')}}>
 						<MaterialCommunityIcons name="heart-outline" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
 						<Text style={styles.text}>Favorit Saya</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
@@ -167,7 +167,7 @@ class HeaderAfterLogin extends Component {
 					</TouchableOpacity>
 				</View>
 				<View style={styles.body}>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => {this.props.navigation.navigate('Wishlist')}}>
 						<MaterialCommunityIcons name="heart-outline" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
 						<Text style={styles.text}>Favorit Saya</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
