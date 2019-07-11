@@ -79,60 +79,6 @@ export default class Mall extends Component {
   _renderScrollViewContent() {
     return (
       <React.Fragment>
-
-        <View style={styles.scrollViewContent}>
-          <View style={{backgroundColor:'#fff', width:'100%', height:157, paddingHorizontal:12, paddingTop:12}}>
-            <View style={{flex:1, flexDirection:'row'}}>
-              <Text style={{fontSize:22, color:'#000'}} numberOfLines={2}>Jilbab Pashmina sabyan diamond italiano</Text>
-            </View>
-            
-            <View style={{flex:1, flexDirection:'row'}}>
-              <Text style={{fontSize:22, color:'#ee4d2d', fontWeight:'300'}}>Rp 61.200</Text>
-            </View>
-          </View>
-          
-          <View style={{backgroundColor:'#de2de1', width:'100%', height:125, marginTop:10}} />
-
-          <View style={{backgroundColor:'#ff0000', width:'100%', height:118.3, marginTop:10}} />
-
-          <View style={{backgroundColor:'#ff0000', width:'100%', height:48, marginTop:10}} />
-
-          <View style={{backgroundColor:'#ff0000', width:'100%', height:140, marginTop:10}} />
-
-          <View style={{backgroundColor:'#ff0000', width:'100%', height:432, marginTop:8}} />
-
-          <View style={{backgroundColor:'#ff0000', width:'100%', height:422, marginTop:8}} />
-
-          <View style={{marginTop:15, flex:1, backgroundColor:'#efefef'}}>
-            <View style={{flexDirection:'row', justifyContent:'space-between', height:42, width:'100%', backgroundColor:'#fff', paddingHorizontal:10}}>
-              <View style={{justifyContent:'center'}}>
-                <Text style={{alignItems:'flex-start', color:'#ee4d2d', fontSize:19, fontFamily:'HelveticaNeueMedium', fontWeight:'300'}}>REKOMENDASI</Text>
-              </View>
-              <View style={{justifyContent:'center'}}>
-                <TouchableOpacity>
-                  <Text style={{alignItems:'flex-end', color:'rgba(0, 0, 0, 0.54)', fontFamily:'HelveticaNeueMedium', fontWeight:'300'}}>Lihat Lainnya &gt;</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-
-            <FlatList 
-            data={dummyData}
-            numColumns={2}
-            keyExtractor={(item, index) => item.key}
-            renderItem={({item, index}) => {
-              return (
-                <CardsProduct item={item} index={index} />
-              )
-            }} />
-
-            <View style={{flexDirection:'row', justifyContent:'center', flex:1, backgroundColor:'#fff', borderWidth:1, borderColor:'#ee4d2d', borderRadius:6, marginVertical:15, marginHorizontal:10}}>
-              <TouchableOpacity style={{paddingHorizontal:10,paddingVertical:8}}>
-                <Text style={{color:'#ee4d2d'}}>Lihat Lainnya</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-
       </React.Fragment>
     );
   }

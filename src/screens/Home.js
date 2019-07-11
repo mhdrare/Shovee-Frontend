@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     bar: {
       flex: 1,
       backgroundColor: 'transparent',
-      marginTop: Platform.OS === 'ios' ? 28 : 38,
+      marginTop: Platform.OS === 'ios' ? 20 : 38,
       height: 37,
       paddingHorizontal:10,
       justifyContent: 'center',
