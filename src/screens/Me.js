@@ -109,9 +109,9 @@ class HeaderAfterLogin extends Component {
 								<SimpleLineIcons name="arrow-right" color={'#EE4D2D'}/>
 							</View>
 						</TouchableOpacity>
-						<TouchableHighlight style={styles.settings}>
+						<TouchableOpacity style={styles.settings} onPress={() => this.props.navigation.navigate('AccountSettings')}>
 							<SimpleLineIcons name="settings" size={24} color={'#FFFFFF'}/>
-						</TouchableHighlight>
+						</TouchableOpacity>
 						<TouchableHighlight style={styles.shopcart}>
 							<MaterialCommunityIcons name="cart-outline" size={24} color={'#FFFFFF'}/>
 						</TouchableHighlight>
@@ -199,7 +199,7 @@ class HeaderAfterLogin extends Component {
 					</TouchableOpacity>
 				</View>
 				<View style={styles.body}>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('AccountSettings')}>
 						<SimpleLineIcons name="user" style={{flex: 1, marginLeft: '3%'}} size={25} color="#3a5998"/>
 						<Text style={styles.text}>Pengaturan Akun</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
@@ -231,7 +231,7 @@ export default class App extends Component {
 		return(
 			<ScrollView>
 				{
-					this.state.isLogin != 1 ? <HeaderAfterLogin navigation={this.props.navigation}/> : <HeaderBeforeLogin navigation={this.props.navigation}/>
+					this.state.isLogin == 1 ? <HeaderAfterLogin navigation={this.props.navigation}/> : <HeaderBeforeLogin navigation={this.props.navigation}/>
 				}
 			</ScrollView>
 		)

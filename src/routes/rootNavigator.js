@@ -20,6 +20,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SplashScreen from '../screens/SplashScreen';
+import AccountSettings from '../screens/user/AccountSettings';
 
 const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {
@@ -96,30 +97,23 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {
       screen: AppTabNavigator
     },
-    Cart,
-    Checkout,
-    Wishlist,
     Login: {
       screen: LoginPage
     },
     Register: {
       screen: LoginPage,
     },
-    PurchaseHistories: {
-      screen: PurchaseHistories,
-    },
-    Profile: {
-      screen: Profile,
-    },
-    SellerPage: {
-      screen: SellerPage,
-    },
-    AddProduct: {
-      screen: AddProduct,
-    },
+    Cart,
+    Checkout,
+    Wishlist,
+    PurchaseHistories,
+    Profile,
+    SellerPage,
+    AddProduct,
     DetailProduct,
     Search,
-    ListSearch
+    ListSearch,
+    AccountSettings
   }, {
     initialRouteName: 'Home',
     headerMode: 'none'
