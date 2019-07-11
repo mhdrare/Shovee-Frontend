@@ -19,7 +19,11 @@
     "react-native-vector-icons": "^6.6.0",
     "react-native-view-more-text": "^2.1.0",
     "react-navigation": "^3.11.0",
-    "react-navigation-material-bottom-tabs": "^1.0.0"
+    "react-navigation-material-bottom-tabs": "^1.0.0",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
+    "redux-promise-middleware": "^6.1.1"
   },
   "devDependencies": {
     "@babel/core": "7.5.0",

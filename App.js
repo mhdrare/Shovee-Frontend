@@ -3,14 +3,14 @@ import AppNavigator from './src/routes/rootNavigator';
 import OneSignal from 'react-native-onesignal'
 
 export default class App extends Component {
-  constructor(properties) {
-    super(properties);
+  constructor(props) {
+    super(props);
     OneSignal.init("df4cae47-cd9d-4dd5-b97f-5f63593f39fb");
 
     OneSignal.addEventListener('received', this.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);
     OneSignal.addEventListener('ids', this.onIds);
-    OneSignal.configure(); 	// triggers the ids event
+    OneSignal.configure();
   }
   componentWillUnmount() {
     OneSignal.removeEventListener('received', this.onReceived);
