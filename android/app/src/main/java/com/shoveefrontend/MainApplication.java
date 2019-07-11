@@ -3,7 +3,11 @@ package com.shoveefrontend;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+<<<<<<< HEAD
+import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
+=======
 import com.imagepicker.ImagePickerPackage;
+>>>>>>> 89f314f0ba16753690f553b45e5125328d9a3138
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
@@ -26,7 +30,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+<<<<<<< HEAD
+            new ReactNativeOneSignalPackage(),
+=======
             new ImagePickerPackage(),
+>>>>>>> 89f314f0ba16753690f553b45e5125328d9a3138
             new VectorIconsPackage(),
             new RNGestureHandlerPackage()
       );
