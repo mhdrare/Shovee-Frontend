@@ -14,6 +14,8 @@ import AddProduct from '../screens/AddProduct';
 import LoginPage from '../screens/LoginPage';
 import SellerPage from '../screens/SellerPage';
 import Wishlist from '../screens/user/Wishlist';
+import Search from '../screens/Search';
+import ListSearch from '../screens/ListSearch';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -115,7 +117,9 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     AddProduct: {
       screen: AddProduct,
     },
-    DetailProduct
+    DetailProduct,
+    Search,
+    ListSearch
   }, {
     initialRouteName: 'Home',
     headerMode: 'none'
