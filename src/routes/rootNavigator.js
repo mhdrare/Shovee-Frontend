@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
+import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import Home from '../screens/Home';
 import Feed from '../screens/Feed';
 import Mall from '../screens/Mall';
@@ -17,6 +17,7 @@ import Wishlist from '../screens/user/Wishlist';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import SplashScreen from '../screens/SplashScreen';
 
 const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {
@@ -119,6 +120,11 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     initialRouteName: 'Home',
     headerMode: 'none'
   })
+
+  const InitialNavigator = createSwitchNavigator({
+    Splash: SplashScreen,
+    App: AppStackNavigator
+  });
   
-  const AppNavigator = createAppContainer(AppStackNavigator);
+  const AppNavigator = createAppContainer(InitialNavigator);
   export default AppNavigator;

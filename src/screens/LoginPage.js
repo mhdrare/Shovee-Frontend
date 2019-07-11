@@ -6,16 +6,39 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign'
 import Next from './user/NextDaftar'
 import ForgetPassword from './user/ForgetPassword'
 import Home from '../routes/rootNavigator'
+import { login, register } from '../public/redux/actions/auth'
 
 class Login extends Component {
+	state = {
+		username: '',
+		password: ''
+	}
+
+	userLogin = (data) => {
+        // this.props.dispatch(login(data))
+        console.log(data)
+    }
+
+    setUsername = (value) => {
+    	this.setState ({
+    		username: value
+    	})
+    }
+
+    setPassword = (value) => {
+    	this.setState ({
+    		password: value
+    	})
+    }
+
 	render(){
 		return(
 			<React.Fragment>
 				<View style={styles.container}>
 					<View style={{width:'80%', marginTop: 30}}>
-						<TextInput style={styles.input} placeholder="Email/Telepon/Username"/>
-						<TextInput style={styles.input} secureTextEntry={true} placeholder="Password"/>
-						<TouchableOpacity style={{position: 'absolute', right: 5, top: 65}} onPress={() => this.props.navigation.navigate('ForgetPassword')}>
+						<TextInput style={styles.input} placeholder="Email/Telepon/Username" onChangeText={this.setUsername}/>
+						<TextInput style={styles.input} secureTextEntry={true} placeholder="Password" onChangeText={this.setPassword}/>
+						<TouchableOpacity style={{position: 'absolute', right: 5, top: 65}} onPress={() => this.userLogin({username: this.state.username, password: this.state.password})}>
 							<Text style={{color: '#075d54'}}>Lupa?</Text>
 						</TouchableOpacity>
 					</View>

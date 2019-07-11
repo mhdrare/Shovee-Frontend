@@ -5,8 +5,38 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import ImagePicker from 'react-native-image-picker'
 
 export default class App extends Component {
+	constructor(props) {
+        super(props);
+  
+        this.state = {
+            imageProfile: null
+        };
+    }
+
+	handleUpdateImage = async () => {
+		const options = {
+			noData: true,
+			mediaType: 'photo'
+		}
+		ImagePicker.showImagePicker(options, (response) => {
+			if (response.didCancel) {
+			    console.warn('User cancelled image picker');
+			} else if (response.error) {
+			    console.warn('ImagePicker Error: ', response.error);
+			} else if (response.customButton) {
+			    console.warn('User tapped custom button: ', response.customButton);
+			} else {
+			    const source = { uri: response.uri }
+			    this.setState({
+			      imageProfile: source,
+			    });
+			}
+		})
+	}
+
 	render(){
 		return(
 			<React.Fragment>
@@ -26,7 +56,13 @@ export default class App extends Component {
 				<View style={styles.container}>
 					<ScrollView>
 						<View style={styles.photo}>
-							<Image style={{width: 70, height: 70, borderRadius: 50, marginTop: '5%'}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
+							<TouchableOpacity onPress={this.handleUpdateImage}>
+							{
+								this.state.imageProfile != null ? 
+								<Image style={{width: 70, height: 70, borderRadius: 50, marginTop: '5%'}} source={ this.state.imageProfile }/> : 
+								<Image style={{width: 70, height: 70, borderRadius: 50, marginTop: '5%'}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg' }}/>
+							}
+							</TouchableOpacity>
 						</View>
 						<TouchableOpacity style={styles.items}>
 							<Text style={styles.textLabel}>Nama</Text>
