@@ -11,11 +11,17 @@ import {
   Image,
   TouchableHighlight,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  ScrollView
 } from 'react-native';
 import dummyData from '../components/dummydata/index.product';
 import Carousel from 'react-native-smart-carousel';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import Icon from 'react-native-vector-icons/EvilIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
+import ViewMoreText from 'react-native-view-more-text';
 
 const HEADER_MAX_HEIGHT = 411;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -56,17 +62,50 @@ export default class DetailProduct extends Component {
     };
   }
 
+  renderViewMore(onPress){
+    return(
+      <View style={{marginTop:20, borderTopWidth:1, borderTopColor:'rgba(0,0,0,0.1)'}}>
+        <View style={{flex:1, justifyContent:'center', alignItems:'center', flexDirection:'row', paddingTop:10}}>
+          <Text onPress={onPress} style={{color:'#ee4d2d'}}>Lihat Lainnya </Text>
+          <Entypo name='chevron-thin-down' color={'#ee4d2d'} />
+        </View>
+      </View>
+    )
+  }
+
+  renderViewLess(onPress){
+    return(
+      <View style={{marginTop:20, borderTopWidth:1, borderTopColor:'rgba(0,0,0,0.1)'}}>
+        <View style={{flex:1, justifyContent:'center', alignItems:'center', flexDirection:'row', paddingTop:10}}>
+          <Text onPress={onPress} style={{color:'#ee4d2d'}}>Sembunyikan </Text>
+          <Entypo name='chevron-thin-up' color={'#ee4d2d'} />
+        </View>
+      </View>
+    )
+  }
   _renderScrollViewContent() {
     return (
       <React.Fragment>
 
         <View style={styles.scrollViewContent}>
-          <View style={{backgroundColor:'#fff', width:'100%', height:157, paddingHorizontal:12, paddingTop:12}}>
-            <View style={{flex:1, flexDirection:'row'}}>
-              <Text style={{fontSize:22, color:'#000'}}>Jilbab Pashmina sabyan diamond italiano</Text>
+          <View style={{backgroundColor:'#fff', width:'100%', height:hp('20%'), paddingHorizontal:12, paddingTop:12}}>
+            <View style={{flex:1}}>
+              <Text style={{fontSize:20, color:'#000'}} numberOfLines={1} maxFontSizeMultiplier={1}>Jilbab Pashmina sabyan diamond italiano</Text>
             </View>
-            <View style={{flex:1, flexDirection:'row'}}>
+
+            <View style={{flex:1}}>
               <Text style={{fontSize:22, color:'#ee4d2d', fontWeight:'300'}}>Rp 61.200</Text>
+            </View>
+
+            <View style={{flex:1, justifyContent:'center', alignItems:'flex-start'}}>
+              <View style={{flexDirection:'row'}}>
+                <Entypo name='star' color={'#FFD211'} size={20} />
+                <Entypo name='star' color={'#FFD211'} size={20} />
+                <Entypo name='star' color={'#FFD211'} size={20} />
+                <Entypo name='star' color={'#FFD211'} size={20} />
+                <Entypo name='star' color={'#FFD211'} size={20} />
+                <Text style={{color:'#ee4d2d'}}>5.0</Text>
+              </View>
             </View>
           </View>
           
@@ -76,9 +115,127 @@ export default class DetailProduct extends Component {
 
           <View style={{backgroundColor:'#ff0000', width:'100%', height:48, marginTop:10}} />
 
-          <View style={{backgroundColor:'#ff0000', width:'100%', height:140, marginTop:10}} />
+          <View style={{backgroundColor:'#fff', width:'100%', height:140, marginTop:10}}>
+            <View style={{flexDirection:'row'}}>
 
-          <View style={{backgroundColor:'#ff0000', width:'100%', height:432, marginTop:8}} />
+              <View style={{paddingTop:10, paddingLeft:10}}>
+                <Image source={require('../assets/img/profile.jpeg')} style={{width:52, height:52, borderRadius:50}}  />
+              </View>
+
+              <View style={{flex:3, marginLeft:10, paddingTop:10}}>
+                <Text style={{fontWeight:'bold'}}>andreferi3</Text>
+                <Text style={{fontSize:11}}>Aktif 2 hari yang lalu</Text>
+                <View style={{flexDirection:'row'}}>
+                  <Icon name='location' size={16} style={{paddingTop:4, marginLeft:-3}} />
+                  <Text style={{fontSize:14}}>Kota Yogyakarta</Text>
+                </View>
+              </View>
+
+              <View style={{flex:3, marginLeft:10, justifyContent:'center', alignItems:'center'}}>
+                <TouchableOpacity style={{borderWidth:1, borderColor:'#ee4d2d', borderRadius:20}}>
+                  <Text style={{paddingHorizontal:20, fontSize:12, paddingVertical:6, color:'#ee4d2d'}} numberOfLines={1}>Kunjungi Toko</Text>
+                </TouchableOpacity>
+              </View>
+
+            </View>
+
+            <View style={{flexDirection:'row', marginTop:18,}}>
+
+              <View style={{flex:1, marginRight:3, justifyContent:'center', alignItems:'center', borderRightWidth:1, borderRightColor:'rgba(0,0,0,0.150)'}} >
+                <Text style={{fontSize:18, color:'#ee4d2d'}}>05</Text>
+                <Text>Produk</Text>
+              </View>
+              <View />
+
+              <View style={{flex:1, marginRight:3, justifyContent:'center', alignItems:'center', borderRightWidth:1, borderRightColor:'rgba(0,0,0,0.150)'}} >
+                <Text style={{fontSize:18, color:'#ee4d2d'}}>99</Text>
+                <Text>Penilaian</Text>
+              </View>
+
+              <View style={{flex:1, justifyContent:'center', alignItems:'center'}} >
+                <Text style={{fontSize:18, color:'#ee4d2d'}}>12</Text>
+                <Text>Chat Dibalas</Text>
+              </View>
+
+            </View>
+
+          </View>
+
+          <View style={{backgroundColor:'#fff', width:'100%', marginTop:8, padding:8}}>
+            <View style={{flex:1}}>
+              <View style={{flexDirection:'row', justifyContent:'flex-start', alignItems:'center'}}>
+                <Text style={{fontSize:16, fontWeight:'bold', color:'#000'}}>Rincian Produk</Text>
+                <AntDesign name='clockcircleo' size={14} style={{marginLeft:6}} />
+                <Text style={{fontSize:12, marginLeft:3}}>5 Bulan</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={{backgroundColor:'#fff', width:'100%', marginTop:1, padding:8}}>
+            <View style={{flexDirection:'row', paddingBottom:20}}>
+              <View style={{flex:1, backgroundColor:'#fff'}}>
+                <Text>Stok</Text>
+              </View>
+              <View style={{flex:1.5, backgroundColor:'#fff'}}>
+                <Text style={{color:'#000'}}>1629</Text>
+              </View>
+            </View>
+
+            <View style={{flexDirection:'row', paddingBottom:20}}>
+              <View style={{flex:1, backgroundColor:'#fff'}}>
+                <Text>Merek</Text>
+              </View>
+              <View style={{flex:1.5, backgroundColor:'#fff'}}>
+                <Text style={{color:'#000'}}>Tidak ada merek</Text>
+              </View>
+            </View>
+
+            <View style={{flexDirection:'row', paddingBottom:20}}>
+              <View style={{flex:1, backgroundColor:'#fff'}}>
+                <Text>Bahan</Text>
+              </View>
+              <View style={{flex:1.5, backgroundColor:'#fff'}}>
+                <Text style={{color:'#000'}}>Katun</Text>
+              </View>
+            </View>
+
+            <View style={{flexDirection:'row', paddingBottom:8}}>
+              <View style={{flex:1, backgroundColor:'#fff'}}>
+                <Text>Dikirim Dari</Text>
+              </View>
+              <View style={{flex:1.5, backgroundColor:'#fff'}}>
+                <Text style={{color:'#000'}} numberOfLines={2}>Los Santos - United States</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={{backgroundColor:'#fff', width:'100%', marginTop:1, padding:10}}>
+            <View style={{flex:1, backgroundColor:'#fff'}}>
+            <ViewMoreText
+              numberOfLines={4}
+              renderViewMore={this.renderViewMore}
+              renderViewLess={this.renderViewLess}
+            >              
+              <Text>
+                    Kode : J138 {'\n'}
+                    Bahan tali :silikon {'\n'}
+                    Ketebalan Watchcase  : 1CM {'\n'}
+                    Panjang keseluruhan (tali jam + casing jam ) = 25.5CM {'\n'}
+                    {'\n'}
+                    {'\n'}
+                    Deskripsi: {'\n'}
+                    - 100% baru {'\n'}
+                    - tersedia baterai dalam jam {'\n'}
+                    - Tampilan waktu dan tanggal digital. {'\n'}
+                    - Gelang jam silikon yang tahan lama dan nyaman {'\n'}
+                    - Gerakan digital yang tepat untuk menjaga waktu akurat. {'\n'}
+                    - Daya tahan air harian 30M (jangan tekan tombol apa pun di bawah air).{'\n'}
+                    {'\n'}
+                    Jam tangan digital ini dapat dipakai oleh anak anak dan remaja (Pria & Wanita) dalam bepergian kemanapun yang kamu sukai.
+              </Text>
+            </ViewMoreText>
+            </View>
+          </View>
 
           <View style={{backgroundColor:'#ff0000', width:'100%', height:422, marginTop:8}} />
 
@@ -111,7 +268,6 @@ export default class DetailProduct extends Component {
             </View>
           </View>
         </View>
-
       </React.Fragment>
     );
   }
@@ -227,15 +383,40 @@ export default class DetailProduct extends Component {
               transform: [{ translateY: imageTranslate }],
             },
           ]}>
-            <Carousel
-              data={datacarousel}
-              height={HEADER_MAX_HEIGHT}
-              navigation={true}
-              navigationColor={'#ffffff'}
-              navigationType={'dots'}
-            />
+            <ScrollView
+              ref={(c) => { this.parentScrollView = c; }}
+            >
+              <Carousel
+                data={datacarousel}
+                height={HEADER_MAX_HEIGHT}
+                navigation={true}
+                navigationColor={'#ffffff'}
+                navigationType={'dots'}
+                parentScrollViewRef={this.parentScrollView}
+              />
+            </ScrollView>
           </Animated.View>
         </Animated.View>
+
+        {/* Bottom Navigation */}
+        <View style={{backgroundColor:'#fff', position:'absolute', bottom:0, left:0, right:0, height:50, justifyContent:'space-between'}}>
+          <View style={{flexDirection:'row'}}>
+
+            <TouchableOpacity style={{flex:1, backgroundColor:'#00bfa5', height:50, justifyContent:'center', alignItems:'center', marginRight:0.5}}>
+              <AntDesign name='message1' color={'#fff'} size={26} />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{flex:1, backgroundColor:'#00bfa5', height:50, justifyContent:'center', alignItems:'center'}}>
+              <MaterialIcon name='add-shopping-cart' size={26} color={'#fff'} />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={{flex:2, backgroundColor:'#ee4d2d', height:50, justifyContent:'center', alignItems:'center'}} onPress={() => {this.props.navigation.navigate('Cart')}}>
+              <Text style={{color:'#fff'}}>Beli Sekarang</Text>
+            </TouchableOpacity>
+
+          </View>
+        </View>
+
         <Animated.View
           style={[
             styles.bar,
@@ -253,7 +434,9 @@ export default class DetailProduct extends Component {
             </View>
           </TouchableWithoutFeedback>
 
-          <Image source={require('../assets/icon/left-arrow.png')} style={{position:'absolute', top:7, left:13, width:24, height:24}} />
+          <TouchableOpacity style={{position:'absolute', top:7, left:13}} onPress={() => this.props.navigation.goBack()}>
+            <Image source={require('../assets/icon/left-arrow.png')} style={{width:24, height:24}} />
+          </TouchableOpacity>
 
           <TouchableHighlight style={{position:'absolute', top:7, right:'17%', zIndex:10}}>
             <Image source={require('../assets/icon/shopcartorange.png')} style={{width:24, height:24}} />
@@ -312,6 +495,7 @@ const styles = StyleSheet.create({
     scrollViewContent: {
       marginTop: Platform.OS !== 'ios' ? 0 : 0,
       paddingTop: Platform.OS !== 'ios' ? HEADER_MAX_HEIGHT : 0,
+      backgroundColor: '#efefef'
     },
     row: {
       height: 40,

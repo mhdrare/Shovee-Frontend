@@ -7,6 +7,8 @@ import Mall from '../screens/Mall';
 import Notification from '../screens/Notification';
 import Me from '../screens/Me';
 import DetailProduct from '../screens/DetailProduct';
+import Cart from '../screens/Cart';
+import Checkout from '../screens/Checkout';
 
 const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {
@@ -83,7 +85,9 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {
       screen: AppTabNavigator
     },
-    DetailProduct
+    DetailProduct,
+    Cart,
+    Checkout
   }, {
     headerMode: 'none'
   })

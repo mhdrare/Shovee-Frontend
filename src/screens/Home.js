@@ -16,6 +16,8 @@ import {
 import dummyData from '../components/dummydata/index.product';
 import Carousel from 'react-native-smart-carousel';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const HEADER_MAX_HEIGHT = 220;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -29,16 +31,27 @@ class CardsProduct extends Component {
 
   render() {
     return (
-      <View style={styles.productContainer}>
-        <TouchableOpacity style={styles.productItem} onPress={() => {this.props.navigation.navigate('DetailProduct')}}>
-          <Image source={{uri: this.props.item.image}} style={styles.productImage} />
-          <Text numberOfLines={2} style={styles.productTitle}>{this.props.item.title}</Text>
-          <View style={styles.productPrice}>
-            <Text style={{color:'#ee4d2d', fontSize:12}}>RP</Text>
-            <Text style={{color:'#ee4d2d', fontSize:16}}>{this.props.item.harga}</Text>
+      <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center', paddingHorizontal:3, marginBottom: 5}} onPress={() => {this.props.navigation.navigate('DetailProduct')}}>
+        <Image source={{uri: this.props.item.image}} style={{width:'100%', height:194}} />
+
+        <View style={{width:'100%', backgroundColor:'#fff', paddingHorizontal:10, paddingVertical:8}}>
+          <Text numberOfLines={2} style={[styles.productTitle, {color:'#000'}]}>{this.props.item.title}</Text>
+
+          <View style={{flexDirection:'row', marginTop:4}}>
+            <View style={{flex:1}}>
+              <View style={{flexDirection:'row', justifyContent:'flex-start', alignItems:'center'}}>
+                <Text style={{color:'#ee4d2d', fontSize:12, marginTop:3.5}}>RP</Text>
+                <Text style={{color:'#ee4d2d', fontSize:16}}>{this.props.item.harga}</Text>
+              </View>
+            </View>
+            
+            <View style={{flex:1, alignItems:'flex-end', justifyContent:'center'}}>
+              <Text style={{fontSize:10, color:'#000'}}>99999 TERJUAL</Text>
+            </View>
           </View>
-        </TouchableOpacity>
-      </View>
+        </View>
+
+      </TouchableOpacity>
     )
   }
 }
@@ -64,20 +77,22 @@ export default class Home extends Component {
           <Image source={require('../assets/img/promo-shopee.jpeg')} style={{height:109, width:'100%'}} />
           <Image source={require('../assets/img/promo-shopee2.jpeg')} style={{height:90, width:'100%'}} />
 
-          <Image source={require('../assets/img/header-promo.jpeg')} style={{height:41, width:411}} />
+          <Image source={require('../assets/img/header-promo.jpeg')} style={{height:41, width:'100%'}} />
           <View style={{width:411, height:200, backgroundColor:'#e3ebfe', padding:10}}>
             <View style={{flexDirection:'row', flex:1}}>
             </View>
           </View>
 
-          <View style={{marginTop:15, flex:1, backgroundColor:'#efefef'}}>
-            <View style={{flexDirection:'row', justifyContent:'space-between', height:42, width:'100%', backgroundColor:'#fff', paddingHorizontal:10}}>
-              <View style={{justifyContent:'center'}}>
-                <Text style={{alignItems:'flex-start', color:'#ee4d2d', fontSize:19, fontFamily:'HelveticaNeueMedium', fontWeight:'300'}}>REKOMENDASI</Text>
+          <View style={{marginTop:15, flex:1}}>
+
+            <View style={{flexDirection:'row', backgroundColor:'#fff', padding: 10}}>
+              <View style={{flex:1}}>
+                <Text style={{color:'#ee4d2d', fontSize:19, fontFamily:'HelveticaNeueMedium', fontWeight:'300'}}>REKOMENDASI</Text>
               </View>
-              <View style={{justifyContent:'center'}}>
+
+              <View style={{flex:1, alignItems:'flex-end', justifyContent:'center'}}>
                 <TouchableOpacity>
-                  <Text style={{alignItems:'flex-end', color:'rgba(0, 0, 0, 0.54)', fontFamily:'HelveticaNeueMedium', fontWeight:'300'}}>Lihat Lainnya &gt;</Text>
+                  <Text>Lihat Lainnya &gt;</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -233,21 +248,26 @@ export default class Home extends Component {
             },
           ]}
         >
-          <TouchableWithoutFeedback>
-            <View style={{width:'70%', height:40, backgroundColor:'#fff', borderRadius:3, flex:1, flexDirection:'column', justifyContent:'center', marginBottom:5}}>
-              <Text style={{alignItems:'flex-start', color:'#F36B2C', fontSize:17, marginLeft:'18%'}}>Shovee</Text>
+
+          <View style={{flexDirection:'row'}}>
+            <TouchableOpacity style={{flex:2.5, backgroundColor:'#fff',paddingHorizontal:13, paddingVertical:3, justifyContent:'center', borderRadius:3}}>
+              <View style={{flexDirection:'row'}}>
+                <AntDesign name='search1' size={18} />
+                <Text style={{fontSize:16, color:'#ee4d2d', marginLeft:5}}>Sobat Balkon</Text>
+              </View>
+            </TouchableOpacity>
+
+            <View style={{flex:1, justifyContent:'center', alignItems:'flex-start', padding:8, marginLeft:10}}>
+              <View style={{flexDirection:'row'}}>
+                <TouchableOpacity>
+                  <AntDesign name='shoppingcart' size={30} color={'#fff'} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <AntDesign name='message1' color={'#fff'} size={30} style={{marginLeft:25}} />
+                </TouchableOpacity>
+              </View>
             </View>
-          </TouchableWithoutFeedback>
-
-          <Image source={require('../assets/icon/search.png')} style={{position:'absolute', top:7, left:13, width:20, height:20}} />
-
-          <TouchableHighlight style={{position:'absolute', top:7, right:'20%'}}>
-            <Image source={require('../assets/icon/shopcartwhite.png')} style={{width:24, height:24}} />
-          </TouchableHighlight>
-
-          <TouchableHighlight style={{position:'absolute', top:7, right:'7%'}}>
-            <Image source={require('../assets/icon/chat.png')} style={{width:28, height:28}} />
-          </TouchableHighlight>
+          </View>
 
         </Animated.View>
       </View>
@@ -276,15 +296,15 @@ const styles = StyleSheet.create({
       top: 0,
       left: 0,
       right: 0,
-      width: null,
+      width: '100%',
       height: HEADER_MAX_HEIGHT,
-      resizeMode: 'cover',
     },
     bar: {
+      flex: 1,
       backgroundColor: 'transparent',
       marginTop: Platform.OS === 'ios' ? 28 : 38,
-      height: 40,
-      marginLeft: 10,
+      height: 37,
+      paddingHorizontal:10,
       justifyContent: 'center',
       position: 'absolute',
       top: 0,
@@ -298,6 +318,7 @@ const styles = StyleSheet.create({
     scrollViewContent: {
       marginTop: Platform.OS !== 'ios' ? 30 : 0,
       paddingTop: Platform.OS !== 'ios' ? HEADER_MAX_HEIGHT : 0,
+      backgroundColor: '#efefef'
     },
     row: {
       height: 40,
@@ -315,15 +336,14 @@ const styles = StyleSheet.create({
       flex:1, 
       flexDirection:'row', 
       justifyContent:'center', 
-      marginBottom:5
+      marginBottom:5,
     },
     productImage: {
       height:196.5, 
       width:196.5
     },
     productTitle: {
-      fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif', 
-      paddingHorizontal:5
+      fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif'
     },
     productPrice: {
       flexDirection:'row', 

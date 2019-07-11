@@ -35,6 +35,18 @@ var dummydata = [
         title: '[Gratis - Uang kembali 100% di Shopee Pay-mu] Shark Attack Weapon (Scar) - 30 Days',
         harga: '10.000'
     },
+    {
+        key:'7',
+        image:'https://cf.shopee.co.id/file/4cf10a607eb631d25a3c56f511ee2947_tn',
+        title: '[Bayar Di Tempat]Cute Rabbit Ear Cap Kids Girls Hat Plush Toy Bunny Hat Fashion Girls gifts',
+        harga: '48.000'
+    },
+    {
+        key:'8',
+        image:'https://cf.shopee.co.id/file/157607f9f0996875169c079f7a19c1b5_tn',
+        title: 'Samsung A10 2GB / 32GB ( SM-A105GZ )',
+        harga: '2.000.000'
+    },
     
 ];
 

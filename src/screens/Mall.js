@@ -14,8 +14,8 @@ import {
   FlatList
 } from 'react-native';
 import dummyData from '../components/dummydata/index.product';
-import Carousel from 'react-native-smart-carousel';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import Carousel from 'react-native-snap-carousel';
 
 const HEADER_MAX_HEIGHT = 411;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -53,6 +53,26 @@ export default class Mall extends Component {
         Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
       ),
       refreshing: false,
+      entries: [
+        {
+          image: "https://cf.shopee.co.id/file/c34c7eadcd6376f5f9355f7a26326c93", // URL
+        },
+        {
+          image: "https://cf.shopee.co.id/file/webp/baa1cd10eda6eedbafee8f002ae6b391_xxhdpi",
+        },
+        {
+          image: 'https://cf.shopee.co.id/file/webp/f3824ab80b89d29677eca72163f93565_xxhdpi',
+        },
+        {
+          image: 'https://cf.shopee.co.id/file/webp/1836a466998e4d1f7cca52275028f6be_xxhdpi',
+        },
+        {
+          image: 'https://cf.shopee.co.id/file/webp/abec0363e8defc836985fa884529470a_xxhdpi',
+        },
+        {
+          image: 'https://cf.shopee.co.id/file/webp/286bb3d889034d103f8576cb6119bc71_xxhdpi',
+        },
+      ]
     };
   }
 
@@ -116,35 +136,15 @@ export default class Mall extends Component {
       </React.Fragment>
     );
   }
+  
+  _renderItem ({item, index}) {
+    return (
+      <View>
+          <Image source={{ uri: item.image }} />
+      </View>
+  );}
 
   render(){
-    const datacarousel = [
-      {
-        "id": '339964',
-        "imagePath": "https://cf.shopee.co.id/file/c34c7eadcd6376f5f9355f7a26326c93", // URL
-      },
-      {
-        "id": '33995',
-        "imagePath": "https://cf.shopee.co.id/file/webp/baa1cd10eda6eedbafee8f002ae6b391_xxhdpi",
-      },
-      {
-        "id": '33995dsf4',
-        "imagePath": 'https://cf.shopee.co.id/file/webp/f3824ab80b89d29677eca72163f93565_xxhdpi',
-      },
-      {
-        "id": '3399545dsf4',
-        "imagePath": 'https://cf.shopee.co.id/file/webp/1836a466998e4d1f7cca52275028f6be_xxhdpi',
-      },
-      {
-        "id": '33993465dsf4',
-        "imagePath": 'https://cf.shopee.co.id/file/webp/abec0363e8defc836985fa884529470a_xxhdpi',
-      },
-      {
-        "id": '33993465d585',
-        "imagePath": 'https://cf.shopee.co.id/file/webp/286bb3d889034d103f8576cb6119bc71_xxhdpi',
-      },
-    ];
-
     const scrollY = Animated.add(
       this.state.scrollY,
       Platform.OS === 'ios' ? HEADER_MAX_HEIGHT : 0,
@@ -229,11 +229,11 @@ export default class Mall extends Component {
             },
           ]}>
             <Carousel
-              data={datacarousel}
-              height={HEADER_MAX_HEIGHT}
-              navigation={true}
-              navigationColor={'#ffffff'}
-              navigationType={'dots'}
+              ref={(c) => { this._carousel = c; }}
+              data={this.state.entries}
+              renderItem={this._renderItem}
+              sliderWidth={150}
+              itemWidth={100}
             />
           </Animated.View>
         </Animated.View>
