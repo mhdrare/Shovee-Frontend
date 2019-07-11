@@ -252,7 +252,7 @@ export default class Home extends Component {
         >
 
           <View style={{flexDirection:'row'}}>
-            <TouchableOpacity style={{flex:2.5, backgroundColor:'#fff',paddingHorizontal:13, paddingVertical:3, justifyContent:'center', borderRadius:3}}>
+            <TouchableOpacity style={{flex:2.5, backgroundColor:'#fff',paddingHorizontal:13, paddingVertical:3, justifyContent:'center', borderRadius:3}} onPress={() => {this.props.navigation.navigate('Search')}}>
               <View style={{flexDirection:'row'}}>
                 <AntDesign name='search1' size={18} />
                 <Text style={{fontSize:16, color:'#ee4d2d', marginLeft:5}}>Sobat Balkon</Text>
