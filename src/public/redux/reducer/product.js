@@ -26,8 +26,7 @@ export default product = (state = initialState, action) => {
                 isLoading: false,
                 isError: true
             }
-        
-        
-        
+        default:
+            return state;
     }
 }
