@@ -15,6 +15,8 @@ import {
 } from 'react-native';
 import dummyData from '../components/dummydata/index.product';
 import Carousel from 'react-native-smart-carousel';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -268,7 +270,6 @@ export default class Home extends Component {
               </View>
             </View>
           </View>
-
         </Animated.View>
       </View>
     )
@@ -328,8 +329,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     productItem: {
-      height:hp('39%'), 
-      width:wp('48.3%'), 
+      height:hp('41%'), 
+      width:wp('50%'), 
       backgroundColor:'#fff'
     },
     productContainer: {
@@ -340,7 +341,7 @@ const styles = StyleSheet.create({
     },
     productImage: {
       height:196.5, 
-      width:196.5
+      width:'100%'
     },
     productTitle: {
       fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif'

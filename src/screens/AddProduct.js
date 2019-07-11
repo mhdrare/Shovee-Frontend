@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
-import Feather from 'react-native-vector-icons/Feather'
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -11,19 +12,21 @@ export default class App extends Component {
 			<React.Fragment>
 				<View style={styles.header}>
 					<View style={styles.headerTop}>	
-						<TouchableHighlight style={styles.follow}>
-							<SimpleLineIcons name="user-follow" size={24} color={'#EE4D2D'}/>
-						</TouchableHighlight>
+						<TouchableOpacity style={styles.back} onPress={() => this.props.navigation.goBack()}>
+							<AntDesign name="arrowleft" size={24} color={'#EE4D2D'}/>
+						</TouchableOpacity>
 						<View style={styles.title}>
-							<Text style={styles.text}>Feed</Text>
+							<Text style={{color: '#000000', fontSize: 17}}>Tambah Produk</Text>
 						</View>
-						<TouchableHighlight style={styles.shopcart}>
-							<MaterialCommunityIcons name="cart-outline" size={24} color={'#EE4D2D'}/>
-						</TouchableHighlight>
-						<TouchableHighlight style={styles.chat}>
-							<SimpleLineIcons name="bubbles" size={24} color={'#EE4D2D'}/>
-						</TouchableHighlight>
+						<TouchableOpacity style={styles.check} onPress={() => this.props.navigation.goBack()}>
+							<MaterialCommunityIcons name="check" size={24} color={'#EE4D2D'}/>
+						</TouchableOpacity>
 					</View>
+				</View>
+				<View style={styles.container}>
+					<ScrollView>
+						
+					</ScrollView>
 				</View>
 			</React.Fragment>
 		)
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		height: 80,
 		width: '100%',
-		backgroundColor: '#F2F2F2',
+		backgroundColor: '#FFFFFF',
 	},
 	headerTop: {
 		flexDirection: 'row',
@@ -50,13 +53,16 @@ const styles = StyleSheet.create({
 		fontSize: 17,
 		color: '#000'
 	},
-	follow: {
+	back: {
 		marginLeft: '5%'
 	},
-	shopcart: {
-		marginLeft: '1%'
+	check: {
+		marginLeft: '17%'
 	},
-	chat: {
-		marginLeft: '7%'
-	}
+	container: {
+		flex: 1,
+		alignItems: 'center',
+		marginTop: 80,
+		backgroundColor: '#EFEFEF'
+	},
 })

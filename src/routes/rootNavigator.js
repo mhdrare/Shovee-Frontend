@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import Home from '../screens/Home';
 import Feed from '../screens/Feed';
 import Mall from '../screens/Mall';
@@ -9,14 +8,22 @@ import Me from '../screens/Me';
 import DetailProduct from '../screens/DetailProduct';
 import Cart from '../screens/Cart';
 import Checkout from '../screens/Checkout';
+import Profile from '../screens/user/Profile';
+import PurchaseHistories from '../screens/PurchaseHistories';
+import AddProduct from '../screens/AddProduct';
+import LoginPage from '../screens/LoginPage';
+import SellerPage from '../screens/SellerPage';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {
       screen: Home,
       navigationOptions: {
-        tabBarLabel: 'Home',
+        tabBarLabel: 'Beranda',
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="home" color={tintColor} size={22} />
+          <MaterialCommunityIcons name="home" color={tintColor} size={24} />
         )
       },
     },
@@ -25,7 +32,7 @@ const AppTabNavigator = createMaterialTopTabNavigator({
       navigationOptions: {
         tabBarLabel: 'Feed',
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="feed" color={tintColor} size={22} />
+          <MaterialCommunityIcons name="vector-arrange-above" color={tintColor} size={22} />
         )
       }
     },
@@ -34,23 +41,23 @@ const AppTabNavigator = createMaterialTopTabNavigator({
       navigationOptions: {
         tabBarLabel: 'Mall',
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="envelope" color={tintColor} size={22} />
+          <MaterialIcons name="local-mall" color={tintColor} size={22} />
         )
       }
     },
     Notification: {
       screen: Notification,
       navigationOptions: {
-        tabBarLabel: 'Notify',
+        tabBarLabel: 'Notifikasi',
         tabBarIcon: ({ tintColor }) => (
-          <Icon name="bell" color={tintColor} size={22} />
+          <Icon name="bell-o" color={tintColor} size={22} />
         )
       }
     },
     Me: {
       screen: Me,
       navigationOptions: {
-        tabBarLabel: 'Me',
+        tabBarLabel: 'Saya',
         tabBarIcon: ({ tintColor }) => (
           <Icon name="user" color={tintColor} size={22} />
         )
@@ -85,10 +92,29 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {
       screen: AppTabNavigator
     },
-    DetailProduct,
     Cart,
-    Checkout
+    Checkout,
+    Login: {
+      screen: LoginPage
+    },
+    Register: {
+      screen: LoginPage,
+    },
+    PurchaseHistories: {
+      screen: PurchaseHistories,
+    },
+    Profile: {
+      screen: Profile,
+    },
+    SellerPage: {
+      screen: SellerPage,
+    },
+    AddProduct: {
+      screen: AddProduct,
+    },
+    DetailProduct
   }, {
+    initialRouteName: 'Home',
     headerMode: 'none'
   })
   
