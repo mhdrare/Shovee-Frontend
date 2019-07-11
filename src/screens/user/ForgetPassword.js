@@ -1,11 +1,31 @@
 import React, {Component} from 'react'
 import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
+import { connect } from 'react-redux'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { forgetPassword } from '../../public/redux/actions/auth'
 
-export default class App extends Component {
+class App extends Component {
+	state = {
+		email: ''
+	}
+
+	setEmail = (data) => {
+		this.setState({
+			email: data
+		})
+	}
+
+	sendPassword = (data) => {
+		if (this.state.email == '') {
+			alert('Email kosong!')
+		} else {
+			this.props.dispatch(forgetPassword(data))
+		}
+	}
+
 	render(){
 		return(
 			<React.Fragment>
@@ -24,9 +44,9 @@ export default class App extends Component {
 						<Text style={{color: '#000'}}>Masukkan email atau no. telepon Anda yang sudah terdaftar</Text>
 					</View>
 					<View style={{width:'80%', marginTop: 5}}>
-						<TextInput style={styles.input} placeholder="Email"/>
+						<TextInput style={styles.input} placeholder="Email" onChangeText={this.setEmail}/>
 					</View>
-					<TouchableOpacity style={styles.button} onPress={() =>  this.props.navigation.navigate('Login')}>
+					<TouchableOpacity style={styles.button} onPress={() =>  this.sendPassword(this.state.email)}>
 						<Text style={{color: '#FFFFFF'}}>{'Lanjut'.toUpperCase()}</Text>
 					</TouchableOpacity>
 				</View>
@@ -34,6 +54,14 @@ export default class App extends Component {
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps)(App)
 
 const styles = StyleSheet.create({
 	header: {
