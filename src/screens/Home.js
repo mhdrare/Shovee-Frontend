@@ -265,7 +265,7 @@ export default class Home extends Component {
                   <AntDesign name='shoppingcart' size={30} color={'#fff'} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                  <AntDesign name='message1' color={'#fff'} size={30} style={{marginLeft:25}} />
+                  <AntDesign name='message1' color={'#fff'} size={28} style={{marginLeft:30}} />
                 </TouchableOpacity>
               </View>
             </View>

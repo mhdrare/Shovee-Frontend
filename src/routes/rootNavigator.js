@@ -13,6 +13,7 @@ import PurchaseHistories from '../screens/PurchaseHistories';
 import AddProduct from '../screens/AddProduct';
 import LoginPage from '../screens/LoginPage';
 import SellerPage from '../screens/SellerPage';
+import Wishlist from '../screens/user/Wishlist';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -94,6 +95,7 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     },
     Cart,
     Checkout,
+    Wishlist,
     Login: {
       screen: LoginPage
     },
