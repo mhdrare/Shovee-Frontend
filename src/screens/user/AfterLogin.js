@@ -36,26 +36,34 @@ class AfterLogin extends Component {
 		})
 		.then(()=>{
 			this.fetchDetailUser(this.state.token)
+			this.props.dispatch(getWishlist(this.state.token))
+			.then(() => {
+				console.log(this.props.wishlist)
+			})
 		})
 
-		this.props.dispatch(getWishlist(this.state.token))
-		.then(() => {
-			console.log(this.props.wishlist)
-		})
 
 	}
 
 	componentDidMount() {
-    	// this.props.fetchData();   	
-    	// this.willFocusSubscription = this.props.navigation.addListener(
-     //  	'willFocus',
-     //  		() => {
-     //    		this._bootstrapAsync();
-     //  		}
-    	// );
-    	this._bootstrapAsync()
+
+    	this._bootstrapAsync()   	
+    	this.willFocusSubscription = this.props.navigation.addListener(
+      	'willFocus',
+      		() => {
+        		// this.fetchDetailUser(this.state.token)
+				this.props.dispatch(getWishlist(this.state.token))
+				.then(() => {
+					console.log(this.props.wishlist)
+				})
+      		}
+    	);
+    	
   	}
 
+  	componentWillUnmount() {
+    	this.willFocusSubscription.remove();
+  	}
 
 	render(){
 		return (
