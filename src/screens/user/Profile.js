@@ -1,20 +1,37 @@
 import React, {Component} from 'react'
-import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
+import { AsyncStorage, Alert, StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import ImagePicker from 'react-native-image-picker'
+import { connect } from 'react-redux'
+import { updateImage } from '../../public/redux/actions/user'
 
-export default class App extends Component {
+class App extends Component {
 	constructor(props) {
         super(props);
   
         this.state = {
-            imageProfile: null
+            imageProfile: null,
+			isUploading: false,
+			token: '',
+			image: {}
         };
+
+        this._bootstrapAsync()
     }
+
+    _bootstrapAsync = async () => {
+		await AsyncStorage.getItem('Token', (error, result) => {
+			if(result) {
+				this.setState({
+					token: result
+				})
+			}
+		});
+	}
 
 	handleUpdateImage = async () => {
 		const options = {
@@ -23,18 +40,25 @@ export default class App extends Component {
 		}
 		ImagePicker.showImagePicker(options, (response) => {
 			if (response.didCancel) {
-			    console.warn('User cancelled image picker');
+			    Alert.alert('User cancelled image picker');
 			} else if (response.error) {
-			    console.warn('ImagePicker Error: ', response.error);
+			    Alert.alert('ImagePicker Error: ', response.error);
 			} else if (response.customButton) {
-			    console.warn('User tapped custom button: ', response.customButton);
+			    Alert.alert('User tapped custom button: ', response.customButton);
 			} else {
-			    const source = { uri: response.uri }
+				const source = { uri: response.uri }
+				const sendSource = response
 			    this.setState({
-			      imageProfile: source,
+				  imageProfile: source,
+				  image: sendSource
 			    });
 			}
 		})
+	}
+
+	updateImageProfile = async () => {
+		await this.props.dispatch(updateImage(this.state.token, this.state.image))
+		this.props.navigation.navigate('Me')
 	}
 
 	render(){
@@ -48,7 +72,7 @@ export default class App extends Component {
 						<View style={styles.title}>
 							<Text style={{color: '#000000', fontSize: 17}}>Ubah Profil</Text>
 						</View>
-						<TouchableOpacity style={styles.check} onPress={() => this.props.navigation.goBack()}>
+						<TouchableOpacity style={styles.check} onPress={this.updateImageProfile}>
 							<MaterialCommunityIcons name="check" size={24} color={'#EE4D2D'}/>
 						</TouchableOpacity>
 					</View>
@@ -105,6 +129,14 @@ export default class App extends Component {
 		)
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		users: state.users
+	}
+}
+
+export default connect(mapStateToProps)(App)
 
 const styles = StyleSheet.create({
 	header: {

@@ -68,7 +68,8 @@ class App extends Component {
 	}
 
 	addProduct = async () => {
-		this.props.dispatch(addProduct(this.state.token, this.state.category, this.state.price, this.state.image, 'Yogyakarta', this.state.description, this.state.name, this.state.stok, this.state.brand))
+		await this.props.dispatch(addProduct(this.state.token, this.state.category, this.state.price, this.state.image, 'Yogyakarta', this.state.description, this.state.name, this.state.stok, this.state.brand))
+		this.props.navigation.goBack()
 	}
 
 	render(){

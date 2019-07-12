@@ -33,3 +33,10 @@ export const fetchProducts = () => {
         payload: axios.get(`${url}`)
     }
 }
+
+export const searchProducts = (data) => {
+    return {
+      type: 'SEARCH_PRODUCTS',
+      payload: axios.get(`${url}`)
+    }
+}

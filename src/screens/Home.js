@@ -53,7 +53,7 @@ class CardsProduct extends Component {
             </View>
             
             <View style={{flex:1, alignItems:'flex-end', justifyContent:'center'}}>
-              <Text style={{fontSize:10, color:'#000'}}>99999 TERJUAL</Text>
+              <Text style={{fontSize:8, color:'#000'}}>99 TERJUAL</Text>
             </View>
           </View>
         </View>

@@ -22,14 +22,14 @@ class App extends Component {
     	// screen will be unmounted and thrown away.
     	// this.props.navigation.navigate(userToken ? 'App' : 'Auth');
     	if (userToken) {
-			this.setState({
-				isLogin: true
-			})
-		} else {
-			this.setState({
-				isLogin: false
-			})
-		}
+  			this.setState({
+  				isLogin: true
+  			})
+  		} else {
+  			this.setState({
+  				isLogin: false
+  			})
+  		}
   	};
 
   	componentDidMount() {

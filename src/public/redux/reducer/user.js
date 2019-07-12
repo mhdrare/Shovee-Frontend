@@ -1,5 +1,3 @@
-import { AsyncStorage } from 'react-native'
-
 const initialState = {
 	data: [],
 	isLoading: false,
@@ -18,7 +16,7 @@ export default user = async (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
-				data: action.payload.data.data
+				isError: false
 			}
 		case 'UPDATE_PROFILE_REJECTED':
 			return {

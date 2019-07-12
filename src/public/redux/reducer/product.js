@@ -23,7 +23,7 @@ export default product = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                idError: false,
+                isError: false,
             }
         case 'GET_PRODUCTS_FULFILLED':
             return {
