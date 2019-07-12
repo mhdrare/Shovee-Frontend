@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { AsyncStorage, StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
+import { ActivityIndicator, AsyncStorage, StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -7,33 +7,50 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { getUserDetail } from '../../public/redux/actions/user'
+import { fetchProductsByUser } from '../../public/redux/actions/product';
+
 import { connect } from 'react-redux'
 
 class AfterLogin extends Component {
-	constructor(props) {
-	  super(props);
-	
-	  this.state = {
-	  	token: this.props.token
-	  };
-	}
+	constructor() {
+        super();
 
+        this.state = {
+        	token: '',
+            user: []
+        }
 
-	componentDidMount(){
-		console.warn(this.state.token);
-		
-		this.props.dispatch(getUserDetail(this.state.token))
-		.then(()=>{
-			console.warn(this.props.users)
+        
+    }
+
+    fetchProducts = async (token) => {
+    	await this.props.dispatch(getUserDetail(token))
+  	}
+
+	_bootstrapAsync = async () => {
+		AsyncStorage.getItem('Token', (error, result) => {
+			if(result) {
+				this.setState({
+					token: result
+				})
+			}
 		})
-
+		.then(()=>{
+			this.fetchProducts(this.state.token)
+		})
 	}
 
-	getUserDetails = () => {
-		
-		this.props.dispatch(getUserDetail(this.state.token))
-		
-	}
+	componentDidMount() {
+    	// this.props.fetchData();   	
+    	// this.willFocusSubscription = this.props.navigation.addListener(
+     //  	'willFocus',
+     //  		() => {
+     //    		this._bootstrapAsync();
+     //  		}
+    	// );
+    	this._bootstrapAsync()
+  	}
+
 
 	render(){
 		return (
@@ -62,7 +79,7 @@ class AfterLogin extends Component {
 						<Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
 						<View style={{flexDirection: 'column', margin: 5, marginLeft: 10}}>
 							<View>
-								<Text style={{fontSize: 18, fontWeight: '600', color: '#FFFFFF'}}>mhdrare</Text>
+								{ (this.props.user.isLoading) ? <ActivityIndicator size='small'/> : <Text style={{fontSize: 18, fontWeight: '600', color: '#FFFFFF'}}>{this.props.user.data.user.username}</Text> }
 							</View>
 							<View>
 								<View style={{flexDirection: 'row'}}>
@@ -159,7 +176,8 @@ class AfterLogin extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users
+        user: state.user,
+        products: state.products,
     }
 }
 

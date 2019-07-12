@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button, FlatList } from 'react-native'
+import { AsyncStorage, StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button, FlatList } from 'react-native'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
@@ -9,13 +9,17 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import EvilIcon from 'react-native-vector-icons/EvilIcons'
 
+import { fetchProductsByUser } from '../public/redux/actions/product';
+
+import { connect } from 'react-redux';
+
 class SellProduct extends Component {
 	render() {
 		return (
 			<TouchableOpacity style={{flex:1, backgroundColor:'#fff', marginHorizontal:3, marginVertical:3}}>
-                <Image source={{ uri: this.props.item.image}} style={{width:'100%', height:193}} />
+                <Image source={{uri: this.props.item.thumbnail}} style={{width:'100%', height:193}} />
                 <View style={{paddingHorizontal:10, paddingVertical:8}}>
-                    <Text numberOfLines={2} style={{fontSize:15}}>{this.props.item.title}</Text>
+                    <Text numberOfLines={2} style={{fontSize:15}}>{this.props.item.name}</Text>
                 </View>
                 <View style={{paddingHorizontal:10, paddingBottom:10}}>
                     <Text numberOfLines={2} style={{fontSize:16, color:'#EE4D2D'}}>Rp {this.props.item.price}</Text>
@@ -25,57 +29,48 @@ class SellProduct extends Component {
 	}
 }
 
-export default class App extends Component {
+class App extends Component {
 	constructor() {
         super();
 
         this.state = {
-            data: [
-                {
-                    id: '1',
-                    title: 'Charger toshiba original19v-3,42Ac640,L640,L730,L745,C800 C840 L10 L510 T135 C40 M35X M40X B40a T110',
-                    price: '85.000',
-                    image: 'https://cf.shopee.co.id/file/88181e18e9c400f004be5ad78f145d40_tn'
-                },
-                {
-                    id: '2',
-                    title: 'Laptop Bekas Second ASUS X200 - RAM 2GB - HDD 500GB - Slim Elegan Bekas Second Berkualitas',
-                    price: '2.025.000',
-                    image: 'https://cf.shopee.co.id/file/7789f8cb30eefe0a75f9beba04022f47_tn'
-                },
-                {
-                    id: '3',
-                    title: '★Star Seller★ Laptop Core i5 RAM 8GB 500GB, Laptop Bekas Second Seken Core i5 Ram 8GB - Twenty Cell',
-                    price: '3.650.000',
-                    image: 'https://cf.shopee.co.id/file/7ad55e22e62899b1df88be137dd5f80f_tn'
-                },
-                {
-                    id: '4',
-                    title: 'Laptop Lenovo 15.6" Core i5 / 500GB / Ram 4GB - Laptop Bekas Lenovo 15.6 inch',
-                    price: '3.000.000',
-                    image: 'https://cf.shopee.co.id/file/14a90f185c88aa0a65fc563c91250ffb_tn'
-                },
-                {
-                    id: '5',
-                    title: 'Laptop Bekas Second ASUS X200 - RAM 2GB - HDD 500GB - Slim Elegan Bekas Second Berkualitas',
-                    price: '2.025.000',
-                    image: 'https://cf.shopee.co.id/file/7789f8cb30eefe0a75f9beba04022f47_tn'
-                },
-                {
-                    id: '6',
-                    title: '★Star Seller★ Laptop Core i5 RAM 8GB 500GB, Laptop Bekas Second Seken Core i5 Ram 8GB - Twenty Cell',
-                    price: '3.650.000',
-                    image: 'https://cf.shopee.co.id/file/7ad55e22e62899b1df88be137dd5f80f_tn'
-                },
-                {
-                    id: '7',
-                    title: 'Laptop Lenovo 15.6" Core i5 / 500GB / Ram 4GB - Laptop Bekas Lenovo 15.6 inch',
-                    price: '3.000.000',
-                    image: 'https://cf.shopee.co.id/file/14a90f185c88aa0a65fc563c91250ffb_tn'
-                }
-            ]
+        	token: '',
+            data: []
         }
+
+        this._bootstrapAsync()
     }
+
+    fetchProducts = async (token) => {
+    	await this.props.dispatch(fetchProductsByUser(token))
+  	}
+
+	_bootstrapAsync = async () => {
+		AsyncStorage.getItem('Token', (error, result) => {
+			if(result) {
+				this.setState({
+					token: result
+				})
+			}
+		})
+		.then(()=>{
+			this.fetchProducts(this.state.token);
+		})
+	}
+
+	componentDidMount() {
+    	// this.props.fetchData();   	
+    	this.willFocusSubscription = this.props.navigation.addListener(
+      	'willFocus',
+      		() => {
+        		this._bootstrapAsync();
+      		}
+    	);
+  	}
+
+  	componentWillUnmount() {
+    	this.willFocusSubscription.remove();
+  	}
 
 	render(){
 		return(
@@ -99,7 +94,7 @@ export default class App extends Component {
 								</View>
 								<View style={{flexDirection: 'column', margin: 5, marginLeft: 10}}>
 									<View>
-										<Text style={{fontSize: 18, fontWeight: '600', color: '#000'}}>mhdrare</Text>
+										<Text style={{fontSize: 18, fontWeight: '600', color: '#000'}}>{this.props.user.data.user.username}</Text>
 									</View>
 									<View>
 										<View style={{flexDirection: 'row'}}>
@@ -203,16 +198,16 @@ export default class App extends Component {
 							<View style={styles.body, {paddingTop: 5}}>
 								<View style={styles.items}>
 									<FontAwesome name="box-open" style={{flex: 1, marginLeft: '2%'}} size={18} color="#EE4D2D" />
-									<Text style={{flex:9, color:'#000'}}>{this.state.data.length} Produk</Text>
+									<Text style={{flex:9, color:'#000'}}>Produk</Text>
 								</View>
 							</View>
 
 							<View style={{flex:1}}>
 								<View style={{flexDirection:'row'}}>
 									<FlatList
-									data={this.state.data}
+									data={this.props.products.datauser}
 									numColumns={2}
-									keyExtractor={(item,index) => item.id}
+									keyExtractor={(item,index) => item._id}
 									renderItem={({item, index}) => {
 										return (
 											<SellProduct item={item} index={index} />
@@ -227,6 +222,18 @@ export default class App extends Component {
 		)
 	}
 }
+
+const mapStateToProps = state => {
+    return {
+    	products: state.products,
+    	auth: state.auth,
+    	user: state.user
+    }
+}
+
+// export default connect(state => ({products: state.products}))(Home)
+
+export default connect(mapStateToProps)(App)
 
 const styles = StyleSheet.create({
 	header: {

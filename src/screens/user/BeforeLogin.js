@@ -27,7 +27,7 @@ class BeforeLogin extends Component {
 						<TouchableOpacity style={styles.buttonLogin} onPress={() => this.props.navigation.navigate('Login')}>
 							<Text style={{color: '#EE4D2D'}}>Log In</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.buttonRegister} onPress={() => this.props.navigation.navigate('Register')}>
+						<TouchableOpacity style={styles.buttonRegister} onPress={() => this.props.navigation.navigate('Login')}>
 							<Text style={{color: '#FFFFFF'}}>Register</Text>
 						</TouchableOpacity>
 					</View>

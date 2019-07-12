@@ -10,10 +10,12 @@ export const updateImageProfile = (data) => {
 }
 
 export const getUserDetail = (token) => {
-	return {
-		type: 'GET_PROFILE',
-		payload: axios.get(`${url}/details`, {
-			headers: { 'x-auth-token': token }
-		})
-	}
+    return {
+        type: 'GET_PROFILE',
+        payload: axios.get(`${url}/details`, {
+          headers: {
+               'x-auth-token': token
+           }
+        })
+    }
 }
