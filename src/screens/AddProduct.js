@@ -24,7 +24,8 @@ class App extends Component {
 			description: '',
 			brand: '',
 			token: '',
-			image: {}
+			image: {},
+			loading: false,
 		};
 		
 		this._bootstrapAsync()
@@ -68,7 +69,35 @@ class App extends Component {
 	}
 
 	addProduct = async () => {
-		this.props.dispatch(addProduct(this.state.token, this.state.category, this.state.price, this.state.image, 'Yogyakarta', this.state.description, this.state.name, this.state.stok, this.state.brand))
+		await this.setState({
+			loading: true
+		})
+
+
+		this.props.dispatch(addProduct(
+			this.state.token, 
+			this.state.category, 
+			this.state.price, 
+			this.state.image, 
+			'Yogyakarta', 
+			this.state.description, 
+			this.state.name, 
+			this.state.stok, 
+			this.state.brand))
+		.then(()=>{
+			this.setState({
+				loading: false
+			}, ()=>{
+				this.props.navigation.goBack()
+			})
+		})
+		.catch((err)=>{
+			this.setState({
+				loading: false
+			}, ()=>{
+				alert('Gagal tambah barang')
+			})
+		})
 	}
 
 	render(){
@@ -91,6 +120,9 @@ class App extends Component {
 				<View style={styles.container}>
 					{
 						this.state.isUploading && <ActivityIndicator />
+					}
+					{
+						(this.state.loading) ? <View style={{top: 12, position: 'absolute', left: 0, right: 0, alignItems: 'center'  }}><ActivityIndicator size='large' /></View> : <View/> 
 					}
 					<ScrollView>
 						<View style={styles.imageProduct}>

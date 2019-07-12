@@ -212,7 +212,7 @@ class Home extends Component {
             </View>
 
             <FlatList 
-            data={this.props.products.produk.data}
+            data={this.props.products.data}
             numColumns={2}
             keyExtractor={(item, index) => item._id}
             renderItem={({item, index}) => {
