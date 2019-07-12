@@ -29,7 +29,7 @@ export const addWishlist = (token, idProduct) => {
 export const deleteWishlist = (token, idWishlist) => {
     return {
         type: 'DELETE_WISHLIST',
-        payload: axios.delete(url+`/${idProduct}`, {
+        payload: axios.delete(url+`/${idWishlist}`, {
             headers: {
                 'x-auth-token': token
             }

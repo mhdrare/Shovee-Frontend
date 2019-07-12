@@ -26,7 +26,7 @@ import Login from '../screens/user/Login';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 import { AsyncStorage } from 'react-native';
-import { addWishlist, deleteWishlist } from '../public/redux/actions/wishlist';
+import { addWishlist, getWishlist, deleteWishlist } from '../public/redux/actions/wishlist';
 
 import { changePage, fetchCart } from '../public/redux/actions/cart'
 
@@ -151,24 +151,13 @@ class DetailProduct extends Component {
     } else {
       return this.setState({
         liked: false
+      }, () => {
+        this.props.dispatch(deleteWishlist(this.state.token, this.props.wishlist.data._id));
       })
     }
   }
 
   _renderScrollViewContent() {
-    if(this.props.wishlist.isLoading == false) {
-        AsyncStorage.getItem('Liked', (error, result) => {
-        if(result) {
-          this.setState({
-            liked: result
-          })
-        }
-      })
-
-      console.log('masuk pak eko')
-    }
-
-    console.log(this.state.liked);
     return (
       <React.Fragment>
 
@@ -408,6 +397,12 @@ class DetailProduct extends Component {
       extrapolate: 'clamp'
     });
 
+    const barDissapear = scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE / 50, HEADER_SCROLL_DISTANCE],
+      outputRange: [50, 50, 0],
+      extrapolate: 'clamp'
+    });
+
     const imageOpacity = scrollY.interpolate({
       inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
       outputRange: [1, 1, 0],
@@ -522,6 +517,38 @@ class DetailProduct extends Component {
           style={[
             styles.bar,
             {
+              opacity: barDissapear,
+              transform: [
+                { translateY: titleTranslate },
+              ],
+            },
+          ]}
+        >
+          <View style={{flexDirection:'row'}}>
+            <TouchableOpacity style={{flex:2.5,paddingHorizontal:13, paddingVertical:3, justifyContent:'center', borderRadius:3}} onPress={() => {this.props.navigation.goBack()}}>
+              <View style={{flexDirection:'row'}}>
+                <AntDesign name='arrowleft' size={34} color={'#fff'} style={{backgroundColor:'rgba(0,0,0,0.3)', borderRadius:50}} />
+              </View>
+            </TouchableOpacity>
+
+            <View style={{flex:1, justifyContent:'center', alignItems:'flex-end', padding:8, marginLeft:10}}>
+              <View style={{flexDirection:'row', alignItems:'center'}}>
+                <TouchableOpacity>
+                  <AntDesign name='shoppingcart' size={34} color={'#fff'} style={{marginRight:20, backgroundColor:'rgba(0,0,0,0.3)', borderRadius:50}} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image source={require('../assets/icon/morewhite.png')} style={{width:30, height:30, backgroundColor:'rgba(0,0,0,0.3)', borderRadius:50}} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
+        </Animated.View>
+
+        <Animated.View
+          style={[
+            styles.bar,
+            {
               opacity: barOpacity,
               transform: [
                 { translateY: titleTranslate },
@@ -531,11 +558,11 @@ class DetailProduct extends Component {
         >
           <TouchableWithoutFeedback>
             <View style={{width:'70%', height:40, flex:1, flexDirection:'column', justifyContent:'center', marginBottom:5}}>
-              <Text style={{alignItems:'flex-start', color:'#000', fontSize:20, marginLeft:'20%', fontWeight:'bold', fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif'}} numberOfLines={1}>{'Jilbab Pasmina Sabyan Diamond'.substring(0,20)+'...'}</Text>
+              <Text style={{alignItems:'flex-start', color:'#000', fontSize:20, marginLeft:'20%', fontWeight:'bold', fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif'}} numberOfLines={1}>{this.state.item.name.substring(0,20)}</Text>
             </View>
           </TouchableWithoutFeedback>
 
-          <TouchableOpacity style={{position:'absolute', top:7, left:13}} onPress={() => this.props.navigation.goBack()}>
+          <TouchableOpacity style={{position:'absolute', top:7, left:13}} onPress={() => this.props.navigation.goBack() && this.props.dispatch(getWishlist(this.state.token))}>
             <Image source={require('../assets/icon/left-arrow.png')} style={{width:24, height:24}} />
           </TouchableOpacity>
 

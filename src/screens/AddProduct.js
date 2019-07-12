@@ -69,6 +69,10 @@ class App extends Component {
 	}
 
 	addProduct = async () => {
+		if(this.state.category == '' && this.state.imageProduct == null && this.state.name == '' && this.state.description == '' && this.state.price == '' && this.state.stok == '' && this.state.brand == '') {
+			Alert.alert('Tambah Produk Error', 'Harap periksa kembali form isian tambah produk anda :) jangan sampai ada yang kosong');
+		} else {
+
 		await this.setState({
 			loading: true
 		})
@@ -98,6 +102,7 @@ class App extends Component {
 				alert('Gagal tambah barang')
 			})
 		})
+	}
 	}
 
 	render(){
@@ -134,10 +139,10 @@ class App extends Component {
 							</TouchableOpacity>
 						</View>
 						<View style={styles.items}>
-							<TextInput placeholder="Nama Produk" onChangeText={val => {this.setState({name: val})}} />
+							<TextInput placeholder="Nama Produk" onChangeText={val => {this.setState({name: val})}} style={{flex: 1}} />
 						</View>
 						<View style={styles.items}>
-							<TextInput placeholder="Deskripsi Produk" multiline={true} style={{textAlignVertical: 'top', height: 100}} onChangeText={val => {this.setState({description: val})}}/>
+							<TextInput placeholder="Deskripsi Produk" multiline={true} style={{textAlignVertical: 'top', height: 100}} onChangeText={val => {this.setState({description: val})}} style={{flex: 1}} />
 						</View>
 						<View style={{height: 10}} />
 						<View style={styles.items}>
@@ -148,7 +153,7 @@ class App extends Component {
 								onValueChange={(itemValue, itemIndex) =>
 									this.setState({category: itemValue})
 							}>
-
+									<Picker.Item value='' label='Pilih Kategori' />
 								{
 									this.props.categories.category.data.map(category => (
 										<Picker.Item key={category._id} value={category._id} label={category.name} />
@@ -160,15 +165,15 @@ class App extends Component {
 						<View style={{height: 10}} />
 						<View style={styles.items}>
 							<Text style={{color: '#000', flex: 1}}>Harga</Text>
-							<TextInput placeholder="Atur Harga" onChangeText={val => {this.setState({price: val})}} />
+							<TextInput placeholder="Atur Harga" onChangeText={val => {this.setState({price: val})}} style={{flex: 1}} />
 						</View>
 						<View style={styles.items}>
 							<Text style={{color: '#000', flex: 1}}>Stok</Text>
-							<TextInput placeholder="Atur Stok" onChangeText={val => {this.setState({stok: val})}} />
+							<TextInput placeholder="Atur Stok" onChangeText={val => {this.setState({stok: val})}} style={{flex: 1}} />
 						</View>
 						<View style={styles.items}>
 							<Text style={{color: '#000', flex: 1}}>Brand</Text>
-							<TextInput placeholder="Atur Merk" onChangeText={val => {this.setState({brand: val})}} />
+							<TextInput placeholder="Atur Merk" onChangeText={val => {this.setState({brand: val})}} style={{flex: 1}} />
 						</View>
 					</ScrollView>
 				</View>
