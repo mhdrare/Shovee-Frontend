@@ -14,20 +14,25 @@ class AfterLogin extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	token: ''
+	  	token: this.props.token
 	  };
-
-	  this._bootstrapAsync()
 	}
 
-	_bootstrapAsync = async () => {
-		await AsyncStorage.getItem('Token', (error, result) => {
-			if(result) {
-				this.setState({
-					token: result
-				})
-			}
-		});
+
+	componentDidMount(){
+		console.warn(this.state.token);
+		
+		this.props.dispatch(getUserDetail(this.state.token))
+		.then(()=>{
+			console.warn(this.props.users)
+		})
+
+	}
+
+	getUserDetails = () => {
+		
+		this.props.dispatch(getUserDetail(this.state.token))
+		
 	}
 
 	render(){
@@ -154,7 +159,7 @@ class AfterLogin extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth
+        users: state.users
     }
 }
 

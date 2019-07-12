@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import OneSignal from 'react-native-onesignal'
 import {
   Animated,
   Platform,
@@ -150,10 +151,6 @@ class Home extends Component {
     this._bootstrapAsync();
   }
 
-  // componentDidMount() {
-  //   this.fetchProducts()
-
-  // }
 
   fetchProducts = async () => {
     await this.props.dispatch(fetchProducts())
@@ -254,7 +251,7 @@ class Home extends Component {
             </View>
 
             <FlatList 
-            data={this.props.products.produk.data}
+            data={this.props.products.data}
             numColumns={2}
             keyExtractor={(item, index) => item._id}
             renderItem={({item, index}) => {

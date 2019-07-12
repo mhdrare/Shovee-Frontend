@@ -4,23 +4,58 @@ import { StyleSheet, Text, TextInput, View, TouchableOpacity, TouchableHighlight
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import IconAntDesign from 'react-native-vector-icons/AntDesign'
 import { isLogin } from '../../public/redux/actions/auth'
+import Loading from '../Loading'
+
+import NavigationService from '../NavigationService.js';
 
 class Login extends Component {
 	constructor(props) {
 		super(props)
-		state = {
+		this.state = {
 			username: '',
-			password: ''
+			password: '',
+			loading: false
 		}
 	}
 	userLogin = async (data) => {
 		if (this.state.username == '' || this.state.password == '') {
 			alert('Kosong')
 		} else {
-        	await this.props.dispatch(isLogin(data))
-			// this.props.navigation.navigate('Me')
-			console.log(this.props.navigation.state.params)
-        	this.props.navigation.navigate('Cart', this.props.navigation.state.params)
+
+			await this.setState({
+				loading: true
+			})
+
+        	this.props.dispatch(isLogin(data))
+        	.then(()=>{
+        		this.setState({
+					loading: false
+				}, () => {
+        			console.log(this.props.navigation.state.params)
+        			// this.props.navigation.navigate('Me')
+        			NavigationService.navigate('Me');
+				})
+        		
+        	})
+        	.catch((err)=>{
+        		this.setState({
+					loading: false
+				}, () => {
+        			alert('Gagal login')
+				})
+        	})
+			
+
+			// this.props.dispatch(isLogin(data))
+   //      	.then(()=>{
+        		
+   //      		console.log(this.props.navigation.state.params)
+   //      		this.props.navigation.navigate('Cart', this.props.navigation.state.params)
+        		
+   //      	})
+   //      	.catch((err)=>{
+   //      		alert('Gagal login')
+   //      	})
 		}
     }
 
@@ -41,6 +76,7 @@ class Login extends Component {
 			<React.Fragment>
 				<View style={styles.container}>
 					<View style={{width:'80%', marginTop: 30}}>
+					{ (this.state.loading) ? <Loading /> : <View /> }
 						<TextInput style={styles.input} placeholder="Email/Telepon/Username" onChangeText={this.setUsername}/>
 						<TextInput style={styles.input} secureTextEntry={true} placeholder="Password" onChangeText={this.setPassword}/>
 						<TouchableOpacity style={{position: 'absolute', right: 5, top: 65}} onPress={() => this.props.navigation.navigate('ForgetPassword')}>

@@ -65,7 +65,9 @@ class DetailProduct extends Component {
       ),
       refreshing: false,
       item: this.props.navigation.state.params,
-      isLogin: false
+      isLogin: false,
+      like: false,
+      count: '0'
     };
     console.log(this.state.item)
     this._bootstrapAsync
@@ -73,9 +75,10 @@ class DetailProduct extends Component {
 
   _doNavigateAndFetch = async () => {
     const userToken = await AsyncStorage.getItem('Token')
-    await this.props.navigation.navigate('Cart', this.props.item)
+    await this.props.dispatch(changePage(userToken))
+    await this.props.navigation.navigate('Cart')
     await this.props.dispatch(postCart(this.props.navigation.state.params._id, userToken))
-    await this.props.dispatch(fetchCart(userToken))
+    this.props.dispatch(fetchCart(userToken))
   }
 
   _bootstrapAsync = async () => {
@@ -130,7 +133,21 @@ class DetailProduct extends Component {
       </View>
     )
   }
+
+  renderLike = () => {
+    if(this.state.like == false) { // fungsi dispatch bisa ditaruh disini
+      return this.setState({
+        like: true
+      })
+    } else {
+      return this.setState({
+        like: false
+      })
+    }
+  }
+
   _renderScrollViewContent() {
+    console.log(this.state.like)
     return (
       <React.Fragment>
 
@@ -144,14 +161,21 @@ class DetailProduct extends Component {
               <Text style={{fontSize:22, color:'#ee4d2d', fontWeight:'300'}}>Rp {this.state.item.price}</Text>
             </View>
 
-            <View style={{flex:1, justifyContent:'center', alignItems:'flex-start'}}>
-              <View style={{flexDirection:'row'}}>
+            <View style={{flex:1, justifyContent:'center'}}>
+              <View style={{flexDirection:'row', alignItems:'center'}}>
                 <Entypo name='star' color={'#FFD211'} size={20} />
                 <Entypo name='star' color={'#FFD211'} size={20} />
                 <Entypo name='star' color={'#FFD211'} size={20} />
                 <Entypo name='star' color={'#FFD211'} size={20} />
                 <Entypo name='star' color={'#FFD211'} size={20} />
                 <Text style={{color:'#ee4d2d'}}>5.0</Text>
+
+                <View style={{flex:1, alignItems:'flex-end'}}>
+                  <TouchableOpacity style={{alignItems:'center', width:30}} onPress={() => this.renderLike()}>
+                    <AntDesign name={this.state.like == false ? 'hearto': 'heart'} size={22} color={'#f80e1d'} />
+                    <Text>{this.state.like == true && parseInt(this.state.count) == 0 ? this.setState({count: parseInt(this.state.count) + 1}) : this.state.like == false && parseInt(this.state.count) > 0 ? this.setState({count: this.state.count - 1}) : this.state.count}</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>

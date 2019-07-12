@@ -35,23 +35,6 @@ export default auth = async (state = initialState, action) => {
                 isError: true,
                 isLogin: false,
 			}
-		case 'REGISTER_PENDING':
-			return {
-				...state,
-				isLoading: true,
-                isError: false,
-			}
-		case 'REGISTER_FULFILLED':
-			return {
-				...state,
-				isLoading: false,
-			}
-		case 'REGISTER_REJECTED':
-			return {
-				...state,
-				isLoading: false,
-                isError: true,
-			}
 		case 'FORGET_PASSWORD_PENDING':
 			return {
 				...state,
@@ -68,11 +51,6 @@ export default auth = async (state = initialState, action) => {
 				...state,
 				isLoading: false,
                 isError: true
-			}
-		case 'PAGE':
-			return {
-				...state,
-				page: action.payload
 			}
 		default:
             return state;

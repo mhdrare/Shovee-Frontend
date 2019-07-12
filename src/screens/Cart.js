@@ -117,17 +117,17 @@ class Cart extends Component {
         this.setState(prevState => ({ count: prevState.data[0].count + 1 }))
     }
 
-    countPrice = () => {
-        if (this.props.cart.data.length == 0){
-            return 0
-        } else if (this.props.cart.data.length == 1){
-            let totalPrice = this.props.cart.data.reduce((x, y) => {price: x.produk.price + y.produk.price})
-            return totalPrice.product.price
-        } else {
-            let totalPrice = this.props.cart.data.reduce((a, b) => ({price: a.product.price + b.product.price}))
-            return totalPrice.price
-        }
-    }
+    // countPrice = () => {
+    //     if (this.props.cart.data.length == 0){
+    //         return 0
+    //     } else if (this.props.cart.data.length == 1){
+    //         let totalPrice = this.props.cart.data.reduce((x, y) => {price: x.produk.price + y.produk.price})
+    //         return totalPrice.product.price
+    //     } else {
+    //         let totalPrice = this.props.cart.data.reduce((a, b) => ({price: a.product.price + b.product.price}))
+    //         return totalPrice.price
+    //     }
+    // }
 
     render() {
         return (
@@ -189,7 +189,7 @@ class Cart extends Component {
                         </View>
 
                         <View style={{flex:2, alignItems:'flex-end'}}>
-                            <Text style={{color:'#000'}}>SubTotal : <Text style={{color:'#ee4d2d'}}>Rp{this.countPrice()}</Text></Text>
+                            <Text style={{color:'#000'}}>SubTotal : <Text style={{color:'#ee4d2d'}}>Rp0</Text></Text>
                             <Text style={{fontSize:12, color:'#f6a700'}}>Dapatkan 0 Koin</Text>
                         </View>
 

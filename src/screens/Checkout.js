@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList, AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
+import OneSignal from 'react-native-onesignal'
 import { ScrollView } from 'react-native-gesture-handler';
+import { connect } from 'react-redux'
+
+import axios from 'axios'
 
 class CheckoutList extends Component {
     render() {
@@ -27,7 +31,7 @@ class CheckoutList extends Component {
                             <View style={{flex:1}}>
                                 <View style={{flexDirection:'row'}}>
 
-                                    <Image source={{ uri: this.props.item.image }} style={{width:72, height:72}} />
+                                    <Image source={{ uri: this.props.item.product.thumbnail }} style={{width:72, height:72}} />
                                     
                                     <View style={{flex:1, justifyContent:'space-between', marginLeft:8}}>
                                         <Text numberOfLines={1}>{this.props.item.description}</Text>
@@ -58,11 +62,21 @@ class CheckoutList extends Component {
         )
     }
 }
+class Checkout extends Component {
 
-export default class Checkout extends Component {
+    constructor(props) {
+        super(props);
 
-    constructor() {
-        super();
+        this.deviceID = ''
+
+        OneSignal.init("df4cae47-cd9d-4dd5-b97f-5f63593f39fb");
+
+        OneSignal.addEventListener('received', this.onReceived);
+        OneSignal.addEventListener('opened', this.onOpened);
+        OneSignal.addEventListener('ids', device => {
+            this.deviceID = device.userId
+        });
+        OneSignal.configure();
 
         this.state = {
             checked: false,
@@ -84,7 +98,58 @@ export default class Checkout extends Component {
                 }
             ]
         }
+        this._bootstrapAsync()
     }
+
+    componentDidMount() {
+        // this.props.fetchData();   	
+        this.willFocusSubscription = this.props.navigation.addListener(
+          'willFocus',
+            () => {
+              this._bootstrapAsync();
+            }
+        );
+      }
+    
+      componentWillUnmount() {
+        this.willFocusSubscription.remove();    
+        OneSignal.removeEventListener('received', this.onReceived);
+        OneSignal.removeEventListener('opened', this.onOpened);
+        OneSignal.removeEventListener('ids', this.onIds);
+      }
+      onReceived(notification) {
+        console.log("Notification received: ", notification);
+      }
+    
+      onOpened(openResult) {
+        console.log('Message: ', openResult.notification.payload.body);
+        console.log('Data: ', openResult.notification.payload.additionalData);
+        console.log('isActive: ', openResult.notification.isAppInFocus);
+        console.log('openResult: ', openResult);
+      }
+    
+      onIds(device) {
+        this.deviceID= device.userId
+        console.log('Device info: ', device);
+      }
+
+
+    _bootstrapAsync = async () => {
+        const userToken = await AsyncStorage.getItem('Token');
+    
+        // This will switch to the App screen or Auth screen and this loading
+        // screen will be unmounted and thrown away.
+        // this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+        if (userToken) {
+        this.setState({
+          isLogin: true
+        })
+      } else {
+        this.setState({
+          isLogin: false
+        })
+      }
+      };
 
     _decreaseItem = () => {
         if(this.state.count == 0){
@@ -96,6 +161,24 @@ export default class Checkout extends Component {
 
     _increaseItem = () => {
         this.setState(prevState => ({ count: prevState.count + 1 }))
+    }
+
+    handleCheckout = async (data) => {
+        const arr = []
+        const checkout = {
+            product: arr,
+            totalPrice: 1230000,
+            totalItem: 4,
+            seller: '5d2891b77cbd800017da6f19'
+        }
+        await data.map(datum => arr.push(datum._id))
+        const userToken = await AsyncStorage.getItem('Token');
+        console.log(userToken)
+        axios.post(`http://192.168.100.81:3001/checkout?playerId=${this.deviceID}`, checkout, {
+            headers: {
+                'x-auth-token':userToken
+            }
+        })
     }
 
     render() {
@@ -142,7 +225,7 @@ export default class Checkout extends Component {
                     </View>
 
                     <FlatList 
-                    data={this.state.data}
+                    data={this.props.cart.data}
                     keyExtractor={(item, index) => item.id}
                     renderItem={({item, index}) => {
                         return (
@@ -186,7 +269,8 @@ export default class Checkout extends Component {
                     </View>
                     
                     <View style={{margin:20}}>
-                        <TouchableOpacity style={{flex:1, flexDirection:'row', backgroundColor:'#ee4d2d', justifyContent:'center', alignItems:'center', paddingVertical:10, borderRadius:5}}>
+                        <TouchableOpacity style={{flex:1, flexDirection:'row', backgroundColor:'#ee4d2d', justifyContent:'center', alignItems:'center', paddingVertical:10, borderRadius:5}}
+                        onPress={() => this.handleCheckout(this.props.cart.data)}>
                             <Text style={{color:'#fff', fontSize:16}}>BUAT PESANAN</Text>
                         </TouchableOpacity>
                     </View>
@@ -196,3 +280,5 @@ export default class Checkout extends Component {
         )
     }
 }
+
+export default connect(state => ({cart: state.cart}))(Checkout)
