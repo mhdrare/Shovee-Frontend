@@ -7,8 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { getUserDetail } from '../../public/redux/actions/user'
-import { fetchProductsByUser } from '../../public/redux/actions/product';
-
+import { getWishlist } from '../../public/redux/actions/wishlist';
 import { connect } from 'react-redux'
 
 class AfterLogin extends Component {
@@ -23,7 +22,7 @@ class AfterLogin extends Component {
         
     }
 
-    fetchProducts = async (token) => {
+    fetchDetailUser = async (token) => {
     	await this.props.dispatch(getUserDetail(token))
   	}
 
@@ -36,8 +35,14 @@ class AfterLogin extends Component {
 			}
 		})
 		.then(()=>{
-			this.fetchProducts(this.state.token)
+			this.fetchDetailUser(this.state.token)
 		})
+
+		this.props.dispatch(getWishlist(this.state.token))
+		.then(() => {
+			console.log(this.props.wishlist)
+		})
+
 	}
 
 	componentDidMount() {
@@ -178,6 +183,7 @@ const mapStateToProps = (state) => {
     return {
         user: state.user,
         products: state.products,
+		wishlist: state.wishlist
     }
 }
 

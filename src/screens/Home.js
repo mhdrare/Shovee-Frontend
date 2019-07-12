@@ -25,6 +25,7 @@ import { connect } from 'react-redux';
 import { getCategories } from '../public/redux/actions/categories';
 import { fetchProducts } from '../public/redux/actions/product';
 import { fetchCart } from '../public/redux/actions/cart';
+import { getWishlist } from '../public/redux/actions/wishlist';
 
 const HEADER_MAX_HEIGHT = 220;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -66,12 +67,13 @@ class CardsProduct extends Component {
 class Home extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       scrollY: new Animated.Value(
         Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
       ),
       refreshing: false,
+      token: '',
       data: [
         {
           id: '1',
@@ -145,8 +147,18 @@ class Home extends Component {
         }
       ]
     };
-
+    this._bootstrapAsync()
   }
+
+  _bootstrapAsync = async () => {
+		await AsyncStorage.getItem('Token', (error, result) => {
+			if(result) {
+				this.setState({
+					token: result
+				})
+			}
+		});
+  }  
 
   fetchProducts = async () => {
     await this.props.dispatch(fetchProducts())
@@ -467,8 +479,9 @@ const styles = StyleSheet.create({
 
   const mapStateToProps = state => {
     return {
-    categories: state.categories,
-    products: state.products
+      categories: state.categories,
+      products: state.products,
+      wishlist: state.wishlist
     }
 }
 

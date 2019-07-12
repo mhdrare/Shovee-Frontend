@@ -7,7 +7,10 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import ImagePicker from 'react-native-image-picker'
 
-export default class App extends Component {
+import { connect } from 'react-redux'
+
+
+class App extends Component {
 	constructor(props) {
         super(props);
   
@@ -60,17 +63,17 @@ export default class App extends Component {
 							{
 								this.state.imageProfile != null ? 
 								<Image style={{width: 70, height: 70, borderRadius: 50, marginTop: '5%'}} source={ this.state.imageProfile }/> : 
-								<Image style={{width: 70, height: 70, borderRadius: 50, marginTop: '5%'}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg' }}/>
+								<Image style={{width: 70, height: 70, borderRadius: 50, marginTop: '5%'}} source={{ uri: this.props.user.data.image_profil }}/>
 							}
 							</TouchableOpacity>
 						</View>
 						<TouchableOpacity style={styles.items}>
 							<Text style={styles.textLabel}>Nama</Text>
-							<Text style={styles.text}>M Faisal Akbar</Text>
+							<Text style={styles.text}>{(this.props.user.data.name == '') ? <Text>Belum diatur</Text> : this.props.user.data.name}</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.items}>
 							<Text style={styles.textLabel}>Username</Text>
-							<Text style={styles.text}>mhdrare</Text>
+							<Text style={styles.text}>{this.props.user.data.user.username}</Text>
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.items}>
 							<Text style={styles.textLabel}>Profil</Text>
@@ -82,7 +85,7 @@ export default class App extends Component {
 						<View style={{height: 15}}/>
 						<TouchableOpacity style={styles.items}>
 							<Text style={styles.textLabel}>Jenis Kelamin</Text>
-							<Text style={styles.text}>Pria</Text>	
+							<Text style={styles.text}>{this.props.user.data.gender}</Text>	
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.items}>
 							<Text style={styles.textLabel}>Tanggal Lahir</Text>
@@ -105,6 +108,14 @@ export default class App extends Component {
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(App)
 
 const styles = StyleSheet.create({
 	header: {
