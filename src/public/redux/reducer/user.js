@@ -26,6 +26,24 @@ export default user = async (state = initialState, action) => {
 				isLoading: false,
                 isError: true,
 			}
+		case 'GET_PROFILE_PENDING':
+			return {
+				...state,
+				isLoading: true,
+                isError: false,
+			}
+		case 'GET_PROFILE_FULFILLED':
+			return {
+				...state,
+				isLoading: false,
+				data: action.payload.data
+			}
+		case 'GET_PROFILE_REJECTED':
+			return {
+				...state,
+				isLoading: false,
+                isError: true,
+			}
 		default:
             return state;
 	}
