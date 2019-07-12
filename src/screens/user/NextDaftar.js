@@ -7,6 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ImagePicker from 'react-native-image-picker'
 import { register } from '../../public/redux/actions/auth'
 import { connect } from 'react-redux'
+import Loading from '../Loading'
 
 class App extends Component {
 	constructor (props) {
@@ -18,7 +19,8 @@ class App extends Component {
 			nomorhp: this.props.navigation.state.params,
 			password: '',
 			confirmPassword: '',
-			imageProfile: null
+			imageProfile: null,
+			loading: false,
 		}
 	}
 
@@ -71,8 +73,26 @@ class App extends Component {
 		if (data == []) {
 			alert('Kosong')
 		} else {
-        	await this.props.dispatch(register(data))
-        	this.props.navigation.navigate('Login')
+
+			await this.setState({
+				loading: true
+			})
+
+        	this.props.dispatch(register(data))
+        	.then(()=>{
+        		this.setState({
+        			loading: false
+        		}, ()=>{
+        			this.props.navigation.navigate('Login')
+        		})
+        	})
+        	.catch((err)=>{
+        		this.setState({
+        			loading: false
+        		}, ()=>{
+        			alert('Gagal register')
+        		})
+        	})
 		}
 	}
 
@@ -94,6 +114,7 @@ class App extends Component {
 				</View>
 				<View style={styles.container}>
 					<View style={{width:'80%', marginTop: 10}}>
+						{ (this.state.loading) ? <Loading /> : <View /> }
 						<TextInput style={styles.input} placeholder="Username" onChangeText={this.setUsername} />
 						<TextInput style={styles.input} placeholder="Email" onChangeText={this.setEmail} />
 						<TextInput style={styles.input} value={this.props.navigation.state.params}/>

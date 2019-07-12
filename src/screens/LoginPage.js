@@ -18,6 +18,8 @@ import ListSearch from '../screens/ListSearch';
 import AccountSettings from '../screens/user/AccountSettings';
 import DetailProduct from '../screens/DetailProduct';
 
+import NavigationService from './NavigationService';
+
 const LogNavigator = createMaterialTopTabNavigator({
 	Register: {
 		screen: Register,
@@ -63,21 +65,7 @@ const StackNavigator = createStackNavigator({
   },
   ForgetPassword: {
     screen: ForgetPassword,
-  },
-  Me: {
-    screen: Me
-  },
-  Cart,
-  Checkout,
-  Wishlist,
-  PurchaseHistories,
-  Profile,
-  SellerPage,
-  AddProduct,
-  DetailProduct,
-  Search,
-  ListSearch,
-  AccountSettings
+  }
 },{
   initialRouteName: 'Login',
   headerMode: 'none'
