@@ -1,7 +1,8 @@
 const initialState = {
     isLoading: true,
     isError: false,
-    data: []
+    data: [],
+    page: 'Me'
 }
 
 export default product = (state = initialState, action) => {
@@ -36,6 +37,11 @@ export default product = (state = initialState, action) => {
                 isError: false,
                 data: [...state.data, action.payload.data.data]
             }
+		case 'PAGE':
+			return {
+				...state,
+				page: action.payload
+			}
         default:
             return state   
     }

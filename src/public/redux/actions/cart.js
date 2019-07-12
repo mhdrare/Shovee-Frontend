@@ -25,3 +25,12 @@ export const postCart = (id) => {
         })
     }
 }
+
+
+
+export const changePage = (page) => {
+    return {
+        type: 'PAGE',
+        payload: page
+    }
+}
