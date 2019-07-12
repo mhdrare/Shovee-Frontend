@@ -10,12 +10,13 @@ class Login extends Component {
 		username: '',
 		password: ''
 	}
-	userLogin = (data) => {
+	userLogin = async (data) => {
 		if (this.state.username == '' || this.state.password == '') {
 			alert('Kosong')
 		} else {
-        	this.props.dispatch(isLogin(data))
-        	this.props.navigation.goBack()
+        	await this.props.dispatch(isLogin(data))
+        	// this.props.navigation.navigate('Me')
+        	this.props.navigation.navigate('Me')
 		}
     }
 

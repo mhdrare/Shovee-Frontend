@@ -5,6 +5,18 @@ import ForgetPassword from './user/ForgetPassword'
 import Home from '../routes/rootNavigator'
 import Register from './user/Register'
 import Login from './user/Login'
+import Me from './Me'
+import Cart from '../screens/Cart';
+import Checkout from '../screens/Checkout';
+import Profile from '../screens/user/Profile';
+import PurchaseHistories from '../screens/PurchaseHistories';
+import AddProduct from '../screens/AddProduct';
+import SellerPage from '../screens/SellerPage';
+import Wishlist from '../screens/user/Wishlist';
+import Search from '../screens/Search';
+import ListSearch from '../screens/ListSearch';
+import AccountSettings from '../screens/user/AccountSettings';
+import DetailProduct from '../screens/DetailProduct';
 
 const LogNavigator = createMaterialTopTabNavigator({
 	Register: {
@@ -52,6 +64,20 @@ const StackNavigator = createStackNavigator({
   ForgetPassword: {
     screen: ForgetPassword,
   },
+  Me: {
+    screen: Me
+  },
+  Cart,
+  Checkout,
+  Wishlist,
+  PurchaseHistories,
+  Profile,
+  SellerPage,
+  AddProduct,
+  DetailProduct,
+  Search,
+  ListSearch,
+  AccountSettings
 },{
   initialRouteName: 'Login',
   headerMode: 'none'

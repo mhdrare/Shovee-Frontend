@@ -21,6 +21,7 @@ export default class App extends Component {
 				console.log(error)
 			} else {
 				console.log('Not Login')
+				this.props.navigation.replace('Me')
 			}
 		})
     }
