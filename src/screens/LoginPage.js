@@ -1,136 +1,22 @@
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
 import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation'
-import Icon from 'react-native-vector-icons/FontAwesome5'
-import IconAntDesign from 'react-native-vector-icons/AntDesign'
 import Next from './user/NextDaftar'
 import ForgetPassword from './user/ForgetPassword'
 import Home from '../routes/rootNavigator'
-import { isLogin, register } from '../public/redux/actions/auth'
-
-class Login extends Component {
-	state = {
-		username: '',
-		password: ''
-	}
-	userLogin = (data) => {
-		if (this.state.username == '' || this.state.password == '') {
-			alert('Kosong')
-		} else {
-	        // console.log(data)
-        	console.log(this.props.dispatch)
-		}
-    }
-
-    setUsername = (value) => {
-    	this.setState ({
-    		username: value
-    	})
-    }
-
-    setPassword = (value) => {
-    	this.setState ({
-    		password: value
-    	})
-    }
-
-	render(){
-		return(
-			<React.Fragment>
-				<View style={styles.container}>
-					<View style={{width:'80%', marginTop: 30}}>
-						<TextInput style={styles.input} placeholder="Email/Telepon/Username" onChangeText={this.setUsername}/>
-						<TextInput style={styles.input} secureTextEntry={true} placeholder="Password" onChangeText={this.setPassword}/>
-						<TouchableOpacity style={{position: 'absolute', right: 5, top: 65}} onPress={() => this.props.navigation.navigate('ForgetPassword')}>
-							<Text style={{color: '#075d54'}}>Lupa?</Text>
-						</TouchableOpacity>
-					</View>
-					<TouchableOpacity style={styles.button} onPress={() => this.userLogin({username: this.state.username, password: this.state.password})}>
-						<Text style={{color: '#FFFFFF'}}>{'Log In'.toUpperCase()}</Text>
-					</TouchableOpacity>
-					<View style={{marginTop: 20}}>
-						<TouchableOpacity>
-							<Text>Butuh bantuan?</Text>
-						</TouchableOpacity>
-					</View>
-					<View style={styles.labelLoginWith}>
-						<View style={styles.itemsLoginWith}>
-							<View style={styles.borderLoginWith}></View>
-						</View>
-						<View style={{flex: 3, alignItems: 'center'}}>
-							<Text>Login cepat dengan</Text>
-						</View>
-						<View style={styles.itemsLoginWith}>
-							<View style={styles.borderLoginWith}></View>
-						</View>
-					</View>
-					<TouchableOpacity style={styles.loginSMS}>
-						<IconAntDesign name="message1" style={{flex: 1, paddingLeft: 15}} size={25} color="#FFFFFF"/>
-						<Text style={styles.text}>Login melalui SMS</Text>
-						<Text style={{flex: 1}}/>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.loginLine}>
-						<Icon name="line" style={{flex: 1, paddingLeft: 15}} size={25} color="#FFFFFF"/>
-						<Text style={styles.text}>Login dengan Line</Text>
-						<Text style={{flex: 1}}/>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.loginFacebook}>
-						<Icon name="facebook" style={{flex: 1, paddingLeft: 15}} size={25} color="#FFFFFF"/>
-						<Text style={styles.text}>Lanjutkan dengan Facebook</Text>
-						<Text style={{flex: 1}}/>
-					</TouchableOpacity>
-				</View>
-		    </React.Fragment>
-		)
-	}
-}
-
-class Register extends Component {
-	render(){
-		return(
-			<React.Fragment>
-				<View style={styles.container}>
-					<View style={{width:'80%', marginTop: 30}}>
-						<TextInput style={styles.input} placeholder="Nomor HP"/>
-					</View>
-					<TouchableOpacity style={styles.button} onPress={() =>  this.props.navigation.navigate('Next')}>
-						<Text style={{color: '#FFFFFF'}}>{'Lanjut'.toUpperCase()}</Text>
-					</TouchableOpacity>
-					<View style={{marginTop: '30%'}}>
-						
-					</View>
-					<View style={styles.labelLoginWith}>
-						<View style={styles.itemsLoginWith}>
-							<View style={styles.borderLoginWith}></View>
-						</View>
-						<View style={{flex: 3, alignItems: 'center'}}>
-							<Text>Daftar dengan</Text>
-						</View>
-						<View style={styles.itemsLoginWith}>
-							<View style={styles.borderLoginWith}></View>
-						</View>
-					</View>
-					<TouchableOpacity style={styles.loginSMS}>
-						<IconAntDesign name="message1" style={{flex: 1, paddingLeft: 15}} size={25} color="#FFFFFF"/>
-						<Text style={styles.text}>Daftar melalui Email</Text>
-						<Text style={{flex: 1}}/>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.loginLine}>
-						<Icon name="line" style={{flex: 1, paddingLeft: 15}} size={25} color="#FFFFFF"/>
-						<Text style={styles.text}>Login dengan Line</Text>
-						<Text style={{flex: 1}}/>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.loginFacebook}>
-						<Icon name="facebook" style={{flex: 1, paddingLeft: 15}} size={25} color="#FFFFFF"/>
-						<Text style={styles.text}>Lanjutkan dengan Facebook</Text>
-						<Text style={{flex: 1}}/>
-					</TouchableOpacity>
-				</View>
-		    </React.Fragment>
-		)
-	}
-}
+import Register from './user/Register'
+import Login from './user/Login'
+import Me from './Me'
+import Cart from '../screens/Cart';
+import Checkout from '../screens/Checkout';
+import Profile from '../screens/user/Profile';
+import PurchaseHistories from '../screens/PurchaseHistories';
+import AddProduct from '../screens/AddProduct';
+import SellerPage from '../screens/SellerPage';
+import Wishlist from '../screens/user/Wishlist';
+import Search from '../screens/Search';
+import ListSearch from '../screens/ListSearch';
+import AccountSettings from '../screens/user/AccountSettings';
+import DetailProduct from '../screens/DetailProduct';
 
 const LogNavigator = createMaterialTopTabNavigator({
 	Register: {
@@ -179,6 +65,20 @@ const StackNavigator = createStackNavigator({
   ForgetPassword: {
     screen: ForgetPassword,
   },
+  Me: {
+    screen: Me
+  },
+  Cart,
+  Checkout,
+  Wishlist,
+  PurchaseHistories,
+  Profile,
+  SellerPage,
+  AddProduct,
+  DetailProduct,
+  Search,
+  ListSearch,
+  AccountSettings
 },{
   initialRouteName: 'Login',
   headerMode: 'none'
@@ -186,10 +86,12 @@ const StackNavigator = createStackNavigator({
 
 const LogPage = createAppContainer(StackNavigator)
 
-class App extends Component {
+export default class App extends Component {
 	render(){
 		return(
-			<LogPage/>
+			<React.Fragment>
+				<LogPage/>
+			</React.Fragment>
 		)
 	}
 }
@@ -277,3 +179,4 @@ const styles = StyleSheet.create({
 		borderColor: 'grey',
 	}
 })
+
