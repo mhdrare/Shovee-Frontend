@@ -1,13 +1,40 @@
 import React, {Component} from 'react'
-import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
+import { AsyncStorage, StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
+import { getUserDetail } from '../../public/redux/actions/user'
 import { connect } from 'react-redux'
 
 class AfterLogin extends Component {
+	constructor(props) {
+	  super(props);
+	
+	  this.state = {
+	  	token: this.props.token
+	  };
+	}
+
+
+	componentDidMount(){
+		console.warn(this.state.token);
+		
+		this.props.dispatch(getUserDetail(this.state.token))
+		.then(()=>{
+			console.warn(this.props.users)
+		})
+
+	}
+
+	getUserDetails = () => {
+		
+		this.props.dispatch(getUserDetail(this.state.token))
+		
+	}
+
 	render(){
 		return (
 			<React.Fragment>
@@ -132,7 +159,7 @@ class AfterLogin extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth
+        users: state.users
     }
 }
 

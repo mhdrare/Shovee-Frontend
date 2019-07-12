@@ -11,7 +11,7 @@ const appReducer = combineReducers({
     users,
     products,
     categories,
-    cart
+    cart,
 })
 
 export default appReducer;
