@@ -4,8 +4,78 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import ImagePicker from 'react-native-image-picker'
+import { register } from '../../public/redux/actions/auth'
+import { connect } from 'react-redux'
 
-export default class App extends Component {
+class App extends Component {
+	constructor (props) {
+		super(props)
+
+		this.state = {
+			username: '',
+			email: '',
+			nomorhp: this.props.navigation.state.params,
+			password: '',
+			confirmPassword: '',
+			imageProfile: null
+		}
+	}
+
+	setUsername = (value) => {
+    	this.setState ({
+    		username: value
+    	})
+    }
+
+    setEmail = (value) => {
+    	this.setState ({
+    		email: value
+    	})
+    }
+
+    setPassword = (value) => {
+    	this.setState ({
+    		password: value
+    	})
+    }
+
+    setConfirmPassword = (value) => {
+    	this.setState ({
+    		confirmPassword: value
+    	})
+    }
+
+    handleUpdateImage = async () => {
+		const options = {
+			noData: true,
+			mediaType: 'photo'
+		}
+		ImagePicker.showImagePicker(options, (response) => {
+			if (response.didCancel) {
+			    console.warn('User cancelled image picker');
+			} else if (response.error) {
+			    console.warn('ImagePicker Error: ', response.error);
+			} else if (response.customButton) {
+			    console.warn('User tapped custom button: ', response.customButton);
+			} else {
+			    const source = { uri: response.uri }
+			    this.setState({
+			      imageProfile: source,
+			    });
+			}
+		})
+	}
+
+	userRegister = async (data) => {
+		if (data == []) {
+			alert('Kosong')
+		} else {
+        	await this.props.dispatch(register(data))
+        	this.props.navigation.navigate('Login')
+		}
+	}
+
 	render(){
 		return(
 			<React.Fragment>
@@ -24,21 +94,31 @@ export default class App extends Component {
 				</View>
 				<View style={styles.container}>
 					<View style={{width:'80%', marginTop: 10}}>
-						<TextInput style={styles.input} placeholder="Username"/>
-						<TextInput style={styles.input} placeholder="Email"/>
-						<TextInput style={styles.input} placeholder="Nomor HP"/>
-						<TextInput style={styles.input} secureTextEntry={true} placeholder="Password"/>
-						<TextInput style={styles.input} secureTextEntry={true} placeholder="Konfirmasi Password"/>
+						<TextInput style={styles.input} placeholder="Username" onChangeText={this.setUsername} />
+						<TextInput style={styles.input} placeholder="Email" onChangeText={this.setEmail} />
+						<TextInput style={styles.input} value={this.props.navigation.state.params}/>
+						<TextInput style={styles.input} secureTextEntry={true} placeholder="Password" onChangeText={this.setPassword}/>
+						<TextInput style={styles.input} secureTextEntry={true} placeholder="Konfirmasi Password" onChangeText={this.setConfirmPassword}/>
 					</View>
-					<View style={{width:'80%', marginTop: 20, flexDirection: 'row'}} >
+					<TouchableOpacity style={{width:'80%', marginTop: 20, flexDirection: 'row'}} onPress={this.handleUpdateImage} >
 						<View style={{flex: 1}}>
-							<Image style={{width: 100, height: 100, borderRadius: 50}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
+							{
+								this.state.imageProfile != null ? 
+								<Image style={{width: 100, height: 100, borderRadius: 50}} source={ this.state.imageProfile }/> : 
+								<Image style={{width: 100, height: 100, borderRadius: 50}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
+							}
 						</View>
 						<View style={{flex: 2, justifyContent: 'center', alignItems: 'center'}}>
 							<Text>Tekan untuk mengubah</Text>
 						</View>
-					</View>
-					<TouchableOpacity style={styles.button} onPress={() =>  console.warn(this.props.navigation.navigate('Login'))}>
+					</TouchableOpacity>
+					<TouchableOpacity style={styles.button} onPress={() => this.userRegister({
+						username: this.state.username,
+						email: this.state.email,
+						phone: this.state.nomorhp,
+						password: this.state.password,
+						password_confirmation: this.state.confirmPassword,
+					})}>
 						<Text style={{color: '#FFFFFF'}}>{'Lanjut'.toUpperCase()}</Text>
 					</TouchableOpacity>
 					<View style={{width:'80%', marginTop: 50, flexDirection: 'row'}} >
@@ -49,6 +129,14 @@ export default class App extends Component {
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+	return {
+		auth: state.auth
+	}
+}
+
+export default connect(mapStateToProps)(App)
 
 const styles = StyleSheet.create({
 	header: {
