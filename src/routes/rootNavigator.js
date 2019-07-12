@@ -103,9 +103,6 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     Register: {
       screen: LoginPage,
     },
-    Me: {
-      screen: Me,
-    },
     Cart,
     Checkout,
     Wishlist,
@@ -128,4 +125,5 @@ const AppTabNavigator = createMaterialTopTabNavigator({
   });
   
   const AppNavigator = createAppContainer(InitialNavigator);
+  
   export default AppNavigator;

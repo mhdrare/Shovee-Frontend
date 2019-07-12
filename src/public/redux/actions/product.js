@@ -25,7 +25,7 @@ export const addProduct = (token,category,price,images,city,description,name,sto
            }
        })
    }
-};
+}
 
 export const fetchProducts = () => {
     return {

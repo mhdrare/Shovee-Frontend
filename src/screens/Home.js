@@ -148,11 +148,6 @@ class Home extends Component {
 
   }
 
-  // componentDidMount() {
-  //   this.fetchProducts()
-
-  // }
-
   fetchProducts = async () => {
     await this.props.dispatch(fetchProducts())
   }
@@ -472,8 +467,8 @@ const styles = StyleSheet.create({
 
   const mapStateToProps = state => {
     return {
-		  categories: state.categories,
-      products: state.products
+    categories: state.categories,
+    products: state.products
     }
 }
 

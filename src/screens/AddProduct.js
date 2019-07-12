@@ -129,7 +129,7 @@ class App extends Component {
 						<View style={{height: 10}} />
 						<View style={styles.items}>
 							<Text style={{color: '#000', flex: 1}}>Harga</Text>
-							<TextInput placeholder="Atur Harga" onChangeText={val => {this.setState({price: val})}} />
+							<TextInput style={{textAlign: 'right'}} placeholder="Atur Harga" onChangeText={val => {this.setState({price: val})}} />
 						</View>
 						<View style={styles.items}>
 							<Text style={{color: '#000', flex: 1}}>Stok</Text>
