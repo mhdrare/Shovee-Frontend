@@ -26,6 +26,13 @@ export default product = (state = initialState, action) => {
                 isLoading: false,
                 isError: true
             }
+        case 'POST_PRODUCT_FULFILLED':
+            return {
+                ...state,
+                isLoading: false,
+                idError: false,
+                produk: action.payload.data
+            }
         default:
             return state;
     }

@@ -21,6 +21,8 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { connect } from 'react-redux';
+import { getCategories } from '../public/redux/actions/categories';
 
 const HEADER_MAX_HEIGHT = 220;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -59,7 +61,7 @@ class CardsProduct extends Component {
   }
 }
 
-export default class Home extends Component {
+class Home extends Component {
   constructor(props) {
     super(props);
 
@@ -141,6 +143,10 @@ export default class Home extends Component {
         }
       ]
     };
+  }
+
+  componentDidMount() {
+    this.props.dispatch(getCategories());
   }
 
   _renderScrollViewContent() {
@@ -450,3 +456,11 @@ const styles = StyleSheet.create({
       paddingTop:2
     }
   });
+
+  const mapStateToProps = state => {
+    return {
+		categories: state.categories
+    }
+}
+
+export default connect(mapStateToProps)(Home)

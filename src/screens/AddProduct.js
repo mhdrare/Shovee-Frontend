@@ -1,20 +1,48 @@
 import React, {Component} from 'react'
-import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
+import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button, ActivityIndicator, Alert, Picker, AsyncStorage} from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import ImagePicker from 'react-native-image-picker'
+import { connect } from 'react-redux';
+import { getCategories } from '../public/redux/actions/categories';
+import { addProduct } from '../public/redux/actions/product';
 
-export default class App extends Component {
+class App extends Component {
 	constructor(props) {
         super(props);
   
         this.state = {
-            imageProduct: null
-        };
-    }
+			imageProduct: null,
+			isUploading: false,
+			category: '',
+			price: '',
+			stok: '',
+			name: '',
+			description: '',
+			brand: '',
+			token: '',
+			image: {}
+		};
+		
+		this._bootstrapAsync()
+	}
+
+	_bootstrapAsync = async () => {
+		await AsyncStorage.getItem('Token', (error, result) => {
+			if(result) {
+				this.setState({
+					token: result
+				})
+			}
+		});
+	}
+
+	componentDidMount() {
+		this.props.dispatch(getCategories());
+	}
 
     handleUpdateImage = async () => {
 		const options = {
@@ -23,20 +51,28 @@ export default class App extends Component {
 		}
 		ImagePicker.showImagePicker(options, (response) => {
 			if (response.didCancel) {
-			    console.warn('User cancelled image picker');
+			    Alert.alert('User cancelled image picker');
 			} else if (response.error) {
-			    console.warn('ImagePicker Error: ', response.error);
+			    Alert.alert('ImagePicker Error: ', response.error);
 			} else if (response.customButton) {
-			    console.warn('User tapped custom button: ', response.customButton);
+			    Alert.alert('User tapped custom button: ', response.customButton);
 			} else {
-			    const source = { uri: response.uri }
+				const source = { uri: response.uri }
+				const sendSource = response
 			    this.setState({
-			      imageProduct: source,
+				  imageProduct: source,
+				  image: sendSource
 			    });
 			}
 		})
 	}
+
+	addProduct = async () => {
+		this.props.dispatch(addProduct(this.state.token, this.state.category, this.state.price, this.state.image, 'Yogyakarta', this.state.description, this.state.name, this.state.stok, this.state.brand))
+	}
+
 	render(){
+		{console.log(this.state.imageProduct)}
 		return(
 			<React.Fragment>
 				<View style={styles.header}>
@@ -47,12 +83,15 @@ export default class App extends Component {
 						<View style={styles.title}>
 							<Text style={{color: '#000000', fontSize: 17}}>Tambah Produk</Text>
 						</View>
-						<TouchableOpacity style={styles.check} onPress={() => alert('SUKSES')}>
+						<TouchableOpacity style={styles.check} onPress={() => this.addProduct()}>
 							<MaterialCommunityIcons name="check" size={24} color={'#EE4D2D'}/>
 						</TouchableOpacity>
 					</View>
 				</View>
 				<View style={styles.container}>
+					{
+						this.state.isUploading && <ActivityIndicator />
+					}
 					<ScrollView>
 						<View style={styles.imageProduct}>
 							{
@@ -63,28 +102,41 @@ export default class App extends Component {
 							</TouchableOpacity>
 						</View>
 						<View style={styles.items}>
-							<TextInput placeholder="Nama Produk" />
+							<TextInput placeholder="Nama Produk" onChangeText={val => {this.setState({name: val})}} />
 						</View>
 						<View style={styles.items}>
-							<TextInput placeholder="Deskripsi Produk" multiline={true} style={{textAlignVertical: 'top', height: 100}}/>
+							<TextInput placeholder="Deskripsi Produk" multiline={true} style={{textAlignVertical: 'top', height: 100}} onChangeText={val => {this.setState({description: val})}}/>
 						</View>
 						<View style={{height: 10}} />
 						<View style={styles.items}>
 							<Text style={{color: '#000', flex: 1}}>Kategori</Text>
-							<TextInput placeholder="Atur Kategori" />
+							<Picker
+								selectedValue={this.state.category}
+								style={{height: 50, width: 200}}
+								onValueChange={(itemValue, itemIndex) =>
+									this.setState({category: itemValue})
+							}>
+
+								{
+									this.props.categories.category.data.map(category => (
+										<Picker.Item key={category._id} value={category._id} label={category.name} />
+									))
+								}
+								
+							</Picker>
 						</View>
 						<View style={{height: 10}} />
 						<View style={styles.items}>
 							<Text style={{color: '#000', flex: 1}}>Harga</Text>
-							<TextInput placeholder="Atur Harga" />
+							<TextInput placeholder="Atur Harga" onChangeText={val => {this.setState({price: val})}} />
 						</View>
 						<View style={styles.items}>
 							<Text style={{color: '#000', flex: 1}}>Stok</Text>
-							<TextInput placeholder="Atur Stok" />
+							<TextInput placeholder="Atur Stok" onChangeText={val => {this.setState({stok: val})}} />
 						</View>
 						<View style={styles.items}>
-							<Text style={{color: '#000', flex: 1}}>Variasi</Text>
-							<TextInput placeholder="Atur Merk" />
+							<Text style={{color: '#000', flex: 1}}>Brand</Text>
+							<TextInput placeholder="Atur Merk" onChangeText={val => {this.setState({brand: val})}} />
 						</View>
 					</ScrollView>
 				</View>
@@ -140,3 +192,12 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 })
+
+const mapStateToProps = state => {
+    return {
+		categories: state.categories,
+		product: state.product
+    }
+}
+
+export default connect(mapStateToProps)(App)
