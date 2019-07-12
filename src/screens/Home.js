@@ -12,6 +12,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   FlatList,
+  AsyncStorage,
   ScrollView
 } from 'react-native';
 import dummyData from '../components/dummydata/index.product';
@@ -72,6 +73,7 @@ class Home extends Component {
         Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
       ),
       refreshing: false,
+      isLogin: false,
       data: [
         {
           id: '1',
@@ -145,7 +147,7 @@ class Home extends Component {
         }
       ]
     };
-
+    this._bootstrapAsync();
   }
 
   // componentDidMount() {
@@ -157,10 +159,45 @@ class Home extends Component {
     await this.props.dispatch(fetchProducts())
   }
 
+  fetchCart = async () => {
+      const userToken = await AsyncStorage.getItem('Token');
+      console.log(this.props)
+      await this.props.dispatch(fetchCart(userToken))
+  }
+
   componentDidMount() {
+    this.willFocusSubscription = this.props.navigation.addListener(
+      'willFocus',
+        () => {
+          this._bootstrapAsync();
+        }
+    );
     this.props.dispatch(getCategories());
     this.fetchProducts();
+    this.fetchCart()
   }
+  
+  componentWillUnmount() {
+    this.willFocusSubscription.remove();
+  }
+
+
+  _bootstrapAsync = async () => {
+    const userToken = await AsyncStorage.getItem('Token');
+
+    // This will switch to the App screen or Auth screen and this loading
+    // screen will be unmounted and thrown away.
+    // this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    if (userToken) {
+    this.setState({
+      isLogin: true
+    })
+  } else {
+    this.setState({
+      isLogin: false
+    })
+  }
+  };
 
   _renderScrollViewContent() {
     return (
@@ -378,7 +415,7 @@ class Home extends Component {
 
             <View style={{flex:1, justifyContent:'center', alignItems:'flex-start', padding:8, marginLeft:10}}>
               <View style={{flexDirection:'row'}}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {this.state.isLogin ? this.props.navigation.navigate('Cart') : this.props.navigation.navigate('Login')}}>
                   <AntDesign name='shoppingcart' size={30} color={'#fff'} />
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -473,7 +510,8 @@ const styles = StyleSheet.create({
   const mapStateToProps = state => {
     return {
 		  categories: state.categories,
-      products: state.products
+      products: state.products,
+      cart: state.cart
     }
 }
 

@@ -12,9 +12,9 @@ class CartList extends Component {
         super(props)
 
         this.state = {
-            total: 0
+            total: 0,
+            checked: true
         }
-        console.log(this.props.item)
     }
 
     render() {
@@ -25,16 +25,16 @@ class CartList extends Component {
                         <View style={{flexDirection: 'row', paddingHorizontal:15, paddingVertical:10, alignItems:'center'}}>
                             <View style={{flex:1}}>
                                 <CheckBox
-                                    value={this.props.item.checked}
-                                    onValueChange={() => this.setState({ checked: !this.props.item.checked })}
+                                    value={this.state.checked}
+                                    onValueChange={() => this.setState({ checked: !this.state.checked })}
                                 />
                             </View>
 
                             <View style={{flex:9}}>
                                 <View style={{flexDirection:'row'}}>
-                                    <Image source={{ uri: this.props.item.product.thumbnail }} style={{width:24, height:24, borderRadius:50 }} />
+                                    <Image source={{ uri: this.props.item.product.seller.image_profil }} style={{width:24, height:24, borderRadius:50 }} />
 
-                                    <Text style={{color:'#000'}}>  item</Text>
+                                    <Text style={{color:'#000'}}>  {this.props.item.product.seller.user.username}</Text>
                                 </View>
                             </View>
                         </View>
@@ -44,17 +44,17 @@ class CartList extends Component {
                         <View style={{flexDirection:'row', padding:15, alignItems:'center'}}>
                             <View style={{flex:1}}>
                             <CheckBox
-                                value={this.props.item.checked}
-                                onValueChange={() => this.setState({ checked: !this.props.item.checked })}
+                                value={this.state.checked}
+                                onValueChange={() => this.setState({ checked: !this.state.checked })}
                             />
                             </View>
                             <View style={{flex:9}}>
                                 <View style={{flexDirection:'row'}}>
 
-                                    <Image source={{ uri: this.props.item.imageProduct }} style={{width:72, height:72}} />
+                                    <Image source={{ uri: this.props.item.product.thumbnail }} style={{width:72, height:72}} />
                                     
                                     <View style={{flex:1, justifyContent:'space-between', marginLeft:8}}>
-                                        <Text numberOfLines={1}>{this.props.item.titleProduct}</Text>
+                                        <Text numberOfLines={1}>{this.props.item.product.name}</Text>
                                         
                                         <View style={{flexDirection:'row'}} >
                                             <TouchableOpacity onPress={this.props.decreaseItem}>
@@ -70,7 +70,7 @@ class CartList extends Component {
                                             </TouchableOpacity>
                                         </View>
 
-                                        <Text style={{color:'#ee4d2d'}}>Rp {this.props.item.price}</Text>
+                                        <Text style={{color:'#ee4d2d'}}>Rp {this.props.item.product.price}</Text>
                                     </View>
                                     
                                 </View>
@@ -115,6 +115,18 @@ class Cart extends Component {
 
     _increaseItem = () => {
         this.setState(prevState => ({ count: prevState.data[0].count + 1 }))
+    }
+
+    countPrice = () => {
+        if (this.props.cart.data.length == 0){
+            return 0
+        } else if (this.props.cart.data.length == 1){
+            let totalPrice = this.props.cart.data.reduce((x, y) => {price: x.produk.price + y.produk.price})
+            return totalPrice.product.price
+        } else {
+            let totalPrice = this.props.cart.data.reduce((a, b) => ({price: a.product.price + b.product.price}))
+            return totalPrice.price
+        }
     }
 
     render() {
@@ -177,7 +189,7 @@ class Cart extends Component {
                         </View>
 
                         <View style={{flex:2, alignItems:'flex-end'}}>
-                            <Text style={{color:'#000'}}>SubTotal : <Text style={{color:'#ee4d2d'}}>Rp{this.state.data[0].price}</Text></Text>
+                            <Text style={{color:'#000'}}>SubTotal : <Text style={{color:'#ee4d2d'}}>Rp{this.countPrice()}</Text></Text>
                             <Text style={{fontSize:12, color:'#f6a700'}}>Dapatkan 0 Koin</Text>
                         </View>
 
