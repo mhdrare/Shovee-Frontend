@@ -22,10 +22,11 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ViewMoreText from 'react-native-view-more-text';
-import Login from '../screens/user/Login'
+import Login from '../screens/user/Login';
 import Axios from 'axios';
-import { connect } from 'react-redux'
-import { AsyncStorage } from 'react-native'
+import { connect } from 'react-redux';
+import { AsyncStorage } from 'react-native';
+import { addWishlist, getWishlist, deleteWishlist } from '../public/redux/actions/wishlist';
 
 import { changePage, fetchCart, postCart } from '../public/redux/actions/cart'
 
@@ -58,6 +59,8 @@ class DetailProduct extends Component {
   constructor(props) {
     super(props);
 
+    this._bootstrapAsync
+
     this.state = {
       scrollY: new Animated.Value(
         // iOS has negative initial scroll value because content inset...
@@ -66,11 +69,11 @@ class DetailProduct extends Component {
       refreshing: false,
       item: this.props.navigation.state.params,
       isLogin: false,
-      like: false,
-      count: '0'
+      liked: false,
+      count: '0',
+      token: ''
     };
     console.log(this.state.item)
-    this._bootstrapAsync
   }
 
   _doNavigateAndFetch = async () => {
@@ -82,12 +85,18 @@ class DetailProduct extends Component {
   }
 
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('Token');
+    await AsyncStorage.getItem('Token', (error, result) => {
+			if(result) {
+				this.setState({
+					token: result
+				})
+			}
+    });
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
     // this.props.navigation.navigate(userToken ? 'App' : 'Auth');
-    if (userToken) {
+    if (this.state.token) {
     this.setState({
       isLogin: true
     })
@@ -135,19 +144,22 @@ class DetailProduct extends Component {
   }
 
   renderLike = () => {
-    if(this.state.like == false) { // fungsi dispatch bisa ditaruh disini
+    if(this.state.liked == false) { // fungsi dispatch bisa ditaruh disini
       return this.setState({
-        like: true
+        liked: true
+      }, () => {
+        this.props.dispatch(addWishlist(this.state.token, this.state.item._id))
       })
     } else {
       return this.setState({
-        like: false
+        liked: false
+      }, () => {
+        this.props.dispatch(deleteWishlist(this.state.token, this.props.wishlist.data._id));
       })
     }
   }
 
   _renderScrollViewContent() {
-    console.log(this.state.like)
     return (
       <React.Fragment>
 
@@ -172,8 +184,8 @@ class DetailProduct extends Component {
 
                 <View style={{flex:1, alignItems:'flex-end'}}>
                   <TouchableOpacity style={{alignItems:'center', width:30}} onPress={() => this.renderLike()}>
-                    <AntDesign name={this.state.like == false ? 'hearto': 'heart'} size={22} color={'#f80e1d'} />
-                    <Text>{this.state.like == true && parseInt(this.state.count) == 0 ? this.setState({count: parseInt(this.state.count) + 1}) : this.state.like == false && parseInt(this.state.count) > 0 ? this.setState({count: this.state.count - 1}) : this.state.count}</Text>
+                    <AntDesign name={this.state.liked == false ? 'hearto': 'heart'} size={22} color={'#f80e1d'} />
+                    <Text>{this.state.liked == true && parseInt(this.state.count) == 0 ? this.setState({count: parseInt(this.state.count) + 1}) : this.state.liked == false && parseInt(this.state.count) > 0 ? this.setState({count: this.state.count - 1}) : this.state.count}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -355,6 +367,12 @@ class DetailProduct extends Component {
       extrapolate: 'clamp'
     });
 
+    const barDissapear = scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE / 50, HEADER_SCROLL_DISTANCE],
+      outputRange: [50, 50, 0],
+      extrapolate: 'clamp'
+    });
+
     const imageOpacity = scrollY.interpolate({
       inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
       outputRange: [1, 1, 0],
@@ -469,6 +487,38 @@ class DetailProduct extends Component {
           style={[
             styles.bar,
             {
+              opacity: barDissapear,
+              transform: [
+                { translateY: titleTranslate },
+              ],
+            },
+          ]}
+        >
+          <View style={{flexDirection:'row'}}>
+            <TouchableOpacity style={{flex:2.5,paddingHorizontal:13, paddingVertical:3, justifyContent:'center', borderRadius:3}} onPress={() => {this.props.navigation.goBack()}}>
+              <View style={{flexDirection:'row'}}>
+                <AntDesign name='arrowleft' size={34} color={'#fff'} style={{backgroundColor:'rgba(0,0,0,0.3)', borderRadius:50}} />
+              </View>
+            </TouchableOpacity>
+
+            <View style={{flex:1, justifyContent:'center', alignItems:'flex-end', padding:8, marginLeft:10}}>
+              <View style={{flexDirection:'row', alignItems:'center'}}>
+                <TouchableOpacity>
+                  <AntDesign name='shoppingcart' size={34} color={'#fff'} style={{marginRight:20, backgroundColor:'rgba(0,0,0,0.3)', borderRadius:50}} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image source={require('../assets/icon/morewhite.png')} style={{width:30, height:30, backgroundColor:'rgba(0,0,0,0.3)', borderRadius:50}} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
+        </Animated.View>
+
+        <Animated.View
+          style={[
+            styles.bar,
+            {
               opacity: barOpacity,
               transform: [
                 { translateY: titleTranslate },
@@ -478,11 +528,11 @@ class DetailProduct extends Component {
         >
           <TouchableWithoutFeedback>
             <View style={{width:'70%', height:40, flex:1, flexDirection:'column', justifyContent:'center', marginBottom:5}}>
-              <Text style={{alignItems:'flex-start', color:'#000', fontSize:20, marginLeft:'20%', fontWeight:'bold', fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif'}} numberOfLines={1}>{'Jilbab Pasmina Sabyan Diamond'.substring(0,20)+'...'}</Text>
+              <Text style={{alignItems:'flex-start', color:'#000', fontSize:20, marginLeft:'20%', fontWeight:'bold', fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif'}} numberOfLines={1}>{this.state.item.name.substring(0,20)}</Text>
             </View>
           </TouchableWithoutFeedback>
 
-          <TouchableOpacity style={{position:'absolute', top:7, left:13}} onPress={() => this.props.navigation.goBack()}>
+          <TouchableOpacity style={{position:'absolute', top:7, left:13}} onPress={() => this.props.navigation.goBack() && this.props.dispatch(getWishlist(this.state.token))}>
             <Image source={require('../assets/icon/left-arrow.png')} style={{width:24, height:24}} />
           </TouchableOpacity>
 
@@ -500,7 +550,7 @@ class DetailProduct extends Component {
   };
 }
 
-export default connect(state => ({auth: state.auth}))(DetailProduct)
+export default connect(state => ({auth: state.auth, wishlist: state.wishlist}))(DetailProduct)
 
 const styles = StyleSheet.create({
     fill: {
