@@ -6,6 +6,8 @@ import store from './src/public/redux/store';
 import OneSignal from 'react-native-onesignal'
 YellowBox.ignoreWarnings(['ViewPagerAndroid']);
 
+import NavigationService from './src/screens/NavigationService';
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +42,11 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store} >
-        <AppNavigator />
+        <AppNavigator 
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+        />
       </Provider>
     );
   }

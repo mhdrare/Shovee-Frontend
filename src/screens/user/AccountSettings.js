@@ -3,6 +3,8 @@ import {AsyncStorage, StyleSheet, Text, ScrollView, TextInput, View, TouchableOp
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
+import NavigationService from '../NavigationService.js';
+
 export default class App extends Component {
 	constructor(props) {
         super(props);
@@ -21,7 +23,8 @@ export default class App extends Component {
 				console.log(error)
 			} else {
 				console.log('Not Login')
-				this.props.navigation.replace('Me')
+				// this.props.navigation.replace('Me')
+				NavigationService.navigate('Me');
 			}
 		})
     }
