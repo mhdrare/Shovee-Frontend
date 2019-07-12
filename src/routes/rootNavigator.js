@@ -103,6 +103,9 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     Register: {
       screen: LoginPage,
     },
+    Me: {
+      screen: Me,
+    },
     Cart,
     Checkout,
     Wishlist,
