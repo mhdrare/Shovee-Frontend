@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
+
 import { View, Text, TouchableOpacity, Image, CheckBox, FlatList, ScrollView } from 'react-native';
 import Fa from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import cart from '../public/redux/reducer/cart';
 
 class CartList extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             total: 0
         }
+        console.log(this.props.item)
     }
 
     render() {
@@ -28,9 +32,9 @@ class CartList extends Component {
 
                             <View style={{flex:9}}>
                                 <View style={{flexDirection:'row'}}>
-                                    <Image source={{ uri: this.props.item.imageUser }} style={{width:24, height:24, borderRadius:50 }} />
+                                    <Image source={{ uri: this.props.item.product.thumbnail }} style={{width:24, height:24, borderRadius:50 }} />
 
-                                    <Text style={{color:'#000'}}>  {this.props.item.username}</Text>
+                                    <Text style={{color:'#000'}}>  item</Text>
                                 </View>
                             </View>
                         </View>
@@ -79,7 +83,7 @@ class CartList extends Component {
     }
 }
 
-export default class Cart extends Component {
+class Cart extends Component {
     
     constructor() {
         super();
@@ -149,8 +153,8 @@ export default class Cart extends Component {
                     </View>
 
                     <FlatList
-                    data={this.state.data}
-                    keyExtractor={(item, index) => item.idProduct}
+                    data={this.props.cart.data}
+                    keyExtractor={(item, index) => item._id}
                     renderItem={({item, index}) => {
                         return (
                             <CartList item={item} index={index} increaseItem={this._increaseItem} decreaseItem={this._decreaseItem} />
@@ -187,3 +191,5 @@ export default class Cart extends Component {
         )
     }
 }
+
+export default connect(state => ({cart: state.cart}))(Cart)

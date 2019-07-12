@@ -1,13 +1,35 @@
 import React, {Component} from 'react'
-import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
+import { AsyncStorage, StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
+import { getUserDetail } from '../../public/redux/actions/user'
 import { connect } from 'react-redux'
 
 class AfterLogin extends Component {
+	constructor(props) {
+	  super(props);
+	
+	  this.state = {
+	  	token: ''
+	  };
+
+	  this._bootstrapAsync()
+	}
+
+	_bootstrapAsync = async () => {
+		await AsyncStorage.getItem('Token', (error, result) => {
+			if(result) {
+				this.setState({
+					token: result
+				})
+			}
+		});
+	}
+
 	render(){
 		return (
 			<React.Fragment>
