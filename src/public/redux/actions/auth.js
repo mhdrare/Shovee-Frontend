@@ -15,14 +15,7 @@ export const isLogin = (data) => {
 export const register = (data) => {
     return {
         type: 'REGISTER',
-        payload: axios.post(`${url}/register`, {
-            username: data.username,
-            phone: data.phone,
-            email: data.email,
-            email: data.email,
-            password: data.password,
-            password_confirmation: data.password_confirm,
-        })
+        payload: axios.post(`${url}/register`, data)
     }
 }
 
