@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux'
 import {
   Animated,
   Platform,
@@ -149,21 +148,18 @@ class Home extends Component {
 
   }
 
-  componentDidMount() {
-    this.fetchProducts()
+  // componentDidMount() {
+  //   this.fetchProducts()
 
-  }
+  // }
 
   fetchProducts = async () => {
     await this.props.dispatch(fetchProducts())
   }
 
-  fetchCart = async () => {
-    await this.props.dispatch(fetchCart())
-  }
-
   componentDidMount() {
     this.props.dispatch(getCategories());
+    this.fetchProducts();
   }
 
   _renderScrollViewContent() {
@@ -397,9 +393,6 @@ class Home extends Component {
   };
 }
 
-  
-export default connect(state => ({products: state.products}))(Home)
-
 const styles = StyleSheet.create({
     fill: {
       flex: 1,
@@ -479,8 +472,11 @@ const styles = StyleSheet.create({
 
   const mapStateToProps = state => {
     return {
-		categories: state.categories
+		  categories: state.categories,
+      products: state.products
     }
 }
+
+// export default connect(state => ({products: state.products}))(Home)
 
 export default connect(mapStateToProps)(Home)

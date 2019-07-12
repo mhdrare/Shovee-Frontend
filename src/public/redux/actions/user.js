@@ -8,3 +8,12 @@ export const updateImageProfile = (data) => {
         payload: axios.patch(`${url}/details`)
     }
 }
+
+export const getUserDetail = (token) => {
+	return {
+		type: 'GET_PROFILE',
+		payload: axios.get(`${url}/details`, {
+			headers: { 'x-auth-token': token }
+		})
+	}
+}
