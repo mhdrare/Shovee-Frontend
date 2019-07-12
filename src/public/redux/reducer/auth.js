@@ -20,6 +20,7 @@ export default auth = async (state = initialState, action) => {
 		case 'LOGIN_FULFILLED':
 			await AsyncStorage.setItem('Token', action.payload.data.token);
 			await AsyncStorage.setItem('Login', state.isLogin);
+			console.log(state)
 			return {
 				...state,
 				isLoading: false,
@@ -67,6 +68,11 @@ export default auth = async (state = initialState, action) => {
 				...state,
 				isLoading: false,
                 isError: true
+			}
+		case 'PAGE':
+			return {
+				...state,
+				page: action.payload
 			}
 		default:
             return state;

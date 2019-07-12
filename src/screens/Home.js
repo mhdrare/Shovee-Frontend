@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import {
   Animated,
   Platform,
@@ -23,6 +24,8 @@ import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { connect } from 'react-redux';
 import { getCategories } from '../public/redux/actions/categories';
+import { fetchProducts } from '../public/redux/actions/product';
+import { fetchCart } from '../public/redux/actions/cart';
 
 const HEADER_MAX_HEIGHT = 220;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -36,17 +39,17 @@ class CardsProduct extends Component {
 
   render() {
     return (
-      <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center', paddingHorizontal:3, marginBottom: 5}} onPress={() => {this.props.navigation.navigate('DetailProduct')}}>
-        <Image source={{uri: this.props.item.image}} style={{width:'100%', height:194}} />
+      <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center', paddingHorizontal:3, marginBottom: 5}} onPress={() => {this.props.navigation.navigate('DetailProduct', this.props.item)}}>
+        <Image source={{uri: this.props.item.thumbnail}} style={{width:'100%', height:194}} />
 
         <View style={{width:'100%', backgroundColor:'#fff', paddingHorizontal:10, paddingVertical:8}}>
-          <Text numberOfLines={2} style={[styles.productTitle, {color:'#000'}]}>{this.props.item.title}</Text>
+          <Text numberOfLines={2} style={[styles.productTitle, {color:'#000'}]}>{this.props.item.name}</Text>
 
           <View style={{flexDirection:'row', marginTop:4}}>
             <View style={{flex:1}}>
               <View style={{flexDirection:'row', justifyContent:'flex-start', alignItems:'center'}}>
                 <Text style={{color:'#ee4d2d', fontSize:12, marginTop:3.5}}>RP</Text>
-                <Text style={{color:'#ee4d2d', fontSize:16}}>{this.props.item.harga}</Text>
+                <Text style={{color:'#ee4d2d', fontSize:16}}>{this.props.item.price}</Text>
               </View>
             </View>
             
@@ -143,6 +146,20 @@ class Home extends Component {
         }
       ]
     };
+
+  }
+
+  componentDidMount() {
+    this.fetchProducts()
+
+  }
+
+  fetchProducts = async () => {
+    await this.props.dispatch(fetchProducts())
+  }
+
+  fetchCart = async () => {
+    await this.props.dispatch(fetchCart())
   }
 
   componentDidMount() {
@@ -204,9 +221,9 @@ class Home extends Component {
             </View>
 
             <FlatList 
-            data={dummyData}
+            data={this.props.products.produk.data}
             numColumns={2}
-            keyExtractor={(item, index) => item.key}
+            keyExtractor={(item, index) => item._id}
             renderItem={({item, index}) => {
               return (
                 <CardsProduct item={item} index={index} navigation={this.props.navigation} />
@@ -379,6 +396,9 @@ class Home extends Component {
     )
   };
 }
+
+  
+export default connect(state => ({products: state.products}))(Home)
 
 const styles = StyleSheet.create({
     fill: {

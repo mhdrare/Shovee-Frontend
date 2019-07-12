@@ -22,6 +22,12 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ViewMoreText from 'react-native-view-more-text';
+import Login from '../screens/user/Login'
+import Axios from 'axios';
+import { connect } from 'react-redux'
+import { AsyncStorage } from 'react-native'
+
+import { changePage, fetchCart } from '../public/redux/actions/cart'
 
 const HEADER_MAX_HEIGHT = 411;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -48,8 +54,7 @@ class CardsProduct extends Component {
     )
   }
 }
-
-export default class DetailProduct extends Component {
+class DetailProduct extends Component {
   constructor(props) {
     super(props);
 
@@ -59,7 +64,48 @@ export default class DetailProduct extends Component {
         Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
       ),
       refreshing: false,
+      item: this.props.navigation.state.params,
+      isLogin: false
     };
+    console.log(this.state.item)
+    this._bootstrapAsync
+  }
+
+  _doNavigateAndFetch = async () => {
+    const userToken = await AsyncStorage.getItem('Token')
+    await this.props.dispatch(fetchCart(userToken))
+    await this.props.navigation.navigate('Cart', this.props.item)
+  }
+
+  _bootstrapAsync = async () => {
+    const userToken = await AsyncStorage.getItem('Token');
+
+    // This will switch to the App screen or Auth screen and this loading
+    // screen will be unmounted and thrown away.
+    // this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    if (userToken) {
+    this.setState({
+      isLogin: true
+    })
+  } else {
+    this.setState({
+      isLogin: false
+    })
+  }
+  };
+
+  componentDidMount() {
+    // this.props.fetchData();   	
+    this.willFocusSubscription = this.props.navigation.addListener(
+      'willFocus',
+        () => {
+          this._bootstrapAsync();
+        }
+    );
+  }
+
+  componentWillUnmount() {
+    this.willFocusSubscription.remove();
   }
 
   renderViewMore(onPress){
@@ -90,11 +136,11 @@ export default class DetailProduct extends Component {
         <View style={styles.scrollViewContent}>
           <View style={{backgroundColor:'#fff', width:'100%', height:hp('20%'), paddingHorizontal:12, paddingTop:12}}>
             <View style={{flex:1}}>
-              <Text style={{fontSize:20, color:'#000'}} numberOfLines={1} maxFontSizeMultiplier={1}>Jilbab Pashmina sabyan diamond italiano</Text>
+              <Text style={{fontSize:20, color:'#000'}} numberOfLines={1} maxFontSizeMultiplier={1}>{this.state.item.name}</Text>
             </View>
 
             <View style={{flex:1}}>
-              <Text style={{fontSize:22, color:'#ee4d2d', fontWeight:'300'}}>Rp 61.200</Text>
+              <Text style={{fontSize:22, color:'#ee4d2d', fontWeight:'300'}}>Rp {this.state.item.price}</Text>
             </View>
 
             <View style={{flex:1, justifyContent:'center', alignItems:'flex-start'}}>
@@ -410,7 +456,16 @@ export default class DetailProduct extends Component {
               <MaterialIcon name='add-shopping-cart' size={26} color={'#fff'} />
             </TouchableOpacity>
 
-            <TouchableOpacity style={{flex:2, backgroundColor:'#ee4d2d', height:50, justifyContent:'center', alignItems:'center'}} onPress={() => {this.props.navigation.navigate('Cart')}}>
+            <TouchableOpacity style={{flex:2, backgroundColor:'#ee4d2d', height:50, justifyContent:'center', alignItems:'center'}} onPress={async () => {
+              try {
+                await this.props.dispatch(changePage('Cart'))
+                console.log('akaka')
+              } catch {
+                console.log('wkwkw')
+              }
+              
+              await this.state.isLogin ? this._doNavigateAndFetch() : this.props.navigation.navigate('Login', this.props.item )
+              }}>
               <Text style={{color:'#fff'}}>Beli Sekarang</Text>
             </TouchableOpacity>
 
@@ -451,6 +506,8 @@ export default class DetailProduct extends Component {
     )
   };
 }
+
+export default connect(state => ({auth: state.auth}))(DetailProduct)
 
 const styles = StyleSheet.create({
     fill: {
