@@ -65,7 +65,6 @@ export default class Home extends Component {
 
     this.state = {
       scrollY: new Animated.Value(
-        // iOS has negative initial scroll value because content inset...
         Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
       ),
       refreshing: false,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
+import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import Home from '../screens/Home';
 import Feed from '../screens/Feed';
 import Mall from '../screens/Mall';
@@ -19,6 +19,8 @@ import ListSearch from '../screens/ListSearch';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import SplashScreen from '../screens/SplashScreen';
+import AccountSettings from '../screens/user/AccountSettings';
 
 const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {
@@ -95,34 +97,35 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     Home: {
       screen: AppTabNavigator
     },
-    Cart,
-    Checkout,
-    Wishlist,
     Login: {
       screen: LoginPage
     },
     Register: {
       screen: LoginPage,
     },
-    PurchaseHistories: {
-      screen: PurchaseHistories,
+    Me: {
+      screen: Me,
     },
-    Profile: {
-      screen: Profile,
-    },
-    SellerPage: {
-      screen: SellerPage,
-    },
-    AddProduct: {
-      screen: AddProduct,
-    },
+    Cart,
+    Checkout,
+    Wishlist,
+    PurchaseHistories,
+    Profile,
+    SellerPage,
+    AddProduct,
     DetailProduct,
     Search,
-    ListSearch
+    ListSearch,
+    AccountSettings
   }, {
     initialRouteName: 'Home',
     headerMode: 'none'
   })
+
+  const InitialNavigator = createSwitchNavigator({
+    Splash: SplashScreen,
+    App: AppStackNavigator
+  });
   
-  const AppNavigator = createAppContainer(AppStackNavigator);
+  const AppNavigator = createAppContainer(InitialNavigator);
   export default AppNavigator;
