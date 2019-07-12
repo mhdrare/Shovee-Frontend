@@ -4,7 +4,8 @@ const initialState = {
 	data: [],
 	isLoading: false,
 	isError: false,
-	token: []
+	token: [],
+	isLogin: false
 }
 
 export default auth = async (state = initialState, action) => {
@@ -13,20 +14,25 @@ export default auth = async (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: true,
-                isError: false
+                isError: false,
+                isLogin: false,
 			}
 		case 'LOGIN_FULFILLED':
+			await AsyncStorage.setItem('Token', action.payload.data.token);
+			await AsyncStorage.setItem('Login', state.isLogin);
 			return {
 				...state,
 				isLoading: false,
-				token: action.payload.data,
+				isLogin: true,
+				token: action.payload.data.token,
 				data: action.payload.data.data
 			}
 		case 'LOGIN_REJECTED':
 			return {
 				...state,
 				isLoading: false,
-                isError: true
+                isError: true,
+                isLogin: false,
 			}
 		case 'FORGET_PASSWORD_PENDING':
 			return {

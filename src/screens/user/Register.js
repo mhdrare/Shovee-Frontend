@@ -1,11 +1,22 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
+import { AsyncStorage, StyleSheet, Text, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import IconAntDesign from 'react-native-vector-icons/AntDesign'
 import { register } from '../../public/redux/actions/auth'
 
 class Register extends Component {
+
+	componentWillMount(){
+		AsyncStorage.getItem('Token', (error, result) => {
+			if (result) {
+				this.props.navigation.goBack()
+			} else {
+				console.log('Not Login')
+			}
+		})
+	}
+
 	render(){
 		return(
 			<React.Fragment>

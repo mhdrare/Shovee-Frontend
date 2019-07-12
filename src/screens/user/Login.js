@@ -14,8 +14,8 @@ class Login extends Component {
 		if (this.state.username == '' || this.state.password == '') {
 			alert('Kosong')
 		} else {
-	        // console.log(data)
-        	console.log(this.props.dispatch(isLogin(data)))
+        	this.props.dispatch(isLogin(data))
+        	this.props.navigation.goBack()
 		}
     }
 
