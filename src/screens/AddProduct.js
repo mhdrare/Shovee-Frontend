@@ -5,8 +5,37 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import ImagePicker from 'react-native-image-picker'
 
 export default class App extends Component {
+	constructor(props) {
+        super(props);
+  
+        this.state = {
+            imageProduct: null
+        };
+    }
+
+    handleUpdateImage = async () => {
+		const options = {
+			noData: true,
+			mediaType: 'photo'
+		}
+		ImagePicker.showImagePicker(options, (response) => {
+			if (response.didCancel) {
+			    console.warn('User cancelled image picker');
+			} else if (response.error) {
+			    console.warn('ImagePicker Error: ', response.error);
+			} else if (response.customButton) {
+			    console.warn('User tapped custom button: ', response.customButton);
+			} else {
+			    const source = { uri: response.uri }
+			    this.setState({
+			      imageProduct: source,
+			    });
+			}
+		})
+	}
 	render(){
 		return(
 			<React.Fragment>
@@ -26,8 +55,10 @@ export default class App extends Component {
 				<View style={styles.container}>
 					<ScrollView>
 						<View style={styles.imageProduct}>
-							<Image style={{width: 120, height: 120, margin: 2}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
-							<TouchableOpacity style={{width: 120, height: 120, margin: 2, borderWidth: 1, borderRadius: 1, borderStyle: 'dashed', justifyContent:'center'}}>
+							{
+								this.state.imageProduct != null ? <Image style={{width: 120, height: 120, margin: 2}} source={this.state.imageProduct}/> : <Image/>
+							}
+							<TouchableOpacity style={{width: 120, height: 120, margin: 2, borderWidth: 1, borderRadius: 1, borderStyle: 'dashed', justifyContent:'center'}} onPress={this.handleUpdateImage}>
 								<Text style={{textAlign: 'center',}}>+ Tambah Foto</Text>
 							</TouchableOpacity>
 						</View>
