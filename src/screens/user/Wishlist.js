@@ -4,6 +4,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Fa from 'react-native-vector-icons/FontAwesome';
 import DummyData from '../../components/dummydata/index.product';
+import { getWishlist, deleteWishlist } from '../../public/redux/actions/wishlist';
+import { connect } from 'react-redux';
 
 class WishlistCard extends Component {
 
@@ -58,7 +60,7 @@ class WishlistCard extends Component {
     }
 }
 
-export default class Wishlist extends Component {
+class Wishlist extends Component {
 
     render() {
         return (
@@ -79,7 +81,6 @@ export default class Wishlist extends Component {
                             </View>
                         </View>
                     </View>
-
                     
                     <FlatList
                     data={DummyData}
@@ -96,3 +97,12 @@ export default class Wishlist extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {
+        users: state.users,
+        wishlist: state.wishlist
+    }
+}
+
+export default connect(mapStateToProps)(Wishlist);

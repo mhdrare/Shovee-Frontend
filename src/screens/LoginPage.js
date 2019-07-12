@@ -5,6 +5,8 @@ import ForgetPassword from './user/ForgetPassword'
 import Home from '../routes/rootNavigator'
 import Register from './user/Register'
 import Login from './user/Login'
+import EditProfile from './user/EditProfile'
+import AddAddress from './user/AddAddress';
 import Me from './Me'
 import Cart from '../screens/Cart';
 import Checkout from '../screens/Checkout';
@@ -65,7 +67,13 @@ const StackNavigator = createStackNavigator({
   },
   ForgetPassword: {
     screen: ForgetPassword,
-  }
+  },
+  EditProfile:{
+    screen: EditProfile,
+  },
+  AddAddress:{
+    screen: AddAddress,
+  },
 },{
   initialRouteName: 'Login',
   headerMode: 'none'

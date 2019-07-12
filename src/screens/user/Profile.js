@@ -88,14 +88,14 @@ class App extends Component {
 							}
 							</TouchableOpacity>
 						</View>
-						<TouchableOpacity style={styles.items}>
+						<TouchableOpacity style={styles.items} onPress={()=>this.props.navigation.navigate('EditProfile')}>
 							<Text style={styles.textLabel}>Nama</Text>
 							<Text style={styles.text}>M Faisal Akbar</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.items}>
+						<View style={styles.items}>
 							<Text style={styles.textLabel}>Username</Text>
 							<Text style={styles.text}>mhdrare</Text>
-						</TouchableOpacity>
+						</View>
 						<TouchableOpacity style={styles.items}>
 							<Text style={styles.textLabel}>Profil</Text>
 							<Text style={styles.text}>Whoops!</Text>
@@ -104,23 +104,23 @@ class App extends Component {
 							<Text style={styles.textLabel}>Ubah Password</Text>
 						</TouchableOpacity>
 						<View style={{height: 15}}/>
-						<TouchableOpacity style={styles.items}>
+						<TouchableOpacity style={styles.items} onPress={()=>alert('Soon!')}>
 							<Text style={styles.textLabel}>Jenis Kelamin</Text>
 							<Text style={styles.text}>Pria</Text>	
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.items}>
+						<TouchableOpacity style={styles.items} onPress={()=>alert('Soon!')}>
 							<Text style={styles.textLabel}>Tanggal Lahir</Text>
 							<Text style={styles.text}>02-06-2001</Text>	
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.items}>
+						<TouchableOpacity style={styles.items} onPress={()=>alert('Soon!')}>
 							<Text style={styles.textLabel}>Telepon</Text>
 							<Text style={styles.text}>******17</Text>	
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.items}>
+						<TouchableOpacity style={styles.items} onPress={()=>alert('Soon!')}>
 							<Text style={styles.textLabel}>Email</Text>
 							<Text style={styles.text}>a******7@gmail.com</Text>	
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.items}>
+						<TouchableOpacity style={styles.items} onPress={()=>alert('Soon!')}>
 							<Text style={styles.textLabel}>Akun Sosial Media</Text>
 						</TouchableOpacity>
 					</ScrollView>

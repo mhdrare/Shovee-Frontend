@@ -12,7 +12,8 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   FlatList,
-  ScrollView
+  ScrollView,
+  AsyncStorage
 } from 'react-native';
 import dummyData from '../components/dummydata/index.product';
 import Carousel from 'react-native-smart-carousel';
@@ -25,6 +26,7 @@ import { connect } from 'react-redux';
 import { getCategories } from '../public/redux/actions/categories';
 import { fetchProducts } from '../public/redux/actions/product';
 import { fetchCart } from '../public/redux/actions/cart';
+import { getWishlist } from '../public/redux/actions/wishlist';
 
 const HEADER_MAX_HEIGHT = 220;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -66,12 +68,13 @@ class CardsProduct extends Component {
 class Home extends Component {
   constructor(props) {
     super(props);
-
+    
     this.state = {
       scrollY: new Animated.Value(
         Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
       ),
       refreshing: false,
+      token: '',
       data: [
         {
           id: '1',
@@ -145,8 +148,18 @@ class Home extends Component {
         }
       ]
     };
-
+    this._bootstrapAsync()
   }
+
+  _bootstrapAsync = async () => {
+		await AsyncStorage.getItem('Token', (error, result) => {
+			if(result) {
+				this.setState({
+					token: result
+				})
+			}
+		});
+  }  
 
   fetchProducts = async () => {
     await this.props.dispatch(fetchProducts())
@@ -212,7 +225,7 @@ class Home extends Component {
             </View>
 
             <FlatList 
-            data={this.props.products.produk.data}
+            data={this.props.products.data}
             numColumns={2}
             keyExtractor={(item, index) => item._id}
             renderItem={({item, index}) => {
@@ -222,7 +235,7 @@ class Home extends Component {
             }} />
 
             <View style={{flexDirection:'row', justifyContent:'center', flex:1, backgroundColor:'#fff', borderWidth:1, borderColor:'#ee4d2d', borderRadius:6, marginVertical:15, marginHorizontal:10}}>
-              <TouchableOpacity style={{paddingHorizontal:10,paddingVertical:8}}>
+              <TouchableOpacity style={{paddingHorizontal:10,paddingVertical:8}} onPress={() => alert('Soon!')}>
                 <Text style={{color:'#ee4d2d'}}>Lihat Lainnya</Text>
               </TouchableOpacity>
             </View>
@@ -376,7 +389,7 @@ class Home extends Component {
                 <TouchableOpacity>
                   <AntDesign name='shoppingcart' size={30} color={'#fff'} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => alert('Soon!')}>
                   <AntDesign name='message1' color={'#fff'} size={28} style={{marginLeft:30}} />
                 </TouchableOpacity>
               </View>
@@ -467,8 +480,9 @@ const styles = StyleSheet.create({
 
   const mapStateToProps = state => {
     return {
-    categories: state.categories,
-    products: state.products
+      categories: state.categories,
+      products: state.products,
+      wishlist: state.wishlist
     }
 }
 

@@ -56,7 +56,7 @@ export default class Search extends Component {
                             <View style={{flex:8}}>
                                 <View style={{flexDirection:'row', alignItems:'center', backgroundColor:'#efefef', borderRadius:4}}>
                                     <TextInput placeholder='Cari Produk' style={{ borderRadius:5, paddingVertical:7, paddingLeft:14, flex:7}} />
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => alert('Soon!')}>
                                         <SimpleLineIcons name='camera' color={'#EE4D2D'} size={24} style={{marginRight:10}} />
                                     </TouchableOpacity>
                                 </View>
@@ -76,7 +76,7 @@ export default class Search extends Component {
                         />
                         <View style={{backgroundColor:'#fff', borderTopWidth:1, borderTopColor:'rgba(0,0,0,0.1)'}}>
                             <View style={{flexDirection:'row'}}>
-                                <TouchableOpacity style={{flex:1, paddingHorizontal:15, paddingVertical:10, justifyContent:'center', alignItems:'center'}}>
+                                <TouchableOpacity style={{flex:1, paddingHorizontal:15, paddingVertical:10, justifyContent:'center', alignItems:'center'}} onPress={() => alert('Soon!')}>
                                     <Text>Hapus Riwayat Pencarian</Text>
                                 </TouchableOpacity>
                             </View>

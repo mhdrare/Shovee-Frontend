@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
+import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, Image, Button} from 'react-native'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -13,17 +13,17 @@ class BeforeLogin extends Component {
 			<React.Fragment>
 				<View style={styles.header}>
 					<View style={styles.headerTop}>	
-						<TouchableHighlight style={styles.shopcart}>
+						<TouchableOpacity style={styles.shopcart} onPress={() => this.props.navigation.navigate('Login')}>
 							<MaterialCommunityIcons name="cart-outline" size={24} color={'#FFFFFF'}/>
-						</TouchableHighlight>
-						<TouchableHighlight style={styles.chat}>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.chat} onPress={() => this.props.navigation.navigate('Login')}>
 							<SimpleLineIcons name="bubbles" size={24} color={'white'}/>
-						</TouchableHighlight>
+						</TouchableOpacity>
 					</View>
 					<View style={styles.headerAccount}>
-						<TouchableHighlight>
+						<TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}>
 							<FontAwesome name="user-circle-o" size={40} color={'white'}/>
-						</TouchableHighlight>
+						</TouchableOpacity>
 						<TouchableOpacity style={styles.buttonLogin} onPress={() => this.props.navigation.navigate('Login')}>
 							<Text style={{color: '#EE4D2D'}}>Log In</Text>
 						</TouchableOpacity>
@@ -33,56 +33,56 @@ class BeforeLogin extends Component {
 					</View>
 				</View>
 				<View style={styles.body}>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('Login')}>
 						<MaterialCommunityIcons name="clipboard" style={{flex: 1, marginLeft: '3%'}} size={25} color="#3a5998" />
 						<Text style={styles.text}>Pesanan Saya</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('Login')}>
 						<MaterialCommunityIcons name="cellphone" style={{flex: 1, marginLeft: '3%'}} size={25} color="#369e55"/>
 						<Text style={styles.text}>Pulsa & Produk Digital</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
 				</View>
 				<View style={styles.body}>
-					<TouchableOpacity style={styles.items} onPress={() => {this.props.navigation.navigate('Wishlist')}}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('Login')}>
 						<MaterialCommunityIcons name="heart-outline" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
 						<Text style={styles.text}>Favorit Saya</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('Login')}>
 						<SimpleLineIcons name="clock" style={{flex: 1, marginLeft: '3%'}} size={25} color="#3a5998"/>
 						<Text style={styles.text}>Terakhir Dilihat</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('Login')}>
 						<MaterialCommunityIcons name="wallet" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
 						<Text style={styles.text}>ShoveePay</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('Login')}>
 						<FontAwesome name="share-alt" style={{flex: 1, marginLeft: '3%'}} size={25} color="#3a5998"/>
 						<Text style={styles.text}>Undang Teman</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('Login')}>
 						<MaterialCommunityIcons name="coin" style={{flex: 1, marginLeft: '3%'}} size={25} color="#edd51a"/>
 						<Text style={styles.text}>Koin Shovee</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('Login')}>
 						<MaterialCommunityIcons name="star-outline" style={{flex: 1, marginLeft: '3%'}} size={25} color="#369e55"/>
 						<Text style={styles.text}>Penilaian Saya</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
 				</View>
 				<View style={styles.body}>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('Login')}>
 						<SimpleLineIcons name="user" style={{flex: 1, marginLeft: '3%'}} size={25} color="#3a5998"/>
 						<Text style={styles.text}>Pengaturan Akun</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('Login')}>
 						<SimpleLineIcons name="question" style={{flex: 1, marginLeft: '3%'}} size={25} color="#369e55"/>
 						<Text style={styles.text}>Pusat Bantuan</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>

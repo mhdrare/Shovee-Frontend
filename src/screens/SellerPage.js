@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import { StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button, FlatList } from 'react-native'
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import EvilIcon from 'react-native-vector-icons/EvilIcons'
+import Foundation from 'react-native-vector-icons/Foundation'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 
 class SellProduct extends Component {
 	render() {
@@ -85,9 +85,9 @@ export default class App extends Component {
 						<TouchableOpacity style={styles.back} onPress={() => this.props.navigation.goBack()}>
 							<AntDesign name="arrowleft" size={24} color={'#EE4D2D'}/>
 						</TouchableOpacity>
-						<TouchableHighlight style={styles.chat}>
+						<TouchableOpacity style={styles.chat} onPress={() => alert('Soon!')}>
 							<SimpleLineIcons name="bubbles" size={24} color={'#EE4D2D'}/>
-						</TouchableHighlight>
+						</TouchableOpacity>
 					</View>
 				</View>
 				<View style={styles.container}>
@@ -111,26 +111,26 @@ export default class App extends Component {
 								</View>
 							</View>
 							<View style={styles.body, {paddingTop: 5}}>
-								<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('PurchaseHistories')}>
+								<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
 									<MaterialCommunityIcons name="store" style={{flex: 1, marginLeft: '2%'}} size={25} color="#EE4D2D" />
 									<Text style={styles.textPenjualan}>Penjualan Saya</Text>
 									<Text style={{fontSize: 11}}>Lihat Riwayat Penjualan</Text>
 									<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '1%'}} size={18}/>
 								</TouchableOpacity>
 								<View style={styles.itemPenjualan}>
-									<TouchableOpacity style={styles.statusPenjualan}>
+									<TouchableOpacity style={styles.statusPenjualan} onPress={() => alert('Soon!')}>
 										<MaterialCommunityIcons name="truck" size={30}/>
 										<Text style={styles.textStatus}>Perlu Dikirim</Text>
 									</TouchableOpacity>
-									<TouchableOpacity style={styles.statusPenjualan}>
+									<TouchableOpacity style={styles.statusPenjualan} onPress={() => alert('Soon!')}>
 										<MaterialCommunityIcons name="cancel" size={30}/>
 										<Text style={styles.textStatus}>Dibatalkan</Text>
 									</TouchableOpacity>
-									<TouchableOpacity style={styles.statusPenjualan}>
+									<TouchableOpacity style={styles.statusPenjualan} onPress={() => alert('Soon!')}>
 										<MaterialIcons name="compare-arrows" size={30}/>
 										<Text style={styles.textStatus}>Pengembalian</Text>
 									</TouchableOpacity>
-									<TouchableOpacity style={styles.statusPenjualan}>
+									<TouchableOpacity style={styles.statusPenjualan} onPress={() => alert('Soon!')}>
 										<Entypo name="dots-three-horizontal" size={30}/>
 										<Text style={styles.textStatus}>Lainnya</Text>
 									</TouchableOpacity>
@@ -144,56 +144,56 @@ export default class App extends Component {
 								</TouchableOpacity>
 							</View>
 							<View style={styles.body, {paddingTop: 5}}>
-								<TouchableOpacity style={styles.items}>
-									<AntDesign name="pluscircleo" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
+								<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
+									<FontAwesome5 name="money-check" style={{flex: 1, marginLeft: '3%'}} size={20} color="#EE4D2D"/>
 									<Text style={styles.text}>Saldo Penjual</Text>
 									<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '1%'}} size={18}/>
 								</TouchableOpacity>
 							</View>
 							<View style={styles.body}>
-								<TouchableOpacity style={styles.items}>
-									<AntDesign name="pluscircleo" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
+								<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
+									<FontAwesome5 name="money-check-alt" style={{flex: 1, marginLeft: '3%'}} size={20} color="#EE4D2D"/>
 									<Text style={styles.text}>Penghasilan Saya</Text>
 									<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '1%'}} size={18}/>
 								</TouchableOpacity>
 							</View>
 							<View style={styles.body}>
-								<TouchableOpacity style={styles.items}>
-									<AntDesign name="pluscircleo" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
+								<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
+									<MaterialCommunityIcons name="truck" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
 									<Text style={styles.text}>Jasa Kirim Saya</Text>
 									<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '1%'}} size={18}/>
 								</TouchableOpacity>
 							</View>
 							<View style={styles.body}>
-								<TouchableOpacity style={styles.items}>
-									<AntDesign name="pluscircleo" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
+								<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
+									<MaterialIcons name="star" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
 									<Text style={styles.text}>Lihat Penilaian Toko</Text>
 									<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '1%'}} size={18}/>
 								</TouchableOpacity>
 							</View>
 							<View style={styles.body}>
-								<TouchableOpacity style={styles.items}>
-									<AntDesign name="pluscircleo" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
+								<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
+									<Foundation name="graph-trend" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
 									<Text style={styles.text}>Performa Toko</Text>
 									<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '1%'}} size={18}/>
 								</TouchableOpacity>
 							</View>
 							<View style={styles.body}>
-								<TouchableOpacity style={styles.items}>
-									<AntDesign name="pluscircleo" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
+								<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
+									<MaterialCommunityIcons name="assistant" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
 									<Text style={styles.text}>Asisten Penjual</Text>
 									<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '1%'}} size={18}/>
 								</TouchableOpacity>
 							</View>
 							<View style={styles.body}>
-								<TouchableOpacity style={styles.items}>
-									<AntDesign name="questioncircleo" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
+								<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
+									<AntDesign name="questioncircleo" style={{flex: 1, marginLeft: '3%'}} size={20} color="#EE4D2D"/>
 									<Text style={styles.text}>Pusat Bantuan</Text>
 									<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '1%'}} size={18}/>
 								</TouchableOpacity>
 							</View>
-							<View style={styles.body, {paddingTop: 5}}>
-								<TouchableOpacity style={styles.items} onPress={() => this.props.navigation.navigate('PurchaseHistories')}>
+							<View style={styles.body, {paddingTop: 5}} >
+								<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
 									<MaterialCommunityIcons name="store" style={{flex: 1, marginLeft: '2%'}} size={25} color="#EE4D2D" />
 									<Text style={styles.textPenjualan}>Lihat Toko Saya</Text>
 									<Text style={{fontSize: 11, color: '#EE4D2D'}}>shovee.co.id/sobat</Text>

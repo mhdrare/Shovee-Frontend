@@ -17,9 +17,9 @@ export default class App extends Component {
 						<TouchableHighlight style={styles.shopcart}>
 							<MaterialCommunityIcons name="cart-outline" size={24} color={'#EE4D2D'}/>
 						</TouchableHighlight>
-						<TouchableHighlight style={styles.chat}>
+						<TouchableOpacity style={styles.chat} onPress={() => alert('Soon!')}>
 							<SimpleLineIcons name="bubbles" size={24} color={'#EE4D2D'}/>
-						</TouchableHighlight>
+						</TouchableOpacity>
 					</View>
 				</View>
 				<View style={styles.container}>

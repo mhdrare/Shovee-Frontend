@@ -8,55 +8,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 export default class App extends Component {
 	render(){
 		return(
-			<React.Fragment>
-				<View style={styles.header}>
-					<View style={styles.headerTop}>	
-						<TouchableHighlight style={styles.follow}>
-							<SimpleLineIcons name="user-follow" size={24} color={'#EE4D2D'}/>
-						</TouchableHighlight>
-						<View style={styles.title}>
-							<Text style={styles.text}>Feed</Text>
-						</View>
-						<TouchableHighlight style={styles.shopcart}>
-							<MaterialCommunityIcons name="cart-outline" size={24} color={'#EE4D2D'}/>
-						</TouchableHighlight>
-						<TouchableHighlight style={styles.chat}>
-							<SimpleLineIcons name="bubbles" size={24} color={'#EE4D2D'}/>
-						</TouchableHighlight>
-					</View>
-				</View>
-			</React.Fragment>
+			<View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+				<Image source={require('../assets/icon/shopee-seeklogo.com.png')} style={{width: 80, height: 120}}/>
+				<Text style={{ fontSize: 17, fontWeight: '600' }}>Soon!</Text>
+			</View>
 		)
 	}
 }
-
-const styles = StyleSheet.create({
-	header: {
-		position: 'absolute',
-		height: 80,
-		width: '100%',
-		backgroundColor: '#F2F2F2',
-	},
-	headerTop: {
-		flexDirection: 'row',
-		top: 40,
-		alignItems: 'center'
-	},
-	title: {
-		width: '55%',
-		marginLeft: '5%'
-	},
-	text: {
-		fontSize: 17,
-		color: '#000'
-	},
-	follow: {
-		marginLeft: '5%'
-	},
-	shopcart: {
-		marginLeft: '1%'
-	},
-	chat: {
-		marginLeft: '7%'
-	}
-})
