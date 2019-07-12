@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import { YellowBox } from 'react-native'
 import AppNavigator from './src/routes/rootNavigator';
+import store from './src/public/redux/store';
 import OneSignal from 'react-native-onesignal'
-import { Provider } from 'react-redux'
 YellowBox.ignoreWarnings(['ViewPagerAndroid']);
-
-import store from './src/public/redux/store'
 
 export default class App extends Component {
   constructor(props) {

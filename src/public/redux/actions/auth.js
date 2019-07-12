@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const url = 'https://pure-fjord-88379.herokuapp.com/users'
 
-export const login = (data) => {
+export const isLogin = (data) => {
     return {
         type: 'LOGIN',
         payload: axios.post(`${url}/authenticate`, {

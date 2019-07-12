@@ -231,7 +231,7 @@ export default class App extends Component {
 		return(
 			<ScrollView>
 				{
-					this.state.isLogin != 1 ? <HeaderAfterLogin navigation={this.props.navigation}/> : <HeaderBeforeLogin navigation={this.props.navigation}/>
+					this.state.isLogin == 1 ? <HeaderAfterLogin navigation={this.props.navigation}/> : <HeaderBeforeLogin navigation={this.props.navigation}/>
 				}
 			</ScrollView>
 		)

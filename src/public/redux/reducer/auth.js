@@ -19,8 +19,26 @@ export default auth = async (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
+				token: action.payload.data.token
 			}
 		case 'LOGIN_REJECTED':
+			return {
+				...state,
+				isLoading: false,
+                isError: true
+			}
+		case 'FORGET_PASSWORD_PENDING':
+			return {
+				...state,
+				isLoading: true,
+                isError: false
+			}
+		case 'FORGET_PASSWORD_FULFILLED':
+			return {
+				...state,
+				isLoading: false,
+			}
+		case 'FORGET_PASSWORD_REJECTED':
 			return {
 				...state,
 				isLoading: false,

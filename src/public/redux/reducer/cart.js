@@ -1,30 +1,40 @@
 const initialState = {
     isLoading: true,
     isError: false,
-    produk: []
+    data: []
 }
 
 export default product = (state = initialState, action) => {
     switch(action.type){
-        case 'GET_PRODUCTS_PENDING':
+        case 'GET_CART_PENDING':
+        case 'POST_CART_PENDING':    
             return {
                 ...state,
                 isLoading: true
             }
 
-        case 'GET_PRODUCTS_REJECTED':
+        case 'GET_CART_REJECTED':
+        case 'POST_CART_REJECTED':
             return {
                 ...state,
                 isLoading: false,
                 isError: true
             }
         
-        case 'GET_PRODUCTS_FULFILLED':
+        case 'GET_CART_FULFILLED':
             return {
                 ...state,
                 isLoading: false,
                 isError: false,
-                produk: action.payload.data
+                data: action.payload.data.data
+            }
+
+        case 'POST_CART_FULFILLED':
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                data: [...state.data, action.payload.data.data]
             }
         default:
             return state   

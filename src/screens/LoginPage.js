@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
 import { createAppContainer, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -6,17 +7,20 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign'
 import Next from './user/NextDaftar'
 import ForgetPassword from './user/ForgetPassword'
 import Home from '../routes/rootNavigator'
-import { login, register } from '../public/redux/actions/auth'
+import { isLogin, register } from '../public/redux/actions/auth'
 
 class Login extends Component {
 	state = {
 		username: '',
 		password: ''
 	}
-
 	userLogin = (data) => {
-        // this.props.dispatch(login(data))
-        console.log(data)
+		if (this.state.username == '' || this.state.password == '') {
+			alert('Kosong')
+		} else {
+	        // console.log(data)
+        	console.log(this.props.dispatch)
+		}
     }
 
     setUsername = (value) => {
@@ -38,11 +42,11 @@ class Login extends Component {
 					<View style={{width:'80%', marginTop: 30}}>
 						<TextInput style={styles.input} placeholder="Email/Telepon/Username" onChangeText={this.setUsername}/>
 						<TextInput style={styles.input} secureTextEntry={true} placeholder="Password" onChangeText={this.setPassword}/>
-						<TouchableOpacity style={{position: 'absolute', right: 5, top: 65}} onPress={() => this.userLogin({username: this.state.username, password: this.state.password})}>
+						<TouchableOpacity style={{position: 'absolute', right: 5, top: 65}} onPress={() => this.props.navigation.navigate('ForgetPassword')}>
 							<Text style={{color: '#075d54'}}>Lupa?</Text>
 						</TouchableOpacity>
 					</View>
-					<TouchableOpacity style={styles.button}>
+					<TouchableOpacity style={styles.button} onPress={() => this.userLogin({username: this.state.username, password: this.state.password})}>
 						<Text style={{color: '#FFFFFF'}}>{'Log In'.toUpperCase()}</Text>
 					</TouchableOpacity>
 					<View style={{marginTop: 20}}>
@@ -166,7 +170,8 @@ const LogNavigator = createMaterialTopTabNavigator({
 
 const StackNavigator = createStackNavigator({
   Login: {
-    screen: LogNavigator
+	screen: LogNavigator,
+	
   },
   Next: {
     screen: Next,
@@ -181,15 +186,26 @@ const StackNavigator = createStackNavigator({
 
 const LogPage = createAppContainer(StackNavigator)
 
-export default class App extends Component {
+class App extends Component {
 	render(){
 		return(
-			<React.Fragment>
-				<LogPage/>
-			</React.Fragment>
+			<LogPage/>
 		)
 	}
 }
+
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth
+    }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+	login: (data) => dispatch(isLogin(data))
+})
+
+connect(mapStateToProps)(Login)
+export default StackNavigator
 
 const styles = StyleSheet.create({
 	container: {
