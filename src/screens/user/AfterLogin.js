@@ -7,6 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { getUserDetail } from '../../public/redux/actions/user'
+import { getWishlist } from '../../public/redux/actions/wishlist';
 import { connect } from 'react-redux'
 
 class AfterLogin extends Component {
@@ -25,6 +26,11 @@ class AfterLogin extends Component {
 		this.props.dispatch(getUserDetail(this.state.token))
 		.then(()=>{
 			console.warn(this.props.users)
+		})
+
+		this.props.dispatch(getWishlist(this.state.token))
+		.then(() => {
+			console.log(this.props.wishlist)
 		})
 
 	}
@@ -159,7 +165,8 @@ class AfterLogin extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users
+		users: state.users,
+		wishlist: state.wishlist
     }
 }
 
