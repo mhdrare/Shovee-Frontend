@@ -20,7 +20,9 @@ class App extends Component {
 					isLogin: true
 				})
 			} else {
-				console.log('Not Login')
+				this.setState({
+					isLogin: false
+				})
 			}
 		})
     }
