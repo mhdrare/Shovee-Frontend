@@ -6,6 +6,13 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign'
 import { register } from '../../public/redux/actions/auth'
 
 class Register extends Component {
+	constructor (props) {
+		super(props)
+
+		this.state = {
+			nomorhp:''
+		}
+	}
 
 	componentWillMount(){
 		AsyncStorage.getItem('Token', (error, result) => {
@@ -17,14 +24,29 @@ class Register extends Component {
 		})
 	}
 
+	setNomorHP = (values) => {
+		this.setState({
+			nomorhp: values
+		})
+	}
+
+	lanjutDaftar = (data) => {
+		if (data == '') {
+			alert('Kosong!')
+		} else {
+			this.props.navigation.navigate('Next', data)
+		}
+	}
+
 	render(){
+		console.log(this.state.nomorhp)
 		return(
 			<React.Fragment>
 				<View style={styles.container}>
 					<View style={{width:'80%', marginTop: 30}}>
-						<TextInput style={styles.input} placeholder="Nomor HP"/>
+						<TextInput style={styles.input} placeholder="Nomor HP" onChangeText={this.setNomorHP}/>
 					</View>
-					<TouchableOpacity style={styles.button} onPress={() =>  this.props.navigation.navigate('Next')}>
+					<TouchableOpacity style={styles.button} onPress={() =>  this.lanjutDaftar(this.state.nomorhp)}>
 						<Text style={{color: '#FFFFFF'}}>{'Lanjut'.toUpperCase()}</Text>
 					</TouchableOpacity>
 					<View style={{marginTop: '30%'}}>
