@@ -8,12 +8,13 @@ import cart from '../public/redux/reducer/cart';
 
 class CartList extends Component {
 
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             total: 0
         }
+        console.log(this.props.item)
     }
 
     render() {
@@ -31,9 +32,9 @@ class CartList extends Component {
 
                             <View style={{flex:9}}>
                                 <View style={{flexDirection:'row'}}>
-                                    <Image source={{ uri: this.props.item.thumbnail }} style={{width:24, height:24, borderRadius:50 }} />
+                                    <Image source={{ uri: this.props.item.product.thumbnail }} style={{width:24, height:24, borderRadius:50 }} />
 
-                                    <Text style={{color:'#000'}}>  {this.props.item.seller.name}</Text>
+                                    <Text style={{color:'#000'}}>  item</Text>
                                 </View>
                             </View>
                         </View>

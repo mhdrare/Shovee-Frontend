@@ -76,7 +76,6 @@ class Home extends Component {
 
   componentDidMount() {
     this.fetchProducts()
-    this.fetchCart()
 
   }
 

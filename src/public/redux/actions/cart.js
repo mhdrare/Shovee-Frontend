@@ -2,25 +2,25 @@ import axios from 'axios'
 
 const url = 'https://pure-fjord-88379.herokuapp.com/cart'
 
-export const fetchCart = () => {
+export const fetchCart = (token) => {
     return {
         type: 'GET_CART',
         payload: axios.get(`${url}`, {
             headers: {
-                'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDI2MDVhNDBjYWYwNTBmOWNhY2QyYjYiLCJpYXQiOjE1NjI4MjczMjB9.PYF2rJAEZXm0teJSij1-BDoBXvCDgZcy33g2NH27F3o'
+                'x-auth-token':token
             }
         })
     }
 }
 
-export const postCart = (id) => {
+export const postCart = (id, token) => {
     return {
         type: 'POST_CART',
         payload: axios.post(`${url}`, {
             product: id
         }, {
             headers: {
-                'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDI2MDVhNDBjYWYwNTBmOWNhY2QyYjYiLCJpYXQiOjE1NjI4MjczMjB9.PYF2rJAEZXm0teJSij1-BDoBXvCDgZcy33g2NH27F3o'
+                'x-auth-token':token
             }
         })
     }

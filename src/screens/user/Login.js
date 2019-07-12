@@ -6,17 +6,21 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign'
 import { isLogin } from '../../public/redux/actions/auth'
 
 class Login extends Component {
-	state = {
-		username: '',
-		password: ''
+	constructor(props) {
+		super(props)
+		state = {
+			username: '',
+			password: ''
+		}
 	}
 	userLogin = async (data) => {
 		if (this.state.username == '' || this.state.password == '') {
 			alert('Kosong')
 		} else {
         	await this.props.dispatch(isLogin(data))
-        	// this.props.navigation.navigate('Me')
-        	this.props.navigation.navigate('Me')
+			// this.props.navigation.navigate('Me')
+			console.log(this.props.navigation.state.params)
+        	this.props.navigation.navigate('Cart', this.props.navigation.state.params)
 		}
     }
 
@@ -89,7 +93,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(Login)
+export default connect(state => ({auth: state.auth}))(Login)
 
 const styles = StyleSheet.create({
 	container: {
