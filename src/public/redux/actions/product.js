@@ -25,11 +25,7 @@ export const addProduct = (token,category,price,images,city,description,name,sto
            }
        })
    }
-};
-
-import axios from 'axios'
-
-const url = 'https://pure-fjord-88379.herokuapp.com/products'
+}
 
 export const fetchProducts = () => {
     return {

@@ -22,7 +22,6 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { connect } from 'react-redux';
 import { getCategories } from '../public/redux/actions/categories';
 import { fetchProducts } from '../public/redux/actions/product';
 import { fetchCart } from '../public/redux/actions/cart';
@@ -397,9 +396,6 @@ class Home extends Component {
   };
 }
 
-  
-export default connect(state => ({products: state.products}))(Home)
-
 const styles = StyleSheet.create({
     fill: {
       flex: 1,
@@ -479,7 +475,8 @@ const styles = StyleSheet.create({
 
   const mapStateToProps = state => {
     return {
-		categories: state.categories
+    categories: state.categories,
+    products: state.products
     }
 }
 
