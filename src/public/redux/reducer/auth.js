@@ -4,7 +4,7 @@ const initialState = {
 	data: [],
 	isLoading: false,
 	isError: false,
-	token: [],
+	token: '',
 	isLogin: false
 }
 
@@ -19,7 +19,7 @@ export default auth = async (state = initialState, action) => {
 			}
 		case 'LOGIN_FULFILLED':
 			await AsyncStorage.setItem('Token', action.payload.data.token);
-			await AsyncStorage.setItem('Login', state.isLogin);
+			// await AsyncStorage.setItem('Login', state.isLogin);
 			console.log(state)
 			return {
 				...state,

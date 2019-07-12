@@ -18,10 +18,8 @@ import ListSearch from '../screens/ListSearch';
 import AccountSettings from '../screens/user/AccountSettings';
 import DetailProduct from '../screens/DetailProduct';
 
-import NavigationService from './NavigationService';
-
 const LogNavigator = createMaterialTopTabNavigator({
-	Register: {
+	Register2: {
 		screen: Register,
 		navigationOptions: {
 	    	tabBarLabel: 'Daftar',
@@ -34,7 +32,7 @@ const LogNavigator = createMaterialTopTabNavigator({
 	    }
 	}
 },{
-  initialRouteName: 'Register',
+  initialRouteName: 'Register2',
   swipeEnabled: true,
   animationEnabled: false,
   tabBarOptions: {
