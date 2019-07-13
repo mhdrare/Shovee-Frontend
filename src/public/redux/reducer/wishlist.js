@@ -16,7 +16,7 @@ export default wishlist = (state = initialState, action) => {
                 ...state,
                 isLoading: true
             }
-        case 'GET_WISHLISTREJECTED':
+        case 'GET_WISHLIST_REJECTED':
             return {
                 ...state,
                 isLoading: false,

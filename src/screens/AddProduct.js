@@ -98,15 +98,14 @@ class App extends Component {
 		.catch((err)=>{
 			this.setState({
 				loading: false
-			}, ()=>{
-				alert('Gagal tambah barang')
+			}, () => {
+					alert('Gagal tambah barang')
+				})
 			})
-		})
-	}
+		}
 	}
 
 	render(){
-		{console.log(this.state.imageProduct)}
 		return(
 			<React.Fragment>
 				<View style={styles.header}>

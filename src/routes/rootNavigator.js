@@ -9,6 +9,9 @@ import DetailProduct from '../screens/DetailProduct';
 import Cart from '../screens/Cart';
 import Checkout from '../screens/Checkout';
 import Profile from '../screens/user/Profile';
+import AddressSettings from '../screens/user/AddressSettings';
+import AddAddress from '../screens/user/AddAddress';
+import EditProfile from '../screens/user/EditProfile'
 import PurchaseHistories from '../screens/PurchaseHistories';
 import AddProduct from '../screens/AddProduct';
 import LoginPage from '../screens/LoginPage';
@@ -100,11 +103,17 @@ const AppTabNavigator = createMaterialTopTabNavigator({
     Login: {
       screen: LoginPage
     },
+    Register: {
+      screen: LoginPage,
+    },
+    EditProfile,
     Cart,
     Checkout,
     Wishlist,
     PurchaseHistories,
     Profile,
+    AddressSettings,
+    AddAddress,
     SellerPage,
     AddProduct,
     DetailProduct,
