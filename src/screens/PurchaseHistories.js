@@ -11,23 +11,27 @@ class ListHistories extends Component {
 		return (
 			<TouchableOpacity style={styles.items}>
 				<View style={{flexDirection: 'row', margin: 13, alignItems: 'center'}}>
-					<Image style={{width: 30, height: 30, borderRadius: 50}} source={{ uri: this.props.item.product.seller.image_profil}}/>
-					<Text style={{flex: 1, marginLeft: '2%', fontSize: 15, fontWeight: '500', color: '#000'}}>{this.props.item.product.seller.user.username}</Text>
+					<Text style={{flex: 1, marginLeft: '2%', fontSize: 15, fontWeight: '500', color: '#000'}}>{}</Text>
 					<Text style={{flex: 1, textAlign: 'right', marginRight: '5%', color: '#EE4D2D'}}>Telah Dinilai</Text>
 				</View>
 				<View style={{flexDirection: 'row', margin: 13, alignItems: 'center'}}>
 					<View style={{backgroundColor: '#000', width: 100, height: 100, borderWidth: 0.5}}>
 						<Image style={{width: '100%', height: '100%'}} source={{ uri: this.props.item.product.thumbnail}}/>
 					</View>
-					<View style={{flexDirection: 'column', margin: 13, width: '63%', height: '100%'}}>
-						<Text style={{flex: 1, fontSize: 15, color: '#000'}}>{this.props.item.product[0].name}</Text>
-						<Text style={{flex: 1, fontSize: 15, color: '#000', textAlign: 'right'}}>x1</Text>
-						<Text style={{flex: 1, fontSize: 15, color: '#000', textAlign: 'right'}}>{this.props.item.product[0].price}</Text>
-					</View>
+					{
+						this.props.item.product.map(produk => (
+							<View style={{flexDirection: 'column', margin: 13, width: '63%', height: '100%'}}>
+								<Text style={{flex: 1, fontSize: 15, color: '#000'}}>{produk.name}</Text>
+								<Text style={{flex: 1, fontSize: 15, color: '#000', textAlign: 'right'}}>x1</Text>
+								<Text style={{flex: 1, fontSize: 15, color: '#000', textAlign: 'right'}}>{produk.price}</Text>
+							</View>
+						))
+					}
+
 				</View>
 				<View style={{flexDirection: 'row', marginLeft: 13, marginRight: 18, alignItems: 'center', borderBottomWidth: 0.4, borderTopWidth: 0.4, borderColor: 'grey'}}>
 					<Text style={{flex: 1, margin: 10}}>1 produk</Text>
-					<Text style={{flex: 2, margin: 10, textAlign: 'right'}}>Jumlah Harus Dibayar: </Text><Text style={{color: '#EE4D2D'}}>Rp{this.props.item.product[0].price}</Text>
+					<Text style={{flex: 2, margin: 10, textAlign: 'right'}}>Jumlah Harus Dibayar: </Text><Text style={{color: '#EE4D2D'}}>Rp{this.props.item.product.price}</Text>
 				</View>
 				<View style={{flexDirection: 'row', marginLeft: 13, marginRight: 18, alignItems: 'center', borderBottomWidth: 0.4, borderColor: 'grey'}}>
 					<MaterialCommunityIcons name="truck-fast" size={24} color={'#008eaa'} />
@@ -115,16 +119,14 @@ export default class App extends Component {
 				<View style={styles.container}>
 					<ScrollView>
 						<View>
-							<FlatList
+						<FlatList
 							data={this.state.history}
 							keyExtractor={(item, index) => item._id}
 							renderItem={({item, index}) => {
 								return (
 									<ListHistories item={item} index={index} /> 
 								)
-							}}
-							 />
-							
+							}} />
 						</View>
 					</ScrollView>
 				</View>
