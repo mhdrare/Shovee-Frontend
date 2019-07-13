@@ -37,8 +37,6 @@ class AfterLogin extends Component {
 		.then(()=>{
 			this.fetchDetailUser(this.state.token)
 		})
-
-		this.props.dispatch(getWishlist(this.state.token))
 		.then(() => {
 			console.log(this.props.wishlist)
 		})
