@@ -34,9 +34,13 @@ export const fetchProducts = () => {
     }
 }
 
-export const searchProducts = (data) => {
+export const fetchProductsByUser = (token) => {
     return {
-      type: 'SEARCH_PRODUCTS',
-      payload: axios.get(`${url}`)
+        type: 'GET_PRODUCTS_BYUSER',
+        payload: axios.get(`${url}/user`, {
+          headers: {
+               'x-auth-token': token
+           }
+        })
     }
 }

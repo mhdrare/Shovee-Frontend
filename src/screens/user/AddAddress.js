@@ -5,14 +5,103 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
+import { updateProfileUser } from '../../public/redux/actions/user'
 
 class App extends Component {
 	constructor(props) {
         super(props);
   
         this.state = {
-    
+    		nama: '',
+    		provinsi: '',
+    		kota: '',
+    		kecamatan: '',
+    		kodepos: '',
+    		alamat: '',
+    		loading: false,
+    		token: ''
         };
+
+        this._bootstrapAsync()
+    }
+
+    _bootstrapAsync = async () => {
+		await AsyncStorage.getItem('Token', (error, result) => {
+			if(result) {
+				this.setState({
+					token: result
+				})
+			}
+		});
+	}
+
+    setNama = (data) => {
+    	this.setState({
+    		nama: data
+    	})
+    }
+
+    setProvinsi = (data) => {
+    	this.setState({
+    		provinsi: data
+    	})
+    }
+
+    setKota = (data) => {
+    	this.setState({
+    		kota: data
+    	})
+    }
+
+    setKecamatan = (data) => {
+    	this.setState({
+    		kecamatan: data
+    	})
+    }
+
+    setPOS = (data) => {
+    	this.setState({
+    		kodepos: data
+    	})
+    }
+
+    setAlamat = (data) => {
+    	this.setState({
+    		alamat: data
+    	})
+    }
+
+    updateProfile = async () => {
+    	if (this.state != null) {
+    		await this.setState({
+    			loading: true
+    		})
+
+    		this.props.dispatch(updateProfileUser(
+				this.state.token, 
+				this.state.nama,
+				this.state.provinsi, 
+				this.state.kota,
+				this.state.kecamatan, 
+				this.state.kodepos, 
+				this.state.alamat))
+			.then(()=>{
+				this.setState({
+					loading: false
+				}, ()=>{
+					this.props.navigation.goBack()
+				})
+			})
+			.catch((err)=>{
+				this.setState({
+					loading: false
+				}, () => {
+						alert('Gagal update profile')
+					})
+				})
+		} else {
+
+    	}
     }
 
 	render(){
@@ -32,28 +121,25 @@ class App extends Component {
 					
 				</View>
 				<View style={styles.container}>
-					<TextInput placeholder="Nama" style={styles.items}/>
+					<TextInput placeholder="Nama" style={styles.items} onChangeText={this.setNama}/>
 				</View>
 				<View style={styles.container}>
-					<TextInput placeholder="No Telepon" style={styles.items}/>
+					<TextInput placeholder="Provinsi" style={styles.items} onChangeText={this.setProvinsi}/>
 				</View>
 				<View style={styles.container}>
-					<TextInput placeholder="Provinsi" style={styles.items}/>
+					<TextInput placeholder="Kota/Kabupaten" style={styles.items} onChangeText={this.setKota}/>
 				</View>
 				<View style={styles.container}>
-					<TextInput placeholder="Kota/Kabupaten" style={styles.items}/>
+					<TextInput placeholder="Kecamatan" style={styles.items} onChangeText={this.setKecamatan}/>
 				</View>
 				<View style={styles.container}>
-					<TextInput placeholder="Kecamatan" style={styles.items}/>
+					<TextInput placeholder="Kode POS" style={styles.items} onChangeText={this.setPOS}/>
 				</View>
 				<View style={styles.container}>
-					<TextInput placeholder="Kode POS" style={styles.items}/>
-				</View>
-				<View style={styles.container}>
-					<TextInput placeholder="Alamat Lengkap" multiline={true} style={styles.itemsLengkap}/>
+					<TextInput placeholder="Alamat Lengkap" multiline={true} style={styles.itemsLengkap} onChangeText={this.setAlamat}/>
 				</View>
 				<View style={{position: 'absolute', bottom: 0, width: '100%'}}>
-					<TouchableOpacity style={styles.buttonTambah}>
+					<TouchableOpacity style={styles.buttonTambah} onPress={()=>this.updateProfile()}>
 						<Text style={{color: '#FFFFFF'}}>Kirim</Text>
 					</TouchableOpacity>
 				</View>

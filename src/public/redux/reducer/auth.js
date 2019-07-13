@@ -4,7 +4,7 @@ const initialState = {
 	data: [],
 	isLoading: false,
 	isError: false,
-	token: [],
+	token: '',
 	isLogin: false
 }
 
@@ -19,7 +19,7 @@ export default auth = async (state = initialState, action) => {
 			}
 		case 'LOGIN_FULFILLED':
 			await AsyncStorage.setItem('Token', action.payload.data.token);
-			await AsyncStorage.setItem('Login', state.isLogin);
+			// await AsyncStorage.setItem('Login', state.isLogin);
 			console.log(state)
 			return {
 				...state,
@@ -34,23 +34,6 @@ export default auth = async (state = initialState, action) => {
 				isLoading: false,
                 isError: true,
                 isLogin: false,
-			}
-		case 'REGISTER_PENDING':
-			return {
-				...state,
-				isLoading: true,
-                isError: false,
-			}
-		case 'REGISTER_FULFILLED':
-			return {
-				...state,
-				isLoading: false,
-			}
-		case 'REGISTER_REJECTED':
-			return {
-				...state,
-				isLoading: false,
-                isError: true,
 			}
 		case 'FORGET_PASSWORD_PENDING':
 			return {
@@ -68,11 +51,6 @@ export default auth = async (state = initialState, action) => {
 				...state,
 				isLoading: false,
                 isError: true
-			}
-		case 'PAGE':
-			return {
-				...state,
-				page: action.payload
 			}
 		default:
             return state;

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { AsyncStorage, StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
+import { ActivityIndicator, AsyncStorage, StyleSheet, Text, ScrollView, TextInput, View, TouchableOpacity, TouchableHighlight, Image, Button} from 'react-native'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -11,32 +11,57 @@ import { getWishlist } from '../../public/redux/actions/wishlist';
 import { connect } from 'react-redux'
 
 class AfterLogin extends Component {
-	constructor(props) {
-	  super(props);
-	
-	  this.state = {
-	  	token: this.props.token
-	  };
-	}
+	constructor() {
+        super();
 
+        this.state = {
+        	token: '',
+            user: []
+        }
 
-	componentDidMount(){
-		console.warn(this.state.token);
-		
-		this.props.dispatch(getUserDetail(this.state.token))
+        
+    }
 
-		this.props.dispatch(getWishlist(this.state.token))
-		.then(() => {
-			console.log(this.props.wishlist)
+    fetchDetailUser = async (token) => {
+    	await this.props.dispatch(getUserDetail(token))
+  	}
+
+	_bootstrapAsync = async () => {
+		AsyncStorage.getItem('Token', (error, result) => {
+			if(result) {
+				this.setState({
+					token: result
+				})
+			}
 		})
-
+		.then(()=>{
+			this.fetchDetailUser(this.state.token)
+			this.props.dispatch(getWishlist(this.state.token))
+			.then(() => {
+				console.log(this.props.wishlist)
+			})
+		})
 	}
 
-	getUserDetails = () => {
-		
-		this.props.dispatch(getUserDetail(this.state.token))
-		
-	}
+	componentDidMount() {
+
+    	this._bootstrapAsync()   	
+    	this.willFocusSubscription = this.props.navigation.addListener(
+      	'willFocus',
+      		() => {
+        		// this.fetchDetailUser(this.state.token)
+				this.props.dispatch(getWishlist(this.state.token))
+				.then(() => {
+					console.log(this.props.wishlist)
+				})
+      		}
+    	);
+    	
+  	}
+
+  	componentWillUnmount() {
+    	this.willFocusSubscription.remove();
+  	}
 
 	render(){
 		console.log(this.props.users)
@@ -63,10 +88,10 @@ class AfterLogin extends Component {
 						</TouchableOpacity>
 					</View>
 					<TouchableOpacity style={styles.headerAccount} onPress={()=>this.props.navigation.navigate('Profile')}>
-						<Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
+						{ (this.props.user.isLoading) ? <ActivityIndicator size='small'/> : <Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: this.props.user.data.image_profil }}/> }
 						<View style={{flexDirection: 'column', margin: 5, marginLeft: 10}}>
 							<View>
-								<Text style={{fontSize: 18, fontWeight: '600', color: '#FFFFFF'}}>mhdrare</Text>
+								{ (this.props.user.isLoading) ? <ActivityIndicator size='small'/> : <Text style={{fontSize: 18, fontWeight: '600', color: '#FFFFFF'}}>{this.props.user.data.user.username}</Text> }
 							</View>
 							<View>
 								<View style={{flexDirection: 'row'}}>
@@ -163,7 +188,8 @@ class AfterLogin extends Component {
 
 const mapStateToProps = (state) => {
     return {
-		users: state.users,
+        user: state.user,
+        products: state.products,
 		wishlist: state.wishlist
     }
 }

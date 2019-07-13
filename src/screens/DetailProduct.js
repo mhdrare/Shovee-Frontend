@@ -26,9 +26,9 @@ import Login from '../screens/user/Login';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 import { AsyncStorage } from 'react-native';
-import { addWishlist, deleteWishlist } from '../public/redux/actions/wishlist';
+import { addWishlist, getWishlist, deleteWishlist } from '../public/redux/actions/wishlist';
 
-import { changePage, fetchCart } from '../public/redux/actions/cart'
+import { changePage, fetchCart, postCart } from '../public/redux/actions/cart'
 
 const HEADER_MAX_HEIGHT = 411;
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 60 : 73;
@@ -78,8 +78,10 @@ class DetailProduct extends Component {
 
   _doNavigateAndFetch = async () => {
     const userToken = await AsyncStorage.getItem('Token')
-    await this.props.dispatch(fetchCart(userToken))
-    await this.props.navigation.navigate('Cart', this.props.item)
+    await this.props.dispatch(changePage(userToken))
+    await this.props.navigation.navigate('Cart')
+    await this.props.dispatch(postCart(this.props.navigation.state.params._id, userToken))
+    this.props.dispatch(fetchCart(userToken))
   }
 
   _bootstrapAsync = async () => {
@@ -151,24 +153,13 @@ class DetailProduct extends Component {
     } else {
       return this.setState({
         liked: false
+      }, () => {
+        this.props.dispatch(deleteWishlist(this.state.token, this.props.wishlist.data._id));
       })
     }
   }
 
   _renderScrollViewContent() {
-    if(this.props.wishlist.isLoading == false) {
-        AsyncStorage.getItem('Liked', (error, result) => {
-        if(result) {
-          this.setState({
-            liked: result
-          })
-        }
-      })
-
-      console.log('masuk pak eko')
-    }
-
-    console.log(this.state.liked);
     return (
       <React.Fragment>
 
@@ -211,15 +202,15 @@ class DetailProduct extends Component {
             <View style={{flexDirection:'row'}}>
 
               <View style={{paddingTop:10, paddingLeft:10}}>
-                <Image source={require('../assets/img/profile.jpeg')} style={{width:52, height:52, borderRadius:50}}  />
+                <Image source={{uri: this.props.navigation.state.params.seller.user.image_profil}} style={{width:52, height:52, borderRadius:50}}  />
               </View>
 
               <View style={{flex:3, marginLeft:10, paddingTop:10}}>
-                <Text style={{fontWeight:'bold'}}>andreferi3</Text>
+                <Text style={{fontWeight:'bold'}}>{this.props.navigation.state.params.seller.name}</Text>
                 <Text style={{fontSize:11}}>Aktif 2 hari yang lalu</Text>
                 <View style={{flexDirection:'row'}}>
                   <Icon name='location' size={16} style={{paddingTop:4, marginLeft:-3}} />
-                  <Text style={{fontSize:14}}>Kota Yogyakarta</Text>
+                  <Text style={{fontSize:14}}>{this.props.navigation.state.params.seller.address.city}</Text>
                 </View>
               </View>
 
@@ -269,7 +260,7 @@ class DetailProduct extends Component {
                 <Text>Stok</Text>
               </View>
               <View style={{flex:1.5, backgroundColor:'#fff'}}>
-                <Text style={{color:'#000'}}>1629</Text>
+                <Text style={{color:'#000'}}>{this.props.navigation.state.params.stok}</Text>
               </View>
             </View>
 
@@ -278,16 +269,16 @@ class DetailProduct extends Component {
                 <Text>Merek</Text>
               </View>
               <View style={{flex:1.5, backgroundColor:'#fff'}}>
-                <Text style={{color:'#000'}}>Tidak ada merek</Text>
+                <Text style={{color:'#000'}}>{this.props.navigation.state.params.brand}</Text>
               </View>
             </View>
 
             <View style={{flexDirection:'row', paddingBottom:20}}>
               <View style={{flex:1, backgroundColor:'#fff'}}>
-                <Text>Bahan</Text>
+                <Text>Kategori</Text>
               </View>
               <View style={{flex:1.5, backgroundColor:'#fff'}}>
-                <Text style={{color:'#000'}}>Katun</Text>
+                <Text style={{color:'#000'}}>{this.props.navigation.state.params.category.name}</Text>
               </View>
             </View>
 
@@ -296,7 +287,7 @@ class DetailProduct extends Component {
                 <Text>Dikirim Dari</Text>
               </View>
               <View style={{flex:1.5, backgroundColor:'#fff'}}>
-                <Text style={{color:'#000'}} numberOfLines={2}>Los Santos - United States</Text>
+                <Text style={{color:'#000'}} numberOfLines={2}>{this.props.navigation.state.params.city}</Text>
               </View>
             </View>
           </View>
@@ -309,21 +300,9 @@ class DetailProduct extends Component {
               renderViewLess={this.renderViewLess}
             >              
               <Text>
-                    Kode : J138 {'\n'}
-                    Bahan tali :silikon {'\n'}
-                    Ketebalan Watchcase  : 1CM {'\n'}
-                    Panjang keseluruhan (tali jam + casing jam ) = 25.5CM {'\n'}
-                    {'\n'}
-                    {'\n'}
-                    Deskripsi: {'\n'}
-                    - 100% baru {'\n'}
-                    - tersedia baterai dalam jam {'\n'}
-                    - Tampilan waktu dan tanggal digital. {'\n'}
-                    - Gelang jam silikon yang tahan lama dan nyaman {'\n'}
-                    - Gerakan digital yang tepat untuk menjaga waktu akurat. {'\n'}
-                    - Daya tahan air harian 30M (jangan tekan tombol apa pun di bawah air).{'\n'}
-                    {'\n'}
-                    Jam tangan digital ini dapat dipakai oleh anak anak dan remaja (Pria & Wanita) dalam bepergian kemanapun yang kamu sukai.
+                    {
+                      this.props.navigation.state.params.description
+                    }
               </Text>
             </ViewMoreText>
             </View>
@@ -365,32 +344,12 @@ class DetailProduct extends Component {
   }
 
   render(){
-    const datacarousel = [
-      {
-        "id": '339964',
-        "imagePath": "https://cf.shopee.co.id/file/c34c7eadcd6376f5f9355f7a26326c93", // URL
-      },
-      {
-        "id": '33995',
-        "imagePath": "https://cf.shopee.co.id/file/webp/baa1cd10eda6eedbafee8f002ae6b391_xxhdpi",
-      },
-      {
-        "id": '33995dsf4',
-        "imagePath": 'https://cf.shopee.co.id/file/webp/f3824ab80b89d29677eca72163f93565_xxhdpi',
-      },
-      {
-        "id": '3399545dsf4',
-        "imagePath": 'https://cf.shopee.co.id/file/webp/1836a466998e4d1f7cca52275028f6be_xxhdpi',
-      },
-      {
-        "id": '33993465dsf4',
-        "imagePath": 'https://cf.shopee.co.id/file/webp/abec0363e8defc836985fa884529470a_xxhdpi',
-      },
-      {
-        "id": '33993465d585',
-        "imagePath": 'https://cf.shopee.co.id/file/webp/286bb3d889034d103f8576cb6119bc71_xxhdpi',
-      },
-    ];
+    const datacarousel = [];
+    let id = 1
+    this.props.navigation.state.params.images.map(image => {
+      datacarousel.push({id, imagePath: image})
+      id++
+    })
 
     const scrollY = Animated.add(
       this.state.scrollY,
@@ -405,6 +364,12 @@ class DetailProduct extends Component {
     const barOpacity = scrollY.interpolate({
       inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
       outputRange: [0, 1, 1],
+      extrapolate: 'clamp'
+    });
+
+    const barDissapear = scrollY.interpolate({
+      inputRange: [0, HEADER_SCROLL_DISTANCE / 50, HEADER_SCROLL_DISTANCE],
+      outputRange: [50, 50, 0],
       extrapolate: 'clamp'
     });
 
@@ -522,6 +487,38 @@ class DetailProduct extends Component {
           style={[
             styles.bar,
             {
+              opacity: barDissapear,
+              transform: [
+                { translateY: titleTranslate },
+              ],
+            },
+          ]}
+        >
+          <View style={{flexDirection:'row'}}>
+            <TouchableOpacity style={{flex:2.5,paddingHorizontal:13, paddingVertical:3, justifyContent:'center', borderRadius:3}} onPress={() => {this.props.navigation.goBack()}}>
+              <View style={{flexDirection:'row'}}>
+                <AntDesign name='arrowleft' size={34} color={'#fff'} style={{backgroundColor:'rgba(0,0,0,0.3)', borderRadius:50}} />
+              </View>
+            </TouchableOpacity>
+
+            <View style={{flex:1, justifyContent:'center', alignItems:'flex-end', padding:8, marginLeft:10}}>
+              <View style={{flexDirection:'row', alignItems:'center'}}>
+                <TouchableOpacity>
+                  <AntDesign name='shoppingcart' size={34} color={'#fff'} style={{marginRight:20, backgroundColor:'rgba(0,0,0,0.3)', borderRadius:50}} />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Image source={require('../assets/icon/morewhite.png')} style={{width:30, height:30, backgroundColor:'rgba(0,0,0,0.3)', borderRadius:50}} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
+        </Animated.View>
+
+        <Animated.View
+          style={[
+            styles.bar,
+            {
               opacity: barOpacity,
               transform: [
                 { translateY: titleTranslate },
@@ -531,11 +528,11 @@ class DetailProduct extends Component {
         >
           <TouchableWithoutFeedback>
             <View style={{width:'70%', height:40, flex:1, flexDirection:'column', justifyContent:'center', marginBottom:5}}>
-              <Text style={{alignItems:'flex-start', color:'#000', fontSize:20, marginLeft:'20%', fontWeight:'bold', fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif'}} numberOfLines={1}>{'Jilbab Pasmina Sabyan Diamond'.substring(0,20)+'...'}</Text>
+              <Text style={{alignItems:'flex-start', color:'#000', fontSize:20, marginLeft:'20%', fontWeight:'bold', fontFamily:'Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif'}} numberOfLines={1}>{this.state.item.name.substring(0,20)}</Text>
             </View>
           </TouchableWithoutFeedback>
 
-          <TouchableOpacity style={{position:'absolute', top:7, left:13}} onPress={() => this.props.navigation.goBack()}>
+          <TouchableOpacity style={{position:'absolute', top:7, left:13}} onPress={() => this.props.navigation.goBack() && this.props.dispatch(getWishlist(this.state.token))}>
             <Image source={require('../assets/icon/left-arrow.png')} style={{width:24, height:24}} />
           </TouchableOpacity>
 

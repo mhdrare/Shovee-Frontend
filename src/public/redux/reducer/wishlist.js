@@ -1,7 +1,9 @@
 import { AsyncStorage } from 'react-native'
 
 const initialState = {
-    data: [],
+    data: {
+        data: []
+    },
     isLoading: false,
     isError: false,
     isLiked: false,
@@ -14,7 +16,7 @@ export default wishlist = (state = initialState, action) => {
                 ...state,
                 isLoading: true
             }
-        case 'GET_WISHLISTREJECTED':
+        case 'GET_WISHLIST_REJECTED':
             return {
                 ...state,
                 isLoading: false,
@@ -47,7 +49,7 @@ export default wishlist = (state = initialState, action) => {
                 isLoading: false,
                 isError: false,
                 isLiked: true,
-                data: action.payload.data.data
+                data: [action.payload.data.data].concat(state.data.data)
             }
         case 'DELETE_WISHLIST_PENDING':
                 return {
@@ -68,7 +70,9 @@ export default wishlist = (state = initialState, action) => {
                 isLoading: false,
                 isError: false,
                 isLiked: true,
-                data: action.payload.data
+                data: {
+                    data: state.data.data.filter(wishlist => action.payload.data._id != wishlist._id)
+                }
             }
         default: 
             return state
