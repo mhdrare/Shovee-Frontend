@@ -41,7 +41,7 @@ Shopee aims to continually enhance its platform and become the region’s e-comm
 ## Screenshots
 
 ## Release APK
-<a href="">
+<a href="https://drive.google.com/file/d/1-PVD5_FiRu7hSkt55DJ4NPAoRYAjOfYl/view?usp=drivesdk">
   <img src="https://img.shields.io/badge/Download%20on%20the-Google%20Drive-blue.svg?style=popout&logo=google-drive"/>
 </a>
 
