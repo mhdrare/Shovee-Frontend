@@ -117,17 +117,13 @@ class Cart extends Component {
         this.setState(prevState => ({ count: prevState.data[0].count + 1 }))
     }
 
-    // countPrice = () => {
-    //     if (this.props.cart.data.length == 0){
-    //         return 0
-    //     } else if (this.props.cart.data.length == 1){
-    //         let totalPrice = this.props.cart.data.reduce((x, y) => {price: x.produk.price + y.produk.price})
-    //         return totalPrice.product.price
-    //     } else {
-    //         let totalPrice = this.props.cart.data.reduce((a, b) => ({price: a.product.price + b.product.price}))
-    //         return totalPrice.price
-    //     }
-    // }
+    countPrice = () => {
+        const arr = []
+        this.props.cart.data.map(item => arr.push(item.product.price))
+        console.warn(arr)
+        let totalPrice = arr.reduce((x, y) => (x+y))
+        return totalPrice
+    }
 
     render() {
         return (
@@ -189,11 +185,11 @@ class Cart extends Component {
                         </View>
 
                         <View style={{flex:2, alignItems:'flex-end'}}>
-                            <Text style={{color:'#000'}}>SubTotal : <Text style={{color:'#ee4d2d'}}>Rp0</Text></Text>
+                            <Text style={{color:'#000'}}>SubTotal : <Text style={{color:'#ee4d2d'}}>Rp.{this.props.cart.data.length === 0 ? 0 : this.countPrice()}</Text></Text>
                             <Text style={{fontSize:12, color:'#f6a700'}}>Dapatkan 0 Koin</Text>
                         </View>
 
-                        <TouchableOpacity style={{flex:1, alignItems:'center', backgroundColor:'#ee4d2d', paddingVertical:8, borderRadius:5, marginLeft:10}} onPress={() => {this.props.navigation.navigate('Checkout')}}>
+                        <TouchableOpacity style={{flex:1, alignItems:'center', backgroundColor:'#ee4d2d', paddingVertical:8, borderRadius:5, marginLeft:10}} onPress={() => {this.props.navigation.navigate('Checkout', this.countPrice())}}>
                             <Text style={{color:'#fff', fontSize:16}}>Checkout</Text>
                         </TouchableOpacity>
 
