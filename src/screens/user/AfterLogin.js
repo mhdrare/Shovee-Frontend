@@ -81,7 +81,8 @@ class AfterLogin extends Component {
 						<TouchableOpacity style={styles.settings} onPress={() => this.props.navigation.navigate('AccountSettings')}>
 							<SimpleLineIcons name="settings" size={24} color={'#FFFFFF'}/>
 						</TouchableOpacity>
-						<TouchableHighlight style={styles.shopcart}>
+						<TouchableHighlight style={styles.shopcart}
+							onPress={() => this.props.navigation.navigate('Cart')}>
 							<MaterialCommunityIcons name="cart-outline" size={24} color={'#FFFFFF'}/>
 						</TouchableHighlight>
 						<TouchableHighlight style={styles.chat}>

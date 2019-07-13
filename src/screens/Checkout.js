@@ -20,7 +20,7 @@ class CheckoutList extends Component {
                                 <Entypo name='shop' size={18} />
                             </View>
                             <View style={{flex:13}}>
-                                <Text style={{color:'#000'}}>{this.props.item.seller}</Text>
+                                <Text style={{color:'#000'}}>{this.props.item.product.seller.user.username}</Text>
                             </View>
                         </View>
                     </View>
@@ -34,7 +34,7 @@ class CheckoutList extends Component {
                                     <Image source={{ uri: this.props.item.product.thumbnail }} style={{width:72, height:72}} />
                                     
                                     <View style={{flex:1, justifyContent:'space-between', marginLeft:8}}>
-                                        <Text numberOfLines={1}>{this.props.item.description}</Text>
+                                        <Text numberOfLines={1}>{this.props.item.product.description}</Text>
 
                                         <Text>Variasi: -</Text>
                                         
@@ -53,7 +53,7 @@ class CheckoutList extends Component {
                             </View>
 
                             <View style={{flex:1, alignItems:'flex-end'}}>
-                                <Text style={{color:'#ee4d2d', fontSize:18, fontWeight:'bold'}}>{this.props.item.price}</Text>
+                                <Text style={{color:'#ee4d2d', fontSize:18, fontWeight:'bold'}}>{this.props.item.product.price}</Text>
                             </View>
                         </View>
                     </View>
@@ -109,6 +109,7 @@ class Checkout extends Component {
               this._bootstrapAsync();
             }
         );
+        console.warn(this.props.cart.data[0].product)
       }
     
       componentWillUnmount() {
@@ -167,14 +168,14 @@ class Checkout extends Component {
         const arr = []
         const checkout = {
             product: arr,
-            totalPrice: 1230000,
-            totalItem: 4,
-            seller: '5d2891b77cbd800017da6f19'
+            totalPrice: this.props.navigation.state.params,
+            totalItem: this.props.cart.data.length,
+            seller: this.props.cart.data[0].product.seller.user._id
         }
         await data.map(datum => arr.push(datum._id))
         const userToken = await AsyncStorage.getItem('Token');
         console.log(userToken)
-        axios.post(`http://192.168.100.81:3001/checkout?playerId=${this.deviceID}`, checkout, {
+        axios.post(`https://pure-fjord-88379.herokuapp.com/checkout?playerId=${this.deviceID}`, checkout, {
             headers: {
                 'x-auth-token':userToken
             }
@@ -213,9 +214,9 @@ class Checkout extends Component {
                             <View style={{flex:11}}>
                                 <Text style={{fontSize:15, color:'#000'}}>Alamat Pengiriman {'\n'}</Text>
                                 
-                                <Text style={{fontSize:15, color:'#000'}}>Andre Feri (+62) 831-2024-7547</Text>
-                                <Text style={{fontSize:15, color:'#000'}}>Dsn. Karanganyar RT.04/RW.02</Text>
-                                <Text style={{fontSize:15, color:'#000'}}>KAB.SLEMAN - MLATI, DI YOGYAKARTA, ID 55284</Text>
+                                <Text style={{fontSize:15, color:'#000'}}>{this.props.user.data.address.full_address}</Text>
+                                <Text style={{fontSize:15, color:'#000'}}>{this.props.user.data.address.city}</Text>
+                                <Text style={{fontSize:15, color:'#000'}}>{this.props.user.data.address.province}, ID {this.props.user.data.address.zip_code}</Text>
                             </View>
 
                             <TouchableOpacity style={{flex:1}}>
@@ -262,7 +263,7 @@ class Checkout extends Component {
                             </View>
 
                             <View style={{flex:1, alignItems:'flex-end'}}>
-                                <Text style={{color:'#ee4d2d', fontSize:18, fontWeight:'400'}}>Rp50.000</Text>
+                                <Text style={{color:'#ee4d2d', fontSize:18, fontWeight:'400'}}>{this.props.navigation.state.params}</Text>
                             </View>
                         </View>
 
@@ -281,4 +282,4 @@ class Checkout extends Component {
     }
 }
 
-export default connect(state => ({cart: state.cart}))(Checkout)
+export default connect(state => ({cart: state.cart, user: state.user}))(Checkout)
