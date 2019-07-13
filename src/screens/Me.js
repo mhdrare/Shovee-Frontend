@@ -30,11 +30,7 @@ class App extends Component {
           })
         }
       });
-
-    	// This will switch to the App screen or Auth screen and this loading
-    	// screen will be unmounted and thrown away.
-    	// this.props.navigation.navigate(userToken ? 'App' : 'Auth');
-    //   	if (userToken) {
+    // 	if (userToken) {
   		// 	this.setState({
   		// 		isLogin: true
   		// 	})

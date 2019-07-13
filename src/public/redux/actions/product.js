@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'https://pure-fjord-88379.herokuapp.com/products';
+const url = 'https://stormy-springs-80236.herokuapp.com/products';
 
 export const addProduct = (token,category,price,images,city,description,name,stok, brand) => {
     var data = new FormData();

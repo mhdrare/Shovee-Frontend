@@ -1,5 +1,3 @@
-import { AsyncStorage } from 'react-native'
-
 const initialState = {
 	isLoading: true,
 	isError: false,
@@ -20,7 +18,8 @@ export default user = (state = initialState, action) => {
 				data: state.data.map(user => 
 					(user._id == action.payload.data.data._id) ? 
 					action.payload.data.data : 
-					data)
+					data),
+				isError: false
 			}
 		case 'UPDATE_PROFILE_REJECTED':
 			return {
@@ -28,6 +27,13 @@ export default user = (state = initialState, action) => {
 				isLoading: false,
                 isError: true,
 			}
+		case 'UPDATE_DATA_FULFILLED':
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                data: action.payload.data.data
+            }
 		case 'GET_PROFILE_PENDING':
 			return {
 				...state,
