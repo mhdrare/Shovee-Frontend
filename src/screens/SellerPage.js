@@ -91,7 +91,7 @@ class App extends Component {
 						<ScrollView>
 							<View style={{paddingBottom: 10, flexDirection: 'row', backgroundColor: '#FFFFFF'}}>
 								<View style={{height: 60, paddingLeft: 20, justifyContent: 'center'}}>
-									<Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
+									<Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: this.props.user.data.image_profil }}/>
 								</View>
 								<View style={{flexDirection: 'column', margin: 5, marginLeft: 10}}>
 									<View>

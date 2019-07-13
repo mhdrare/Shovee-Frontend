@@ -165,16 +165,17 @@ class Checkout extends Component {
 
     handleCheckout = async (data) => {
         const arr = []
+        await data.map(datum => arr.push({main: datum.product._id, cart: datum._id}))
+        
         const checkout = {
             product: arr,
             totalPrice: this.props.navigation.state.params,
             totalItem: this.props.cart.data.length,
             seller: this.props.cart.data[0].product.seller.user._id
         }
-        await data.map(datum => arr.push(datum.product._id))
         const userToken = await AsyncStorage.getItem('Token');
         console.log(userToken)
-        axios.post(`https://pure-fjord-88379.herokuapp.com/checkout?playerId=${this.deviceID}`, checkout, {
+        axios.post(`http://192.168.100.81:3001/checkout?playerId=${this.deviceID}`, checkout, {
             headers: {
                 'x-auth-token':userToken
             }
@@ -234,7 +235,6 @@ class Checkout extends Component {
                     }}
                     />
 
-                    <View style={{height: 40}} />
                     <View style={{backgroundColor:'#fff'}}>
 
                         <View style={{flexDirection:'row', paddingHorizontal:12, paddingVertical:4, alignItems:'center'}}>
@@ -271,7 +271,9 @@ class Checkout extends Component {
                     
                     <View style={{margin:20}}>
                         <TouchableOpacity style={{flex:1, flexDirection:'row', backgroundColor:'#ee4d2d', justifyContent:'center', alignItems:'center', paddingVertical:10, borderRadius:5}}
-                        onPress={() => this.handleCheckout(this.props.cart.data)}>
+                        onPress={() => {
+                            this.handleCheckout(this.props.cart.data)
+                            }}>
                             <Text style={{color:'#fff', fontSize:16}}>BUAT PESANAN</Text>
                         </TouchableOpacity>
                     </View>

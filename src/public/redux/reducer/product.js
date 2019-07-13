@@ -26,6 +26,27 @@ export default product = (state = initialState, action) => {
                 isError: false,
                 data: [action.payload.data.data, ...state.data]
             }
+
+        case 'GET_PRODUCTS_MORE_PENDING': // in case when loading get data
+            return {
+                ...state,
+                isLoadingMore: true
+            }
+        case 'GET_PRODUCTS_MORE_REJECTED': // in case error network/else
+            return {
+                ...state,
+                isLoadingMore: false,
+                isError: true
+            }
+        case 'GET_PRODUCTS_MORE_FULFILLED': // in case successfuly get data
+            return {
+                ...state,
+                isLoadingMore: false,
+                isError: false,
+                data: [...state.data].concat(action.payload.data.data),
+                totalPage: action.payload.data.totalPage,
+            }
+
         case 'GET_PRODUCTS_FULFILLED':
             return {
                 ...state,

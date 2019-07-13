@@ -34,6 +34,13 @@ export const fetchProducts = () => {
     }
 }
 
+export const fetchProductsMore = (page) => {
+    return {
+        type: 'GET_PRODUCTS_MORE',
+        payload: axios.get(`${url}?page=${page}`)
+    }
+}
+
 export const fetchProductsByUser = (token) => {
     return {
         type: 'GET_PRODUCTS_BYUSER',

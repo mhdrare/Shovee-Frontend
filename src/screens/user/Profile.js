@@ -64,21 +64,28 @@ class App extends Component {
 			loading: true
 		})
 
-		this.props.dispatch(updateImage(this.state.token, this.state.image))
-		.then(()=>{
-			this.setState({
-				loading: false
-			}, ()=>{
-				this.props.navigation.navigate('Me')
-			})
+		await this.props.dispatch(updateImage(this.state.token, this.state.image))
+		// .then(()=>{
+		// 	this.setState({
+		// 		loading: false
+		// 	}, ()=>{
+		// 		this.props.navigation.navigate('Me')
+		// 	})
+		// })
+		// .catch((err)=>{
+		// 	this.setState({
+		// 		loading: false
+		// 	}, ()=>{
+		// 		this.props.navigation.navigate('Me')
+		// 	})
+		// })
+
+		await this.setState({
+			loading: false
+		}, ()=>{
+			this.props.navigation.navigate('Me')
 		})
-		.catch((err)=>{
-			this.setState({
-				loading: false
-			}, ()=>{
-				alert('gagal')
-			})
-		})
+
 	}
 
 	render(){
@@ -108,6 +115,7 @@ class App extends Component {
 							}
 							</TouchableOpacity>
 						</View>
+						{ (this.state.loading) ? <Loading /> : <View /> }
 						<TouchableOpacity style={styles.items} onPress={()=>this.props.navigation.navigate('EditProfile')}>
 							<Text style={styles.textLabel}>Nama</Text>
 							<Text style={styles.text}>{ (this.props.user.data.name == '') ? <Text>Belum diatur</Text> : this.props.user.data.name}</Text>

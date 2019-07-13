@@ -14,7 +14,8 @@ import {
   TouchableOpacity,
   FlatList,
   AsyncStorage,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
 import dummyData from '../components/dummydata/index.product';
 import Carousel from 'react-native-smart-carousel';
@@ -25,7 +26,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { connect } from 'react-redux';
 import { getCategories } from '../public/redux/actions/categories';
-import { fetchProducts } from '../public/redux/actions/product';
+import { fetchProducts, fetchProductsMore } from '../public/redux/actions/product';
 import { fetchCart } from '../public/redux/actions/cart';
 import { getWishlist } from '../public/redux/actions/wishlist';
 
@@ -37,6 +38,7 @@ class CardsProduct extends Component {
 
   constructor(props) {
     super(props);
+
   }
 
   render() {
@@ -71,6 +73,7 @@ class Home extends Component {
     super(props);
     
     this.state = {
+      page: 1,
       scrollY: new Animated.Value(
         Platform.OS === 'ios' ? -HEADER_MAX_HEIGHT : 0,
       ),
@@ -196,6 +199,16 @@ class Home extends Component {
     }
   };
 
+  loadMoreFlatlist(){
+    
+    this.setState({
+      page: this.state.page+1
+    }, () => {
+      this.props.dispatch(fetchProductsMore(this.state.page))
+    })
+
+  }
+
   _renderScrollViewContent() {
     return (
       <React.Fragment>
@@ -260,8 +273,10 @@ class Home extends Component {
               )
             }} />
 
+            { (this.props.products.isLoadingMore) ? <View style={{marginTop: 8}}><ActivityIndicator size='large' /></View> : <View/> }
+
             <View style={{flexDirection:'row', justifyContent:'center', flex:1, backgroundColor:'#fff', borderWidth:1, borderColor:'#ee4d2d', borderRadius:6, marginVertical:15, marginHorizontal:10}}>
-              <TouchableOpacity style={{paddingHorizontal:10,paddingVertical:8}} onPress={() => alert('Soon!')}>
+              <TouchableOpacity style={{paddingHorizontal:10,paddingVertical:8}} onPress={()=>this.loadMoreFlatlist()}>
                 <Text style={{color:'#ee4d2d'}}>Lihat Lainnya</Text>
               </TouchableOpacity>
             </View>
