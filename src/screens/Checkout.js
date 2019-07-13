@@ -235,7 +235,6 @@ class Checkout extends Component {
                     }}
                     />
 
-                    <View style={{height: 40}} />
                     <View style={{backgroundColor:'#fff'}}>
 
                         <View style={{flexDirection:'row', paddingHorizontal:12, paddingVertical:4, alignItems:'center'}}>
@@ -274,7 +273,6 @@ class Checkout extends Component {
                         <TouchableOpacity style={{flex:1, flexDirection:'row', backgroundColor:'#ee4d2d', justifyContent:'center', alignItems:'center', paddingVertical:10, borderRadius:5}}
                         onPress={() => {
                             this.handleCheckout(this.props.cart.data)
-                            this.props.navigation.navigate('Home')
                             }}>
                             <Text style={{color:'#fff', fontSize:16}}>BUAT PESANAN</Text>
                         </TouchableOpacity>
