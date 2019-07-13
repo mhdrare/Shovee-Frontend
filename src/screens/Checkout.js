@@ -235,6 +235,7 @@ class Checkout extends Component {
                     }}
                     />
 
+                    <View style={{height: 40}} />
                     <View style={{backgroundColor:'#fff'}}>
 
                         <View style={{flexDirection:'row', paddingHorizontal:12, paddingVertical:4, alignItems:'center'}}>

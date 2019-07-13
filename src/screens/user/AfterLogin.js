@@ -90,10 +90,13 @@ class AfterLogin extends Component {
 						</TouchableHighlight>
 					</View>
 					<TouchableOpacity style={styles.headerAccount} onPress={()=>this.props.navigation.navigate('Profile')}>
-						<Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
+
+						{ (this.props.user.isLoading) ? <ActivityIndicator size='small'/> : 
+						<React.Fragment>
+						<Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: this.props.user.data.image_profil}}/>
 						<View style={{flexDirection: 'column', margin: 5, marginLeft: 10}}>
 							<View>
-								{ (this.props.user.isLoading) ? <ActivityIndicator size='small'/> : <Text style={{fontSize: 18, fontWeight: '600', color: '#FFFFFF'}}>{this.props.user.data.user.username}</Text> }
+								<Text style={{fontSize: 18, fontWeight: '600', color: '#FFFFFF'}}>{this.props.user.data.user.username}</Text>
 							</View>
 							<View>
 								<View style={{flexDirection: 'row'}}>
@@ -103,6 +106,8 @@ class AfterLogin extends Component {
 								</View>
 							</View>
 						</View>
+						</React.Fragment>
+						}
 					</TouchableOpacity>
 				</View>
 				<View style={styles.body}>
