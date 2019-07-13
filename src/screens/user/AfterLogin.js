@@ -36,24 +36,32 @@ class AfterLogin extends Component {
 		})
 		.then(()=>{
 			this.fetchDetailUser(this.state.token)
+			this.props.dispatch(getWishlist(this.state.token))
+			.then(() => {
+				console.log(this.props.wishlist)
+			})
 		})
-		.then(() => {
-			console.log(this.props.wishlist)
-		})
-
 	}
 
 	componentDidMount() {
-    	// this.props.fetchData();   	
-    	// this.willFocusSubscription = this.props.navigation.addListener(
-     //  	'willFocus',
-     //  		() => {
-     //    		this._bootstrapAsync();
-     //  		}
-    	// );
-    	this._bootstrapAsync()
+
+    	this._bootstrapAsync()   	
+    	this.willFocusSubscription = this.props.navigation.addListener(
+      	'willFocus',
+      		() => {
+        		// this.fetchDetailUser(this.state.token)
+				this.props.dispatch(getWishlist(this.state.token))
+				.then(() => {
+					console.log(this.props.wishlist)
+				})
+      		}
+    	);
+    	
   	}
 
+  	componentWillUnmount() {
+    	this.willFocusSubscription.remove();
+  	}
 
 	render(){
 		return (
@@ -71,7 +79,8 @@ class AfterLogin extends Component {
 						<TouchableOpacity style={styles.settings} onPress={() => this.props.navigation.navigate('AccountSettings')}>
 							<SimpleLineIcons name="settings" size={24} color={'#FFFFFF'}/>
 						</TouchableOpacity>
-						<TouchableHighlight style={styles.shopcart}>
+						<TouchableHighlight style={styles.shopcart}
+							onPress={() => this.props.navigation.navigate('Cart')}>
 							<MaterialCommunityIcons name="cart-outline" size={24} color={'#FFFFFF'}/>
 						</TouchableHighlight>
 						<TouchableHighlight style={styles.chat}>
