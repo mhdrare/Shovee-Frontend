@@ -41,8 +41,6 @@ class AfterLogin extends Component {
 				console.log(this.props.wishlist)
 			})
 		})
-
-
 	}
 
 	componentDidMount() {
@@ -66,6 +64,7 @@ class AfterLogin extends Component {
   	}
 
 	render(){
+		console.log(this.props.users)
 		return (
 			<React.Fragment>
 				<View style={styles.header}>
@@ -85,12 +84,12 @@ class AfterLogin extends Component {
 							onPress={() => this.props.navigation.navigate('Cart')}>
 							<MaterialCommunityIcons name="cart-outline" size={24} color={'#FFFFFF'}/>
 						</TouchableHighlight>
-						<TouchableHighlight style={styles.chat}>
+						<TouchableOpacity style={styles.chat} onPress={() => alert('Soon!')}>
 							<SimpleLineIcons name="bubbles" size={24} color={'white'}/>
-						</TouchableHighlight>
+						</TouchableOpacity>
 					</View>
 					<TouchableOpacity style={styles.headerAccount} onPress={()=>this.props.navigation.navigate('Profile')}>
-						<Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: 'https://i.pinimg.com/736x/a1/1b/95/a11b95eb80d3451f384c2f565835071f.jpg'}}/>
+						{ (this.props.user.isLoading) ? <ActivityIndicator size='small'/> : <Image style={{width: 50, height: 50, borderRadius: 50}} source={{ uri: this.props.user.data.image_profil }}/> }
 						<View style={{flexDirection: 'column', margin: 5, marginLeft: 10}}>
 							<View>
 								{ (this.props.user.isLoading) ? <ActivityIndicator size='small'/> : <Text style={{fontSize: 18, fontWeight: '600', color: '#FFFFFF'}}>{this.props.user.data.user.username}</Text> }
@@ -113,24 +112,24 @@ class AfterLogin extends Component {
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
 					<View style={styles.itemPesanan}>
-						<TouchableOpacity style={styles.statusPesanan}>
+						<TouchableOpacity style={styles.statusPesanan} onPress={() => alert('Soon!')}>
 							<SimpleLineIcons name="wallet" size={30}/>
 							<Text style={styles.textStatus}>Belum Bayar</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.statusPesanan}>
+						<TouchableOpacity style={styles.statusPesanan} onPress={() => alert('Soon!')}>
 							<MaterialCommunityIcons name="truck" size={30}/>
 							<Text style={styles.textStatus}>Dikemas</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.statusPesanan}>
+						<TouchableOpacity style={styles.statusPesanan} onPress={() => alert('Soon!')}>
 							<MaterialIcons name="move-to-inbox" size={30}/>
 							<Text style={styles.textStatus}>Dikirim</Text>
 						</TouchableOpacity>
-						<TouchableOpacity style={styles.statusPesanan}>
+						<TouchableOpacity style={styles.statusPesanan} onPress={() => alert('Soon!')}>
 							<EvilIcons name="star" size={37}/>
 							<Text style={styles.textStatus}>Beri Penilaian</Text>
 						</TouchableOpacity>
 					</View>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
 						<MaterialCommunityIcons name="cellphone" style={{flex: 1, marginLeft: '3%'}} size={25} color="#369e55"/>
 						<Text style={styles.text}>Pulsa & Produk Digital</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
@@ -142,27 +141,27 @@ class AfterLogin extends Component {
 						<Text style={styles.text}>Favorit Saya</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
 						<SimpleLineIcons name="clock" style={{flex: 1, marginLeft: '3%'}} size={25} color="#3a5998"/>
 						<Text style={styles.text}>Terakhir Dilihat</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
 						<MaterialCommunityIcons name="wallet" style={{flex: 1, marginLeft: '3%'}} size={25} color="#EE4D2D"/>
 						<Text style={styles.text}>ShoveePay</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
 						<FontAwesome name="share-alt" style={{flex: 1, marginLeft: '3%'}} size={25} color="#3a5998"/>
 						<Text style={styles.text}>Undang Teman</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
 						<MaterialCommunityIcons name="coin" style={{flex: 1, marginLeft: '3%'}} size={25} color="#edd51a"/>
 						<Text style={styles.text}>Koin Shovee</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
 						<MaterialCommunityIcons name="star-outline" style={{flex: 1, marginLeft: '3%'}} size={25} color="#369e55"/>
 						<Text style={styles.text}>Penilaian Saya</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
@@ -174,7 +173,7 @@ class AfterLogin extends Component {
 						<Text style={styles.text}>Pengaturan Akun</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.items}>
+					<TouchableOpacity style={styles.items} onPress={() => alert('Soon!')}>
 						<SimpleLineIcons name="question" style={{flex: 1, marginLeft: '3%'}} size={25} color="#369e55"/>
 						<Text style={styles.text}>Pusat Bantuan</Text>
 						<SimpleLineIcons name="arrow-right" style={{flex: 1, marginRight: '-1%'}} size={18}/>

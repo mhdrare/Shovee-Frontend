@@ -87,7 +87,7 @@ class Login extends Component {
 						<Text style={{color: '#FFFFFF'}}>{'Log In'.toUpperCase()}</Text>
 					</TouchableOpacity>
 					<View style={{marginTop: 20}}>
-						<TouchableOpacity>
+						<TouchableOpacity onPress={() => alert('Soon!')}>
 							<Text>Butuh bantuan?</Text>
 						</TouchableOpacity>
 					</View>
@@ -102,17 +102,17 @@ class Login extends Component {
 							<View style={styles.borderLoginWith}></View>
 						</View>
 					</View>
-					<TouchableOpacity style={styles.loginSMS}>
+					<TouchableOpacity style={styles.loginSMS} onPress={() => alert('Soon!')}>
 						<IconAntDesign name="message1" style={{flex: 1, paddingLeft: 15}} size={25} color="#FFFFFF"/>
 						<Text style={styles.text}>Login melalui SMS</Text>
 						<Text style={{flex: 1}}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.loginLine}>
+					<TouchableOpacity style={styles.loginLine} onPress={() => alert('Soon!')}>
 						<Icon name="line" style={{flex: 1, paddingLeft: 15}} size={25} color="#FFFFFF"/>
 						<Text style={styles.text}>Login dengan Line</Text>
 						<Text style={{flex: 1}}/>
 					</TouchableOpacity>
-					<TouchableOpacity style={styles.loginFacebook}>
+					<TouchableOpacity style={styles.loginFacebook} onPress={() => alert('Soon!')}>
 						<Icon name="facebook" style={{flex: 1, paddingLeft: 15}} size={25} color="#FFFFFF"/>
 						<Text style={styles.text}>Lanjutkan dengan Facebook</Text>
 						<Text style={{flex: 1}}/>

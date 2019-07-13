@@ -56,7 +56,7 @@ class CardsProduct extends Component {
             </View>
             
             <View style={{flex:1, alignItems:'flex-end', justifyContent:'center'}}>
-              <Text style={{fontSize:10, color:'#000'}}>99999 TERJUAL</Text>
+              <Text style={{fontSize:8, color:'#000'}}>99 TERJUAL</Text>
             </View>
           </View>
         </View>
@@ -185,15 +185,15 @@ class Home extends Component {
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
     // this.props.navigation.navigate(userToken ? 'App' : 'Auth');
-    if (userToken) {
-    this.setState({
-      isLogin: true
-    })
-  } else {
-    this.setState({
-      isLogin: false
-    })
-  }
+      if (userToken) {
+      this.setState({
+        isLogin: true
+      })
+    } else {
+      this.setState({
+        isLogin: false
+      })
+    }
   };
 
   _renderScrollViewContent() {
@@ -261,7 +261,7 @@ class Home extends Component {
             }} />
 
             <View style={{flexDirection:'row', justifyContent:'center', flex:1, backgroundColor:'#fff', borderWidth:1, borderColor:'#ee4d2d', borderRadius:6, marginVertical:15, marginHorizontal:10}}>
-              <TouchableOpacity style={{paddingHorizontal:10,paddingVertical:8}}>
+              <TouchableOpacity style={{paddingHorizontal:10,paddingVertical:8}} onPress={() => alert('Soon!')}>
                 <Text style={{color:'#ee4d2d'}}>Lihat Lainnya</Text>
               </TouchableOpacity>
             </View>
@@ -415,7 +415,7 @@ class Home extends Component {
                 <TouchableOpacity onPress={() => {this.state.isLogin ? this.props.navigation.navigate('Cart') : this.props.navigation.navigate('Login')}}>
                   <AntDesign name='shoppingcart' size={30} color={'#fff'} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => alert('Soon!')}>
                   <AntDesign name='message1' color={'#fff'} size={28} style={{marginLeft:30}} />
                 </TouchableOpacity>
               </View>
