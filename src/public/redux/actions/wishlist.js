@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'https://pure-fjord-88379.herokuapp.com/wishlist';
+const url = 'https://stormy-springs-80236.herokuapp.com/wishlist';
 
 export const getWishlist = (token) => {
     return {

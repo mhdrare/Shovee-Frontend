@@ -15,6 +15,10 @@ export default user = (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
+				data: state.data.map(user => 
+					(user._id == action.payload.data.data._id) ? 
+					action.payload.data.data : 
+					data),
 				isError: false
 			}
 		case 'UPDATE_PROFILE_REJECTED':

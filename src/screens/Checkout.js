@@ -109,7 +109,6 @@ class Checkout extends Component {
               this._bootstrapAsync();
             }
         );
-        console.warn(this.props.cart.data[0].product)
       }
     
       componentWillUnmount() {
@@ -172,7 +171,7 @@ class Checkout extends Component {
             totalItem: this.props.cart.data.length,
             seller: this.props.cart.data[0].product.seller.user._id
         }
-        await data.map(datum => arr.push(datum._id))
+        await data.map(datum => arr.push(datum.product._id))
         const userToken = await AsyncStorage.getItem('Token');
         console.log(userToken)
         axios.post(`https://pure-fjord-88379.herokuapp.com/checkout?playerId=${this.deviceID}`, checkout, {
