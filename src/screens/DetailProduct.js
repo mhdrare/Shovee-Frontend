@@ -154,7 +154,7 @@ class DetailProduct extends Component {
       return this.setState({
         liked: false
       }, () => {
-        this.props.dispatch(deleteWishlist(this.state.token, this.props.wishlist.data._id));
+        this.props.dispatch(deleteWishlist(this.state.token, this.props.wishlist.data[0]._id));
       })
     }
   }
