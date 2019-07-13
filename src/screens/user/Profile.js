@@ -9,6 +9,8 @@ import ImagePicker from 'react-native-image-picker'
 import { connect } from 'react-redux'
 import { updateImage } from '../../public/redux/actions/user'
 
+import Loading from '../Loading'
+
 class App extends Component {
 	constructor(props) {
         super(props);
@@ -17,7 +19,8 @@ class App extends Component {
             imageProfile: null,
 			isUploading: false,
 			token: '',
-			image: {}
+			image: {},
+			loading: false
         };
 
         this._bootstrapAsync()
@@ -57,8 +60,25 @@ class App extends Component {
 	}
 
 	updateImageProfile = async () => {
-		await this.props.dispatch(updateImage(this.state.token, this.state.image))
-		this.props.navigation.navigate('Me')
+		await this.setState({
+			loading: true
+		})
+
+		this.props.dispatch(updateImage(this.state.token, this.state.image))
+		.then(()=>{
+			this.setState({
+				loading: false
+			}, ()=>{
+				this.props.navigation.navigate('Me')
+			})
+		})
+		.catch((err)=>{
+			this.setState({
+				loading: false
+			}, ()=>{
+				alert('gagal')
+			})
+		})
 	}
 
 	render(){
@@ -90,7 +110,7 @@ class App extends Component {
 						</View>
 						<TouchableOpacity style={styles.items} onPress={()=>this.props.navigation.navigate('EditProfile')}>
 							<Text style={styles.textLabel}>Nama</Text>
-							<Text style={styles.text}>{(this.props.user.data.name == '') ? <Text>Belum diatur</Text> : this.props.user.data.name}</Text>
+							<Text style={styles.text}>{ (this.props.user.data.name == '') ? <Text>Belum diatur</Text> : this.props.user.data.name}</Text>
 						</TouchableOpacity>
 						<View style={styles.items}>
 							<Text style={styles.textLabel}>Username</Text>
@@ -110,15 +130,15 @@ class App extends Component {
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.items} onPress={()=>alert('Soon!')}>
 							<Text style={styles.textLabel}>Tanggal Lahir</Text>
-							<Text style={styles.text}>02-06-2001</Text>	
+							<Text style={styles.text}>{ (this.props.user.data.tanggal_lahir == '') ? <Text>Belum diatur</Text> : this.props.user.data.tanggal_lahir}</Text>	
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.items} onPress={()=>alert('Soon!')}>
 							<Text style={styles.textLabel}>Telepon</Text>
-							<Text style={styles.text}>******17</Text>	
+							<Text style={styles.text}>{this.props.user.data.user.phone}</Text>	
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.items} onPress={()=>alert('Soon!')}>
 							<Text style={styles.textLabel}>Email</Text>
-							<Text style={styles.text}>a******7@gmail.com</Text>	
+							<Text style={styles.text}>{this.props.user.data.user.email}</Text>	
 						</TouchableOpacity>
 						<TouchableOpacity style={styles.items} onPress={()=>alert('Soon!')}>
 							<Text style={styles.textLabel}>Akun Sosial Media</Text>
