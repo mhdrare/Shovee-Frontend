@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity, Image, CheckBox, FlatList, ScrollView } f
 import Fa from 'react-native-vector-icons/FontAwesome5';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import cart from '../public/redux/reducer/cart';
+import Loading from './Loading';
 
 class CartList extends Component {
 
@@ -13,7 +14,8 @@ class CartList extends Component {
 
         this.state = {
             total: 0,
-            checked: true
+            checked: true,
+            isLoading: false
         }
     }
 
@@ -160,7 +162,7 @@ class Cart extends Component {
                         </View>
                     </View>
 
-                    <FlatList
+                    {this.props.cart.isLoading ? <Loading/> : this.props.cart.data.length === 0 ? <Text>Keranjang Kosong, silahkan membali barang.</Text> : <FlatList
                     data={this.props.cart.data}
                     keyExtractor={(item, index) => item._id}
                     renderItem={({item, index}) => {
@@ -168,7 +170,7 @@ class Cart extends Component {
                             <CartList item={item} index={index} increaseItem={this._increaseItem} decreaseItem={this._decreaseItem} />
                         )
                     }}
-                    />
+                    />}
                 </ScrollView>                
 
                 <View style={{backgroundColor:'#fff', position:'absolute', bottom:0, left:0, right:0}}>
@@ -189,9 +191,11 @@ class Cart extends Component {
                             <Text style={{fontSize:12, color:'#f6a700'}}>Dapatkan 0 Koin</Text>
                         </View>
 
-                        <TouchableOpacity style={{flex:1, alignItems:'center', backgroundColor:'#ee4d2d', paddingVertical:8, borderRadius:5, marginLeft:10}} onPress={() => {this.props.navigation.navigate('Checkout', this.countPrice())}}>
+                        {this.props.cart.data.length === 0 ? <TouchableOpacity  style={{flex:1, alignItems:'center', backgroundColor:'#efefef', paddingVertical:8, borderRadius:5, marginLeft:10}} disabled onPress={() => {this.props.navigation.navigate('Checkout', this.countPrice())}}>
+                            <Text style={{color:'#000', fontSize:16}}>Checkout</Text>
+                        </TouchableOpacity> : <TouchableOpacity  style={{flex:1, alignItems:'center', backgroundColor:'#ee4d2d', paddingVertical:8, borderRadius:5, marginLeft:10}} onPress={() => {this.props.navigation.navigate('Checkout', this.countPrice())}}>
                             <Text style={{color:'#fff', fontSize:16}}>Checkout</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity>}
 
                     </View>
                 </View>
