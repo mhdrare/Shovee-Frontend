@@ -21,7 +21,11 @@ class ListHistories extends Component {
 				</View>
 				<View style={{flexDirection: 'row', margin: 13, alignItems: 'center'}}>
 					<View style={{backgroundColor: '#000', width: 100, height: 100, borderWidth: 0.5}}>
-						<Image style={{width: '100%', height: '100%'}} source={{ uri: this.props.item.product.thumbnail}}/>
+						{
+							this.props.item.product.map(produk => (
+								produk > 0 ?  <Image key={produk[0]._id} style={{width: '100%', height: '100%'}} source={{ uri: produk[0].thumbnail}}/> : <Image key={produk._id} style={{width: '100%', height: '100%'}} source={{ uri: produk.thumbnail}}/>								
+							))
+						}
 					</View>
 					{
 						this.props.item.product.map(produk => (

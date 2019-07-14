@@ -422,6 +422,7 @@ class Home extends Component {
             <FlatList
             data={dataShopeeLive}
             horizontal={true}
+            showsHorizontalScrollIndicator={false}
             keyExtractor={(item, index) => item.id}
             renderItem={({item, index}) => {
               return (
@@ -460,7 +461,7 @@ class Home extends Component {
 
             <View style={{flexDirection:'row', paddingHorizontal:10, paddingBottom:10}}>
               <View style={{flex:1}}>
-                <Image source={{uri:'https://cf.shopee.co.id/file/webp/4e4a42d339d7110186058a2a2a514450'}} style={{height:102, width:'100%'}} />
+                <Image source={{uri:'https://cf.shopee.co.id/file/webp/4e4a42d339d7110186058a2a2a514450'}} style={{height:104, width:'100%'}} />
               </View>
             </View>
 
