@@ -21,7 +21,11 @@ class ListHistories extends Component {
 				</View>
 				<View style={{flexDirection: 'row', margin: 13, alignItems: 'center'}}>
 					<View style={{backgroundColor: '#000', width: 100, height: 100, borderWidth: 0.5}}>
-						<Image style={{width: '100%', height: '100%'}} source={{ uri: this.props.item.product.thumbnail}}/>
+					{
+						this.props.item.product.map(produk => (
+								<Image style={{width: '100%', height: '100%'}} source={{ uri: produk.images}}/>
+							))
+					}
 					</View>
 					{
 						this.props.item.product.map(produk => (
@@ -36,7 +40,7 @@ class ListHistories extends Component {
 				</View>
 				<View style={{flexDirection: 'row', marginLeft: 13, marginRight: 18, alignItems: 'center', borderBottomWidth: 0.4, borderTopWidth: 0.4, borderColor: 'grey'}}>
 					<Text style={{flex: 1, margin: 10}}>1 produk</Text>
-					<Text style={{flex: 2, margin: 10, textAlign: 'right'}}>Jumlah Harus Dibayar: </Text><Text style={{color: '#EE4D2D'}}>Rp{this.props.item.product.price}</Text>
+					<Text style={{flex: 2, margin: 10, textAlign: 'right'}}>Jumlah Harus Dibayar: </Text><Text style={{color: '#EE4D2D'}}>Rp</Text>
 				</View>
 				<View style={{flexDirection: 'row', marginLeft: 13, marginRight: 18, alignItems: 'center', borderBottomWidth: 0.4, borderColor: 'grey'}}>
 					<MaterialCommunityIcons name="truck-fast" size={24} color={'#008eaa'} />
@@ -122,7 +126,7 @@ class App extends Component {
 						{
 							this.state.isLoading ? <Loading /> : <FlatList
 							data={this.props.checkout.data}
-							keyExtractor={(item, index) => item._id}
+							keyExtractor={(item) => item._id}
 							renderItem={({item, index}) => {
 								return (
 									<ListHistories item={item} index={index} /> 
