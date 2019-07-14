@@ -29,7 +29,7 @@ class ListHistories extends Component {
 					</View>
 					{
 						this.props.item.product.map(produk => (
-							<View style={{flexDirection: 'column', margin: 13, width: '63%', height: '100%'}}>
+							<View style={{margin: 13, width: '63%', height: '100%'}}>
 								<Text style={{flex: 1, fontSize: 15, color: '#000'}}>{produk.name}</Text>
 								<Text style={{flex: 1, fontSize: 15, color: '#000', textAlign: 'right'}}>x1</Text>
 								<Text style={{flex: 1, fontSize: 15, color: '#000', textAlign: 'right'}}>{produk.price}</Text>
