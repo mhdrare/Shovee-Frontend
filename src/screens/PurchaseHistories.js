@@ -41,21 +41,6 @@ export default class App extends Component {
 										<Text style={{flex: 1, fontSize: 15, color: '#000', textAlign: 'right'}}>Rp70.000</Text>
 									</View>
 								</View>
-								<View style={{flexDirection: 'row', marginLeft: 13, marginRight: 18, alignItems: 'center', borderBottomWidth: 0.4, borderTopWidth: 0.4, borderColor: 'grey'}}>
-									<Text style={{flex: 1, margin: 10}}>1 produk</Text>
-									<Text style={{flex: 2, margin: 10, textAlign: 'right'}}>Jumlah Harus Dibayar: </Text><Text style={{color: '#EE4D2D'}}>Rp70.000</Text>
-								</View>
-								<View style={{flexDirection: 'row', marginLeft: 13, marginRight: 18, alignItems: 'center', borderBottomWidth: 0.4, borderColor: 'grey'}}>
-									<MaterialCommunityIcons name="truck-fast" size={24} color={'#008eaa'} />
-									<Text style={{flex: 8, margin: 10, color: '#008eaa'}}>Paket telah diterima</Text>
-									<SimpleLineIcons name="arrow-right" style={{ flex: 1, marginRight: '-5%' }} size={18}/>
-								</View>
-								<View style={{flexDirection: 'row', margin: 13, alignItems: 'center', justifyContent: 'center'}}>
-									<Text style={{flex: 1}}></Text>
-									<TouchableOpacity style={{width: '100%', flex: 1, backgroundColor: '#EE4D2D', height: 40, justifyContent: 'center', borderRadius: 5}}>
-										<Text style={{color: '#FFFFFF', textAlign: 'center'}}>Penilaian Dari Pembeli</Text>
-									</TouchableOpacity>
-								</View>
 							</TouchableOpacity>
 						</View>
 					</ScrollView>
