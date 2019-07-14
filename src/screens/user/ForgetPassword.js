@@ -6,10 +6,13 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { forgetPassword } from '../../public/redux/actions/auth'
+import Loading from '../Loading'
+import NavigationService from '../NavigationService.js';
 
 class App extends Component {
 	state = {
-		email: ''
+		email: '',
+		loading: false
 	}
 
 	setEmail = (data) => {
@@ -18,11 +21,29 @@ class App extends Component {
 		})
 	}
 
-	sendPassword = (data) => {
+	sendPassword = async (data) => {
 		if (this.state.email == '') {
 			alert('Email kosong!')
 		} else {
+			await this.setState({
+				loading: true
+			})
+
 			this.props.dispatch(forgetPassword(data))
+			.then(() => {
+				this.setState({
+					loading: false
+				}, () => {
+					alert('Silahkan cek email anda!')
+				})
+			})
+			.catch((err)=>{
+        		this.setState({
+					loading: false
+				}, () => {
+        			alert('Email tidak ada!')
+				})
+        	})
 		}
 	}
 
@@ -40,6 +61,7 @@ class App extends Component {
 					</View>
 				</View>
 				<View style={styles.container}>
+				{ (this.state.loading) ? <Loading /> : <View /> }
 					<View style={{width:'80%', marginTop: 10}}>
 						<Text style={{color: '#000'}}>Masukkan email atau no. telepon Anda yang sudah terdaftar</Text>
 					</View>
