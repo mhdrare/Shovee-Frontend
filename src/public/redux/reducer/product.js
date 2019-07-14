@@ -19,6 +19,30 @@ export default product = (state = initialState, action) => {
                 isError: true
             }
 
+        case 'GET_PRODUCTS_FULFILLED':
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                produk: action.payload.data,
+                data: action.payload.data.data
+            }
+        case 'POST_PRODUCT_PENDING':
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                data: [action.payload.data.data, ...state.data]
+            }    
+
+        case 'POST_PRODUCT_REJECTED':
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                data: [action.payload.data.data, ...state.data]
+            }
+
         case 'POST_PRODUCT_FULFILLED':
             return {
                 ...state,
@@ -47,14 +71,6 @@ export default product = (state = initialState, action) => {
                 totalPage: action.payload.data.totalPage,
             }
 
-        case 'GET_PRODUCTS_FULFILLED':
-            return {
-                ...state,
-                isLoading: false,
-                isError: false,
-                produk: action.payload.data,
-                data: action.payload.data.data
-            }
         case 'GET_PRODUCTS_BYUSER_PENDING':
             return {
                 ...state,

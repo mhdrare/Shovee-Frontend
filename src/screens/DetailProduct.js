@@ -192,11 +192,11 @@ class DetailProduct extends Component {
             </View>
           </View>
           
-          <View style={{backgroundColor:'#de2de1', width:'100%', height:125, marginTop:10}} />
+          <View style={{backgroundColor:'#fff', width:'100%', height:125, marginTop:10, display:'none'}} />
 
-          <View style={{backgroundColor:'#ff0000', width:'100%', height:118.3, marginTop:10}} />
+          <View style={{backgroundColor:'#fff', width:'100%', height:118.3, marginTop:10, display:'none'}} />
 
-          <View style={{backgroundColor:'#ff0000', width:'100%', height:48, marginTop:10}} />
+          <View style={{backgroundColor:'#fff', width:'100%', height:48, marginTop:10}} />
 
           <View style={{backgroundColor:'#fff', width:'100%', height:140, marginTop:10}}>
             <View style={{flexDirection:'row'}}>
@@ -308,7 +308,7 @@ class DetailProduct extends Component {
             </View>
           </View>
 
-          <View style={{backgroundColor:'#ff0000', width:'100%', height:422, marginTop:8}} />
+          <View style={{backgroundColor:'#fff', width:'100%', height:422, marginTop:8}} />
 
           <View style={{marginTop:15, flex:1, backgroundColor:'#efefef'}}>
             <View style={{flexDirection:'row', justifyContent:'space-between', height:42, width:'100%', backgroundColor:'#fff', paddingHorizontal:10}}>

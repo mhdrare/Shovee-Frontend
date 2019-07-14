@@ -57,15 +57,15 @@ class CartList extends Component {
                                         <Text numberOfLines={1}>{this.props.item.product.name}</Text>
                                         
                                         <View style={{flexDirection:'row'}} >
-                                            <TouchableOpacity onPress={this.props.decreaseItem}>
+                                            <TouchableOpacity>
                                                 <AntDesign name='minussquareo' size={20} />
                                             </TouchableOpacity>
 
                                             <View>
-                                                <Text>  {this.props.item.count}  </Text>
+                                                <Text>  1  </Text>
                                             </View>
 
-                                            <TouchableOpacity onPress={this.props.increaseItem}>
+                                            <TouchableOpacity>
                                                 <AntDesign name='plussquareo' size={20} />
                                             </TouchableOpacity>
                                         </View>
