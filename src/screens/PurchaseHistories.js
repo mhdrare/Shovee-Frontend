@@ -5,6 +5,11 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios';
+import Loading from './Loading';
+
+import { connect } from 'react-redux'
+
+import { fetchCheckout } from '../public/redux/actions/checkout';
 
 class ListHistories extends Component {
 	render() {
@@ -48,7 +53,7 @@ class ListHistories extends Component {
 		)
 	}
 }
-export default class App extends Component {
+class App extends Component {
 	constructor(props){
 		super(props)
 		this.state = {
@@ -72,15 +77,10 @@ export default class App extends Component {
 	}
 
 	fetchHistory = async () => {
+		this.setState({isLoading: true})
 		const userToken = await AsyncStorage.getItem('Token');
-		axios.get('http://192.168.100.81:3001/checkout', {
-			headers: {
-				'x-auth-token':userToken
-			}
-		}).then(result => {
-			this.setState({history: result.data.data})
-			console.log(this.state.history)
-		})
+		await this.props.dispatch(fetchCheckout(userToken))
+		this.setState({isLoading: false})
 	}
 
 	_bootstrapAsync = async () => {
@@ -119,14 +119,16 @@ export default class App extends Component {
 				<View style={styles.container}>
 					<ScrollView>
 						<View>
-						<FlatList
-							data={this.state.history}
+						{
+							this.state.isLoading ? <Loading /> : <FlatList
+							data={this.props.checkout.data}
 							keyExtractor={(item, index) => item._id}
 							renderItem={({item, index}) => {
 								return (
 									<ListHistories item={item} index={index} /> 
 								)
 							}} />
+						}
 						</View>
 					</ScrollView>
 				</View>
@@ -134,6 +136,8 @@ export default class App extends Component {
 		)
 	}
 }
+
+export default connect(state => ({checkout: state.checkout}))(App)
 
 const styles = StyleSheet.create({
 	header: {
