@@ -24,6 +24,8 @@ Shopee aims to continually enhance its platform and become the region’s e-comm
 
 ## Features
 * Users can buy and sell at one account
+* Notification after checkout
+* Forget password
 
 ## Requirements
 * [`npm`](https://www.npmjs.com/get-npm)
@@ -39,6 +41,7 @@ Shopee aims to continually enhance its platform and become the region’s e-comm
 5. Type `react-native run-android` for run this app. ***Make sure your device is connected with debugging mode***.
 
 ## Screenshots
+More [screenshots]() and if you want to watch demo application, [here]().
 
 ## Release APK
 <a href="https://drive.google.com/file/d/1QBtcaDn-ROlawbQEkHlNwaJcPD6hmtiA/view?usp=sharing">
