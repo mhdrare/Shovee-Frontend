@@ -223,18 +223,18 @@ class Home extends Component {
           renderItem={({item}) => {
             return (
                 <View style={{flex:1, backgroundColor:'#fff', paddingTop:5}}>
-                  <View style={{flexDirection:'row', marginHorizontal:13, marginTop:5, marginBottom:5, justifyContent:'center', width:50, height:60}}>
+                  <TouchableOpacity style={{flexDirection:'row', marginHorizontal:13, marginTop:5, marginBottom:5, justifyContent:'center', width:50, height:60}}>
                     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
                       <Image source={{uri:item.image}} style={{width:42, height:42}} />
                       <Text numberOfLines={2} style={{fontSize:8, textAlign:'center', color:'#000'}}>{item.title}</Text>
                     </View>
-                  </View>
-                  <View style={{flexDirection:'row', marginHorizontal:13, marginBottom:10, justifyContent:'center', width:50, height:90}}>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={{flexDirection:'row', marginHorizontal:13, marginBottom:10, justifyContent:'center', width:50, height:90}}>
                     <View style={{flex:1, justifyContent:'center', alignItems:'center'}}>
                       <Image source={{uri:item.image2}} style={{width:42, height:42}} />
                       <Text style={{fontSize:8, textAlign:'center', color:'#000'}}>{item.title2}</Text>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </View>
               )
             }} />
