@@ -6,6 +6,7 @@ import auth from './auth'
 import categories from './categories'
 import cart from './cart'
 import wishlist from './wishlist'
+import checkout from './checkout'
 
 const appReducer = combineReducers({
 	auth,
@@ -13,7 +14,8 @@ const appReducer = combineReducers({
     products,
     categories,
     cart,
-    wishlist
+    wishlist,
+    checkout
 })
 
 export default appReducer;

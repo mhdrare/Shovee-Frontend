@@ -7,7 +7,13 @@ import OneSignal from 'react-native-onesignal'
 import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux'
 
+import { fetchCart } from '../public/redux/actions/cart'
+import { postCheckout } from '../public/redux/actions/checkout'
+
+import Loading from './Loading'
+
 import axios from 'axios'
+import NavigationService from './NavigationService';
 
 class CheckoutList extends Component {
     render() {
@@ -69,8 +75,9 @@ class Checkout extends Component {
 
         this.deviceID = ''
 
-        OneSignal.init("df4cae47-cd9d-4dd5-b97f-5f63593f39fb");
-
+        OneSignal.init("df4cae47-cd9d-4dd5-b97f-5f63593f39fb")
+        OneSignal.inFocusDisplaying(2)
+        
         OneSignal.addEventListener('received', this.onReceived);
         OneSignal.addEventListener('opened', this.onOpened);
         OneSignal.addEventListener('ids', device => {
@@ -81,6 +88,7 @@ class Checkout extends Component {
         this.state = {
             checked: false,
             count: 0,
+            isLoading: false,
             data: [
                 {
                     id: '1',
@@ -164,6 +172,7 @@ class Checkout extends Component {
     }
 
     handleCheckout = async (data) => {
+        this.setState({isLoading: true})
         const arr = []
         await data.map(datum => arr.push({main: datum.product._id, cart: datum._id}))
         
@@ -175,11 +184,12 @@ class Checkout extends Component {
         }
         const userToken = await AsyncStorage.getItem('Token');
         console.log(userToken)
-        axios.post(`http://192.168.100.81:3001/checkout?playerId=${this.deviceID}`, checkout, {
-            headers: {
-                'x-auth-token':userToken
-            }
-        })
+        //do dispatch here bitch
+
+        await this.props.dispatch(postCheckout(checkout, userToken, this.deviceID))
+        NavigationService.navigate('Home')
+        await this.props.dispatch(fetchCart(userToken))
+        this.setState({isLoading: false})
     }
 
     render() {
@@ -187,6 +197,7 @@ class Checkout extends Component {
             // HEADER \\
             <React.Fragment>
                 <View style={{backgroundColor:'#fff', position:'absolute', top:24, right:0, left:0, elevation:1}}>
+                
                     <View style={{flexDirection:'row', paddingHorizontal:15, paddingVertical:18, justifyContent:'flex-end', alignItems:'center'}}>
                         <View style={{flex:1}}>
                             <TouchableOpacity onPress={() => {this.props.navigation.goBack()}}>
@@ -277,7 +288,7 @@ class Checkout extends Component {
                             <Text style={{color:'#fff', fontSize:16}}>BUAT PESANAN</Text>
                         </TouchableOpacity>
                     </View>
-
+                    {this.state.isLoading ? <Loading /> : <View />}
                 </ScrollView>
             </React.Fragment>
         )
