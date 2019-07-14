@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = 'https://pure-fjord-88379.herokuapp.com/users'
+const url = 'https://stormy-springs-80236.herokuapp.com/users'
 
 export const getUserDetail = (token) => {
   return {

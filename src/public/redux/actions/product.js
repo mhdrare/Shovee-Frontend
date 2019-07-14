@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'https://pure-fjord-88379.herokuapp.com/products';
+const url = 'https://stormy-springs-80236.herokuapp.com/products';
 
 export const addProduct = (token,category,price,images,city,description,name,stok, brand) => {
     var data = new FormData();
@@ -31,6 +31,13 @@ export const fetchProducts = () => {
     return {
         type: 'GET_PRODUCTS',
         payload: axios.get(`${url}`)
+    }
+}
+
+export const fetchProductsMore = (page) => {
+    return {
+        type: 'GET_PRODUCTS_MORE',
+        payload: axios.get(`${url}?page=${page}`)
     }
 }
 
