@@ -123,9 +123,6 @@ class App extends Component {
 				</View>
 				<View style={styles.container}>
 					{
-						this.state.isUploading && <ActivityIndicator />
-					}
-					{
 						(this.state.loading) ? <View style={{top: 12, position: 'absolute', left: 0, right: 0, alignItems: 'center'  }}><ActivityIndicator size='large' /></View> : <View/> 
 					}
 					<ScrollView>
