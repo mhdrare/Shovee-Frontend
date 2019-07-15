@@ -56,7 +56,7 @@ More [screenshots](https://github.com/mhdrare/Shovee-Frontend/blob/master/SCREEN
   <img src="https://img.shields.io/badge/Download%20on%20the-Google%20Drive-blue.svg?style=popout&logo=google-drive"/>
 </a>
 
-## Related Project
+## Related Project (Backend)
 * [Shopee Clone RESTful API](https://github.com/mhdrare/Shovee-Backend.git)
 
 ## Trello
